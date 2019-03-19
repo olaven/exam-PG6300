@@ -3,7 +3,6 @@
  * NOTE: This file is partially copied from: 
  * https: //github.com/arcuri82/web_development_and_api_design/blob/master/exercise-solutions/quiz-game/part-10/src/server/app.js
  */
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
@@ -11,7 +10,8 @@ const session = require("express-session");
 const LocalStrategy = require('passport-local').Strategy;
 const path = require('path');
 
-
+const dataApi = require("./routes/data-api")
+const authApi = require("./routes/auth-api"); 
 
 const app = express();
 
@@ -72,12 +72,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-// TODO: Add some routers
 //--- Routes -----------
-/* 
+// Routes: 
+app.use("/api", dataApi)
 app.use('/api', authApi);
-app.use('/api', matchApi);
- */
+
 
 //handling 404
 app.use((req, res, next) => {

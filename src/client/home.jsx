@@ -1,13 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom"; 
-import Layout from "./layout/layout"; 
+
+import Layout from "./layout/layout.jsx"; 
+
 export default class Home extends React.Component {
 
     render() {
         return <Layout>
-            This is home
-            <Link to={"/ar"}>
-            ar</Link>
+            <h1>This is home</h1>
+            <Link to={"/data"}>
+                go to data page
+            </Link>
         </Layout>
     }
 }

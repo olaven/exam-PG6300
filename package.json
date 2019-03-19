@@ -15,10 +15,12 @@
   "dependencies": {
     "express": "^4.16.4",
     "express-session": "^1.15.6",
+    "load-json-file": "^5.2.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "react": "^16.4.2",
-    "react-dom": "^16.4.2"
+    "react-dom": "^16.4.2",
+    "write-json-file": "^3.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

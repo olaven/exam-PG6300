@@ -7,8 +7,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Home from "./home";
-import Ar from "./ar";
+
+import Home from "./home.jsx";
+import Data from "./data.jsx";
 
 
 class App extends React.Component {
@@ -29,7 +30,7 @@ class App extends React.Component {
             <div>
                 <Switch>
                     <Route exact path="/" component={Home}/>
-                    <Route exact path="/ar" component={Ar}/>              
+                    <Route exact path="/data" component={Data}/>              
                 </Switch>
             </div>
         </BrowserRouter>
