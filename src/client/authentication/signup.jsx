@@ -1,3 +1,8 @@
+/**
+ * NOTE: this file is partially copied from:
+ * https://github.com/arcuri82/web_development_and_api_design/blob/master/les08/authentication/src/client/signup.jsx
+ */
+
 import React from "react";
 
 import Layout from "../layout/layout.jsx";
@@ -10,7 +15,8 @@ export default class Signup extends React.Component {
         this.state = {
             username: "",
             password: "",
-            repeatPassword: ""
+            repeatPassword: "",
+            serverErrorMessage: null
         };
     }
 
@@ -39,20 +45,71 @@ export default class Signup extends React.Component {
     passwordsAreEqual = () => 
         this.state.password === this.state.repeatPassword;
 
-    signup = () => {
-        alert("implement signup on frontend")
+    signup = async () => {
+        
+        const { username, password, repeatPassword } = this.state;
+
+        console.log
+        if (repeatPassword !== password) {
+            this.setState({ serverErrorMessage: "Passwords do not match" });
+            return;
+        }
+
+        const url = "/api/signup";
+        const payload = { username: username, password: password };
+
+        let response;
+
+        try {
+            response = await fetch(url, {
+                method: "post",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+        } catch (err) {
+            console.log(
+                "error connecting to server"
+            )
+            this.setState({ serverErrorMessage: "Failed to connect to server: " + err });
+            return;
+        }
+
+
+        if (response.status === 400) {
+            this.setState({ serverErrorMessage: "Invalid userId/password" });
+            return;
+        }
+
+        if (response.status !== 201) {
+            this.setState({
+                serverErrorMessage:
+                    "Error when connecting to server: status code " + response.status
+            });
+            return;
+        }
+
+        this.setState({ serverErrorMessage: null });
+        //TODO this.props.updateLoggedInUserId(userId);
+        this.props.history.push("/");
     }
 
     render() {
 
-        let errorMessage = <div />
+        let passwordErrorMessge = <div />
         if (!this.passwordsAreEqual()) {
-            errorMessage = <div>
+            passwordErrorMessge = <div>
                 Passwords must match!
             </div>
         }
 
-        console.log(this.passwordsAreEqual(), ' ', this.state.password, ' ' , this.state.repeatPassword)
+        let serverError = <div />
+        if (!this.state.serverErrorMessage !== null) {
+            serverError = <div>
+                {this.state.serverErrorMessage}
+            </div>
+        }
 
         return <Layout>
             <h1>Signup</h1>
@@ -72,9 +129,10 @@ export default class Signup extends React.Component {
                     type="password"
                     value={this.state.repeatPassword}
                     onChange={this.repeatPasswordChanged} />
-                {errorMessage}
+                {passwordErrorMessge}
 
                 <button onClick={this.signup}>Sign up</button>
+                {serverError}
             </div>
         </Layout>
     }

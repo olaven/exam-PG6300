@@ -6,9 +6,7 @@
 
 const express = require('express');
 const passport = require('passport');
-
-//TODO add users 
-//const Users = require('../db/users');
+const Users = require("../database/users"); 
 
 const router = express.Router();
 
@@ -18,10 +16,11 @@ router.post('/login', passport.authenticate('local'), (req, res) => {
 });
 
 router.post('/signup', function (req, res) {
-
-    const created = Users.createUser(req.body.userId, req.body.password);
+    
+    const created = Users.createUser(req.body.username, req.body.password);
 
     if (!created) {
+        
         res.status(400).send();
         return;
     }
@@ -57,7 +56,7 @@ router.get('/user', function (req, res) {
     }
 
     res.status(200).json({
-        id: req.user.id
+        username: req.user.username
         //TODO  add other user data 
     });
 });
