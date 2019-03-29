@@ -12,10 +12,10 @@ export default class Data extends React.Component {
     }
 
     componentDidMount = () => {
-        this.fetchData(); 
+        this.updateData(); 
     }
 
-    fetchData = async () => {
+    updateData = async () => {
 
         const response = await fetch("/api/data"); 
         const data = await response.json(); 

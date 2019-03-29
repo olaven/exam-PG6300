@@ -77,8 +77,13 @@ app.use(passport.session());
 app.use("/api", dataApi)
 app.use('/api', authApi);
 
+// api-routes that are not matched by above routers
+app.all('/api*', (req, res) => {
+    res.status(404).send(); 
+}); 
 
-//handling 404
+
+//If 404 -> just return index
 app.use((req, res, next) => {
     res.sendFile(path.resolve(__dirname, '..', '..', 'public', 'index.html'));
 });

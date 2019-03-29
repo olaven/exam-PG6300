@@ -10,6 +10,8 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import Home from "./home.jsx";
 import Data from "./data.jsx";
+import Signup from "./authentication/signup.jsx";
+import Login from "./authentication/login.jsx";
 
 
 class App extends React.Component {
@@ -30,7 +32,9 @@ class App extends React.Component {
             <div>
                 <Switch>
                     <Route exact path="/" component={Home}/>
-                    <Route exact path="/data" component={Data}/>              
+                    <Route exact path="/data" component={Data}/>    
+                    <Route exact path={"/signup"} component={Signup}/>
+                    <Route exact path={"/login"} component={Login} />      
                 </Switch>
             </div>
         </BrowserRouter>

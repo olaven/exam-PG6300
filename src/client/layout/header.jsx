@@ -7,6 +7,8 @@ export default class Header extends React.Component {
         return <div style={style}>
             <h1>This is the header</h1>
             <Link to={"/"}>Go home</Link>
+            <Link to={"/login"}>Login</Link>
+            <Link to={"/signup"}>Sign up</Link>
         </div>
     }
 }
