@@ -91,7 +91,7 @@ export default class Signup extends React.Component {
         }
 
         this.setState({ serverErrorMessage: null });
-        //TODO this.props.updateLoggedInUserId(userId);
+        this.props.updateLoggedInUser(username);
         this.props.history.push("/");
     }
 

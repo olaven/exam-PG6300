@@ -16,14 +16,32 @@ import Login from "./authentication/login.jsx";
 
 class App extends React.Component {
 
-    //TODO I believe user-state should be passed down
     constructor(props) {
         super(props);
 
         this.state = {
-            user: null,
+            username: null,
             userCount: 1
         };
+    }
+
+    updateLoggedInUsername = (username) => {
+
+        this.setState({
+            username: username
+        });
+    }
+
+    renderRouteWithUser = (path, Component) => {
+
+        return <Route exact path={path}
+            render={ props => 
+                <Component {...props }
+                    username={ this.state.username }
+                    updateLoggedInUser={ this.updateLoggedInUsername } 
+                />
+            }
+        />
     }
 
 
@@ -31,10 +49,10 @@ class App extends React.Component {
         return <BrowserRouter>
             <div>
                 <Switch>
-                    <Route exact path="/" component={Home}/>
-                    <Route exact path="/data" component={Data}/>    
-                    <Route exact path={"/signup"} component={Signup}/>
-                    <Route exact path={"/login"} component={Login} />      
+                    {this.renderRouteWithUser("/", Home)}   
+                    {this.renderRouteWithUser("/data", Data)} 
+                    {this.renderRouteWithUser("/signup", Signup)} 
+                    {this.renderRouteWithUser("/login", Login)}                                      
                 </Switch>
             </div>
         </BrowserRouter>

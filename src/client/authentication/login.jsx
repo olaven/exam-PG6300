@@ -69,7 +69,7 @@ export default class Login extends React.Component {
         }
 
         this.setState({ serverErrorMessage: null });
-        //TODO this.props.updateLoggedInUsername(username);
+        this.props.updateLoggedInUser(username);
         this.props.history.push("/");
     }
 
@@ -99,6 +99,8 @@ export default class Login extends React.Component {
 
             <button onClick={this.login}>Login</button>
             {errorMessage}
+
+            {this.props.username + "Her er jeg "}
         </Layout>
     }
 }
