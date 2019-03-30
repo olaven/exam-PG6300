@@ -10,6 +10,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import Home from "./home.jsx";
 import Data from "./data.jsx";
+import NotFound from "./notFound.jsx"
 import Signup from "./authentication/signup.jsx";
 import Login from "./authentication/login.jsx";
 
