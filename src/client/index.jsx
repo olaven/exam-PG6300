@@ -13,6 +13,7 @@ import Data from "./data.jsx";
 import NotFound from "./notFound.jsx"
 import Signup from "./authentication/signup.jsx";
 import Login from "./authentication/login.jsx";
+import Layout from "./layout/layout.jsx";
 
 
 class App extends React.Component {
@@ -26,7 +27,7 @@ class App extends React.Component {
         };
     }
 
-    updateLoggedInUsername = (username) => {
+    updateLoggedInUser = (username) => {
 
         this.setState({
             username: username
@@ -39,8 +40,7 @@ class App extends React.Component {
             render={ props => 
                 <Component {...props }
                     username={ this.state.username }
-                    loggedIn={ this.state.username !== null}
-                    updateLoggedInUser={ this.updateLoggedInUsername } 
+                    updateLoggedInUser={ this.updateLoggedInUser } 
                 />
             }
         />
@@ -48,16 +48,20 @@ class App extends React.Component {
 
 
     render() {
+
         return <BrowserRouter>
-            <div>
-                <Switch>
-                    {this.renderRouteWithUser("/", Home)}   
-                    {this.renderRouteWithUser("/data", Data)} 
-                    {this.renderRouteWithUser("/signup", Signup)} 
-                    {this.renderRouteWithUser("/login", Login)}
-                    <Route component={NotFound} />                                   
-                </Switch>
-            </div>
+            <Layout
+                username={this.state.username}
+                updateLoggedInUser={this.updateLoggedInUser}>
+ 
+                    <Switch>
+                        {this.renderRouteWithUser("/", Home)}
+                        {this.renderRouteWithUser("/data", Data)}
+                        {this.renderRouteWithUser("/signup", Signup)}
+                        {this.renderRouteWithUser("/login", Login)}
+                        <Route component={NotFound} />
+                    </Switch>
+            </Layout>
         </BrowserRouter>
     }
 }

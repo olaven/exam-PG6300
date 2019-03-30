@@ -13,13 +13,14 @@
     "start": "node src/server/server.js"
   },
   "dependencies": {
-    "express": "^4.16.4",
-    "express-session": "^1.15.6",
-    "load-json-file": "^5.2.0",
-    "passport": "^0.4.0",
-    "passport-local": "^1.0.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
+    "react-router-dom": "^4.3.1",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "load-json-file": "^5.2.0",
     "write-json-file": "^3.1.0"
   },
   "devDependencies": {
@@ -33,7 +34,6 @@
     "concurrently": "^4.1.0",
     "jest": "^24.5.0",
     "nodemon": "^1.18.10",
-    "react-router-dom": "^4.3.1",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",
     "webpack-dev-server": "^3.1.5"

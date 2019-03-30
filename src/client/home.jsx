@@ -1,17 +1,26 @@
 import React from "react";
 import { Link } from "react-router-dom"; 
 
-import Layout from "./layout/layout.jsx"; 
-
 export default class Home extends React.Component {
 
+    constructor(props) {
+        super(props);
+    }
+
     render() {
-        return <Layout>
+
+        console.log(this.props)
+
+        const loggedIn = this.props.username !== null;
+
+        return <div>
             <h1>This is home</h1>
-            <Link to={"/data"}>
-                go to data page
-            </Link>
-        </Layout>
+            {loggedIn ? 
+                <Link to={"/data"}>
+                    go to data page
+                </Link>:
+                <p>You must log in.</p>}
+        </div>
     }
 }
 

@@ -111,7 +111,7 @@ export default class Signup extends React.Component {
             </div>
         }
 
-        return <Layout>
+        return <div>
             <h1>Signup</h1>
             <div>
                 <p>Username</p>
@@ -134,7 +134,7 @@ export default class Signup extends React.Component {
                 <button onClick={this.signup}>Sign up</button>
                 {serverError}
             </div>
-        </Layout>
+        </div>
     }
 }
 

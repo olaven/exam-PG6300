@@ -1,5 +1,4 @@
 import React from "react";
-import Layout from "./layout/layout";
 
 export default class Data extends React.Component {
 
@@ -35,7 +34,7 @@ export default class Data extends React.Component {
         ); 
 
     render() {
-        return <Layout>
+        return <div>
             <h2>This data is fetched from server</h2>
             <table>
                 <thead>
@@ -49,7 +48,7 @@ export default class Data extends React.Component {
                     {this.renderRows()}
                 </tbody>
             </table>
-        </Layout>
+        </div>
     }
 }
 

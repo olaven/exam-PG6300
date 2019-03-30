@@ -10,3 +10,5 @@
 * dependencies not used in course 
   * [load-json-file](https://github.com/sindresorhus/load-json-file)
   * [write-json-file](https://github.com/sindresorhus/write-json-file)
+* on general style 
+  * I could have written some functional components. In particular, the components not having state. However, I stuck with class based components for the sake of consistency. 

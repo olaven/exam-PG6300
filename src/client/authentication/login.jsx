@@ -82,7 +82,7 @@ export default class Login extends React.Component {
             </div>
         }
 
-        return <Layout>
+        return <div>
             <h1>login</h1>
             
             <p>Username</p>
@@ -99,7 +99,7 @@ export default class Login extends React.Component {
 
             <button onClick={this.login}>Login</button>
             {errorMessage}
-        </Layout>
+        </div>
     }
 }
 
