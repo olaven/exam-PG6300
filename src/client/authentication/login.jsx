@@ -99,8 +99,6 @@ export default class Login extends React.Component {
 
             <button onClick={this.login}>Login</button>
             {errorMessage}
-
-            {this.props.username + "Her er jeg "}
         </Layout>
     }
 }

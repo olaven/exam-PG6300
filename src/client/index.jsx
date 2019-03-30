@@ -38,6 +38,7 @@ class App extends React.Component {
             render={ props => 
                 <Component {...props }
                     username={ this.state.username }
+                    loggedIn={ this.state.username !== null}
                     updateLoggedInUser={ this.updateLoggedInUsername } 
                 />
             }
@@ -52,7 +53,8 @@ class App extends React.Component {
                     {this.renderRouteWithUser("/", Home)}   
                     {this.renderRouteWithUser("/data", Data)} 
                     {this.renderRouteWithUser("/signup", Signup)} 
-                    {this.renderRouteWithUser("/login", Login)}                                      
+                    {this.renderRouteWithUser("/login", Login)}
+                    <Route component={NotFound} />                                   
                 </Switch>
             </div>
         </BrowserRouter>
