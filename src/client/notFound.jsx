@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Layout from "./layout/layout";
 
-export default class NotFound extends React.Component {
+export class NotFound extends React.Component {
 
     render() {
         return <div>

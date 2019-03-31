@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class Data extends React.Component {
+export class Data extends React.Component {
 
     constructor(props) {
         

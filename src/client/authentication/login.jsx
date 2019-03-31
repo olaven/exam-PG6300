@@ -5,9 +5,7 @@
 
 import React from "react";
 
-import Layout from "../layout/layout"
-
-export default class Login extends React.Component {
+export class Login extends React.Component {
 
     constructor(props) {
         

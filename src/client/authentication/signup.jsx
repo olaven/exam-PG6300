@@ -5,9 +5,7 @@
 
 import React from "react";
 
-import Layout from "../layout/layout.jsx";
-
-export default class Signup extends React.Component {
+export class Signup extends React.Component {
 
     constructor(props) {
         

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom"; 
 
-export default class Home extends React.Component {
+export class Home extends React.Component {
 
     constructor(props) {
         super(props);
@@ -9,11 +9,9 @@ export default class Home extends React.Component {
 
     render() {
 
-        console.log(this.props)
-
         const loggedIn = this.props.username !== null;
 
-        return <div>
+        return <div id="home">
             <h1>This is home</h1>
             {loggedIn ? 
                 <Link to={"/data"}>

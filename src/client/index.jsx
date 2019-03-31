@@ -8,12 +8,12 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-import Home from "./home.jsx";
-import Data from "./data.jsx";
-import NotFound from "./notFound.jsx"
-import Signup from "./authentication/signup.jsx";
-import Login from "./authentication/login.jsx";
-import Layout from "./layout/layout.jsx";
+import {Home} from "./home.jsx";
+import {Data} from "./data.jsx";
+import {NotFound} from "./notFound.jsx"
+import {Signup} from "./authentication/signup.jsx";
+import {Login} from "./authentication/login.jsx";
+import {Layout} from "./layout/layout.jsx";
 
 
 class App extends React.Component {
