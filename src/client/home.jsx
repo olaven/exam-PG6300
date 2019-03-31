@@ -15,9 +15,9 @@ export class Home extends React.Component {
             <h1>This is home</h1>
             {loggedIn ? 
                 <Link to={"/data"}>
-                    go to data page
+                    <p className="homeMessage">Go to data page</p>
                 </Link>:
-                <p>You must log in.</p>}
+                <p className="homeMessage">You must log in.</p>}
         </div>
     }
 }
