@@ -1,7 +1,7 @@
 /**
  * TODO: double check link when I have internet access
  * NOTE: this file is copied from: 
-  * https: //github.com/arcuri82/web_development_and_api_design/blob/master/exercise-solutions/quiz-game/part-8/src/tests/jest-setup.js
+ * https://github.com/arcuri82/web_development_and_api_design/blob/master/exercise-solutions/quiz-game/part-10/tests/jest-setup.js
  */
 
 const {

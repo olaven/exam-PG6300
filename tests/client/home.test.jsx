@@ -3,12 +3,11 @@ const { MemoryRouter } = require('react-router-dom');
 const { mount, shallow } = require('enzyme');
 const { Home } = require("../../src/client/home.jsx");
 
-const getHome = () => {
+const getHome = (props) => {
 
     return shallow(
-        <MemoryRouter>
-            <Home />
-        </MemoryRouter>
+        <Home
+            {...props}/>
     )
 } 
 
@@ -16,8 +15,8 @@ describe("the home page.", () => {
 
     it("renders some content.", () => {
 
-        const driver = shallow(<Home />);
-        const home = driver.find("#home");
+        const wrapper = getHome(null); 
+        const home = wrapper.find("#home");
 
         console.log
         expect(home).not.toBeNull();
@@ -25,26 +24,31 @@ describe("the home page.", () => {
 
     it("only renders one message only", () => {
         
-        const driver = shallow(<Home />).renderdive();
-        const messages = driver.find(".homeMessage");
+        const wrapper = getHome(null); 
+        const messages = wrapper.find(".homeMessage");
         expect(messages.length).toEqual(1)
-
-        const message = messages.first();
-        expect(message.text()).toEqual("You must log in.");
     });
 
     it("renders message to login when user logged out", () => {
 
+        const wrapper = getHome({
+            username: null 
+        }); 
+        const messages = wrapper.find(".homeMessage"); 
+        
+        const message = messages.first(); 
+        expect(message.text()).toEqual("You must log in.")
     });
 
     it("renders data-message when user logged in", () => {
 
-        const username = "test user";
-        const updateLoggedInUser = () => new Promise(resolve => resolve());
-        const driver = mount(
-            <MemoryRouter initialEntries={["/home"]}>
-                <Home updateLoggedInUser={updateLoggedInUser} username={username} />
-            </MemoryRouter>
-        );
+        const wrapper = getHome({
+            username: "Charlie Banks"
+        }); 
+        const messages = wrapper.find(".homeMessage");
+        expect(messages.length).toEqual(1);
+        
+        const message = messages.first();
+        expect(message.text()).toEqual("Go to data page"); 
     });
 });

@@ -11,6 +11,7 @@ export class Data extends React.Component {
     }
 
     componentDidMount = () => {
+        
         this.updateData(); 
     }
 
@@ -26,7 +27,7 @@ export class Data extends React.Component {
 
     renderRows = () => 
         this.state.data.map(item => 
-            <tr key={item.id}>
+            <tr key={item.id} className="dataTableRow">
                 <td>{item.id}</td>
                 <td>{item.message}</td>
                 <td>{(item.checked ? "checked" : "not checked")}</td>
@@ -34,7 +35,7 @@ export class Data extends React.Component {
         ); 
 
     render() {
-        return <div>
+        return <div id="data">
             <h2>This data is fetched from server</h2>
             <table>
                 <thead>
