@@ -14,9 +14,14 @@ export class Home extends React.Component {
         return <div id="home">
             <h1>This is home</h1>
             {loggedIn ? 
-                <Link to={"/data"}>
-                    <p className="homeMessage">Go to data page</p>
-                </Link>:
+                <div>
+                    <Link to={"/data"}>
+                        <p className="homeMessage">Go to data page</p>
+                    </Link>
+                    <Link to={"/chat"}>
+                        Chat
+                    </Link>
+                </div>:
                 <p className="homeMessage">You must log in.</p>}
         </div>
     }

@@ -10,6 +10,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import {Home} from "./home.jsx";
 import {Data} from "./data.jsx";
+import {Chat} from "./chat";
 import {NotFound} from "./notFound.jsx"
 import {Signup} from "./authentication/signup.jsx";
 import {Login} from "./authentication/login.jsx";
@@ -57,8 +58,9 @@ class App extends React.Component {
                     <Switch>
                         {this.renderRouteWithUser("/", Home)}
                         {this.renderRouteWithUser("/data", Data)}
+                        {this.renderRouteWithUser("/chat", Chat)}
                         {this.renderRouteWithUser("/signup", Signup)}
-                        {this.renderRouteWithUser("/login", Login)}
+                        {this.renderRouteWithUser("/login", Login)}     
                         <Route component={NotFound} />
                     </Switch>
             </Layout>
