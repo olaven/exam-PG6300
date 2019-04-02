@@ -18,7 +18,6 @@ describe("the home page.", () => {
         const wrapper = getHome(null); 
         const home = wrapper.find("#home");
 
-        console.log
         expect(home).not.toBeNull();
     });
 

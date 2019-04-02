@@ -10,7 +10,10 @@ async function waitForData(wrapper) {
     const updated = await asyncCheckCondition(() => {
         
         wrapper.update();
-        const data = wrapper.state().data; 
+
+        // have to find actual component inside MemoryRouter
+        const dataComponent = wrapper.find(Data)
+        const data = dataComponent.state().data; 
         
         return data.length !== 0
     }, 4000, 100);
@@ -22,7 +25,9 @@ describe("the data page.", () => {
 
     it("does show something.", () => {
 
-        const wrapper = shallow(<Data />) ;
+        const wrapper = mount(<MemoryRouter>
+            <Data />
+        </MemoryRouter>) ;
         const data = wrapper.find("#data"); 
 
         expect(data).not.toBeNull(); 
@@ -31,14 +36,19 @@ describe("the data page.", () => {
     it("renders all items from server.", async () => {
 
         overrideFetch(app); 
-        console.log("fetch overriden: ", fetch); 
-        const wrapper = mount(<Data />);
+        //console.log("fetch overriden: ", fetch); 
+        const wrapper = mount(<MemoryRouter>
+            <Data />
+        </MemoryRouter>);
 
         await waitForData(wrapper); 
     
+        const data = wrapper.state().data;
         const rows = wrapper.find(".dataTableRow"); 
-        console.log("fetch defined in test scope: ", fetch); 
-        expect(rows.length).toBeGreaterThan(2); 
+        //console.log("fetch defined in test scope: ", fetch); 
+        
+        expect(rows.length).toEqual(data.length); 
+        expect(rows.length).toBeGreaterThan(0);
     }); 
 
 });
