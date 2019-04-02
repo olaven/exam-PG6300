@@ -25,7 +25,7 @@ const configureWebSocket = (app) => {
 				messages: allMessages,
 				userCount: ews.getWss().clients.size
 			}
-		))
+		));
 
 		ws.on("close", () => {
 			//do a broadcast to all existing clients

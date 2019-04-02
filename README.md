@@ -1,5 +1,7 @@
 # Exam - Web Development and API Design
 
+## About the application
+
 ## Extras 
 * I have added some CSS in the react components, using "CSS-in-JS"-style, as described [here](https://reactjs.org/docs/dom-elements.html#style). This is done in the [layout-folder](./src/frontend/layout/)
 * To ensure consistent code-style, I have used [ESlint](https://eslint.org). This is also configured as an extra script.
