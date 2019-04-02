@@ -8,7 +8,8 @@ export class Chat extends React.Component {
         super(props)
         this.state = {
             input: "",
-            messages: []
+            messages: [],
+            userCount: 0
         }
     }
 
@@ -17,14 +18,18 @@ export class Chat extends React.Component {
         this.socket = new WebSocket("ws://" + window.location.host);
         this.socket.onmessage = (event => {
 
-            const messageList = JSON.parse(event.data);
+            const data = JSON.parse(event.data);
             this.setState(
                 previous => {
                     return (previous.messages === null ? 
-                        {messages: messageList}: 
-                        {messages: [...previous.messages, ...messageList]}) 
+                        {messages: data.messages}: 
+                        {messages: [...previous.messages, ...data.messages]}) 
                 }
             );
+
+            this.setState({
+                userCount: data.userCount
+            });
         });
     }
 
@@ -37,8 +42,10 @@ export class Chat extends React.Component {
     sendMessage = () => {
         
         const payload = JSON.stringify({ 
-            username: this.props.username, 
-            text: this.state.input 
+            message: {
+                username: this.props.username,
+                text: this.state.input 
+            }
         });
 
         this.socket.send(payload);
@@ -58,11 +65,11 @@ export class Chat extends React.Component {
         if (loggedIn) {
 
             return <div id="chat">
-                <h1>Chat</h1>
+                <h1>Chat - {this.state.userCount} users online.</h1>
                 <div id="messages">
                     {this.renderMessages()}
                 </div>
-                <input type="text" onChange={this.onInputChange} />
+                <input type="text" onChange={this.onInputChange} value={this.state.input} />
                 <button onClick={this.sendMessage}>Send</button>
             </div>
         } else {
