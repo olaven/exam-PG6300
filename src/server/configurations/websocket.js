@@ -7,51 +7,83 @@ const WebSocket = require("ws");
 
 const messages = require("../database/messages");
 
+
+//TODO: FIX OR STASH
 let idCounter = 0;
+
 const configureWebSocket = (app) => {
+	const ews = require("express-ws")(app);
 
-    const ews = require('express-ws')(app);
+	app.ws("/", function (ws, req) {
 
-    app.ws('/', function (ws, req) {
-        console.log('Established a new WS connection');
-
-        /*
+		console.log("new connection");
+		/*
             new connection, send all existing messages.
             TODO: this would not handle the case of a client that already
             had the data from previous connection, and started a new one (will get duplicates)
         */
-        const allMessages = messages.getAll(); 
-        ws.send(JSON.stringify(allMessages));
+		const allMessages = messages.getAll(); 
+		ws.send(JSON.stringify(
+			{
+				messages: allMessages,
+				userCount: userCount
+			}
+		))
 
-        /*
+		/*
             Here, we register a callback, which is going to be executed every time a client
             does a send() to the server
         */
-        ws.on('message', fromClient => {
+		ws.on("message", fromClient => {
 
-            const dto = JSON.parse(fromClient);
-            const id = idCounter++;
-            const msg = {
-                id: id,
-                username: dto.username,
-                text: dto.text
-            };
+			console.log("there was a message")
 
-            //add to our current local store
-            messages.addMessage(msg);
+			const dto = JSON.parse(fromClient).message;
+			const id = idCounter++;
+			const message = {
+				id: id,
+				username: dto.username,
+				text: dto.text
+			};
 
-            //do a broadcast to all existing clients
-            ews.getWss().clients.forEach((client) => {
-                if (client.readyState === WebSocket.OPEN) {
-                
-                    client.send(JSON.stringify([msg]));
-                }
-            });
-        })
-    });
-}
+			//add to our current local store
+			messages.addMessage(message);
+
+				//do a broadcast to all existing clients
+				ews.getWss().clients.forEach((client) => {
+
+					if (client.readyState === WebSocket.OPEN) {
+
+						console.log("should send to ", client);
+						client.send(JSON.stringify({
+							messages: [message],
+							userCount: ews.client.size()
+						}));
+					}
+				});
+		});
+
+		ws.on('close', () => {
+
+				//do a broadcast to all existing clients
+				ews.getWss().clients.forEach((client) => {
+
+					if (client.readyState === WebSocket.OPEN) {
+
+						console.log("should send to ", client);
+						client.send(JSON.stringify({
+							messages: messages,
+							userCount: ews.client.size()
+						}));
+					}
+				});
+		});
+	});
+};
+
+
 
 module.exports = {
-    configureWebSocket
-}
+	configureWebSocket
+};
 
