@@ -11,15 +11,37 @@ export class Chat extends React.Component {
         }
     }
 
-    onInputChange = (event) => {
-        
-        this.setState({
-            input: event.target.value
-        }); 
+    componentDidMount() {
+
+        this.socket = new WebSocket("ws://" + window.location.host);
+        this.socket.onmessage = (event => {
+
+            const messageList = JSON.parse(event.data);
+            this.setState(
+                previous => {
+                    return (previous.messages === null ? 
+                        {messages: messageList}: 
+                        {messages: [...previous.messages, ...messageList]}) 
+                }
+            );
+        });
     }
 
-    sendMessage = (event) => {
+    onInputChange = (event) => {
+        
+        const input = event.target.value; 
+        this.setState({input}); 
+    }
 
+    sendMessage = () => {
+        
+        const payload = JSON.stringify({ 
+            username: this.props.username, 
+            text: this.state.input 
+        });
+
+        this.socket.send(payload);
+        this.setState({input: ""});
     }
 
     renderMessages = () => 
@@ -34,7 +56,7 @@ export class Chat extends React.Component {
             <div id="messages">
                 {this.renderMessages()}
             </div>
-            <textarea onChange={this.onInputChange}/>
+            <input type="text" onChange={this.onInputChange}/>
             <button onClick={this.sendMessage}>Send</button>
         </div>
     }
