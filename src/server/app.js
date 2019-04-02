@@ -12,6 +12,10 @@ const path = require('path');
 const { configureAuthentication } = require("./authentication");
 const { configureWebSocket } = require("./websocket");
 
+const { ApolloServer, graphiqlExpress } = require('apollo-server-express');
+const resolvers = require('./graphql/resolvers');
+const typeDefs = require('./graphql/schema');
+
 const dataApi = require("./routes/data-api")
 const authApi = require("./routes/auth-api"); 
 
@@ -34,6 +38,16 @@ app.use(express.static('public'));
 
 configureAuthentication(app);
 configureWebSocket(app);
+
+// configuring graphql
+const apollo = new ApolloServer({
+    typeDefs,
+    resolvers
+});
+apollo.applyMiddleware({
+    app,
+    path: "/graphql"
+});
 
 //--- Routes -----------
 // Routes: 

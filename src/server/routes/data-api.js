@@ -1,16 +1,16 @@
 const express = require('express');
-const database = require("../database/database"); 
+const data = require("../database/data"); 
 const router = express.Router();
 
 router.get("/data", async (req, res) => {
     
-    const data = await database.getAll(); 
+    const data = await data.getAll(); 
     res.send(data); 
 })
 
 router.get("/data/:id", async (req, res) => {
 
-    const data = await database.getAll();
+    const data = await data.getAll();
     const filtered = data.filter(element => 
         element.id === req.param.id
     );

@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/Cellar/node/11.10.0/bin/node /usr/local/Cellar/yarn/1.13.0/libexec/bin/yarn.js add express-es
+  /usr/local/Cellar/node/11.10.0/bin/node /usr/local/Cellar/yarn/1.13.0/libexec/bin/yarn.js add apollo-express-servers
 
 PATH: 
   /usr/local/opt/openssl/bin:/Users/olav/.cargo/bin:/usr/local/bin:/usr/local/mysql/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
@@ -14,7 +14,7 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/express-es: Not found
+  Error: https://registry.yarnpkg.com/apollo-express-servers: Not found
       at Request.params.callback [as _callback] (/usr/local/Cellar/yarn/1.13.0/libexec/lib/cli.js:66255:18)
       at Request.self.callback (/usr/local/Cellar/yarn/1.13.0/libexec/lib/cli.js:129397:22)
       at Request.emit (events.js:197:13)
@@ -44,6 +44,7 @@ npm manifest:
     "dependencies": {
       "express": "^4.16.4",
       "express-session": "^1.15.6",
+      "express-ws": "^4.0.0",
       "load-json-file": "^5.2.0",
       "passport": "^0.4.0",
       "passport-local": "^1.0.0",
@@ -2662,6 +2663,13 @@ Lockfile:
       parseurl "~1.3.2"
       uid-safe "~2.1.5"
       utils-merge "1.0.1"
+  
+  express-ws@^4.0.0:
+    version "4.0.0"
+    resolved "https://registry.yarnpkg.com/express-ws/-/express-ws-4.0.0.tgz#dabd8dc974516418902a41fe6e30ed949b4d36c4"
+    integrity sha512-KEyUw8AwRET2iFjFsI1EJQrJ/fHeGiJtgpYgEWG3yDv4l/To/m3a2GaYfeGyB3lsWdvbesjF5XCMx+SVBgAAYw==
+    dependencies:
+      ws "^5.2.0"
   
   express@^4.16.2, express@^4.16.4:
     version "4.16.4"
