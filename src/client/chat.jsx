@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export class Chat extends React.Component {
 
@@ -52,14 +53,26 @@ export class Chat extends React.Component {
 
     render() {
 
-        return <div id="chat">
-            <h1>Chat</h1>
-            <div id="messages">
-                {this.renderMessages()}
+        const loggedIn = this.props.username !== null;
+
+        if (loggedIn) {
+
+            return <div id="chat">
+                <h1>Chat</h1>
+                <div id="messages">
+                    {this.renderMessages()}
+                </div>
+                <input type="text" onChange={this.onInputChange} />
+                <button onClick={this.sendMessage}>Send</button>
             </div>
-            <input type="text" onChange={this.onInputChange}/>
-            <button onClick={this.sendMessage}>Send</button>
-        </div>
+        } else {
+
+            return <div>
+
+                You must <Link to={"/login"}>log in</Link> to use chat.
+            </div>
+        }
+        
     }
 }
 

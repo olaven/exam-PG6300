@@ -10,8 +10,7 @@ export class Layout extends React.Component {
     }
 
     render() {
-
-        console.log(this.props.history)
+        
         return <div>
             <Header
                 {...this.props}/>   

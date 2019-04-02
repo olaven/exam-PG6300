@@ -47,7 +47,7 @@ export class Signup extends React.Component {
         
         const { username, password, repeatPassword } = this.state;
 
-        console.log
+
         if (repeatPassword !== password) {
             this.setState({ serverErrorMessage: "Passwords do not match" });
             return;
