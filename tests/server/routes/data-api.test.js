@@ -1,15 +1,12 @@
 const request = require('supertest');
 const { app } = require("../../../src/server/app");
 
-let counter = 0;
-
 describe("the data REST-API.", () => {
 
     it("returns data.", async () => {
 
         const response = await request(app)
             .get("/api/data")
-            .set('Content-Type', 'application/json')
 
         expect(response.statusCode).toBe(200);
         expect(response.body.length).toBeGreaterThan(0);
@@ -19,19 +16,68 @@ describe("the data REST-API.", () => {
 
         const response = await request(app)
             .get("/api/data/1")
-            .set('Content-Type', 'application/json')
+            .send()
+
+        const data = response.body
 
         expect(response.statusCode).toBe(200);
-        const data = response.body;
-        expect(data.id).toBe(2); 
+        expect(data.id).toBe(1); 
     });
 
     it("returns 404 on resource not found", async () => {
 
         const response = await request(app)
             .get("/api/data/99999")
-            .set('Content-Type', 'application/json')
+            .send();
+            
 
         expect(response.statusCode).toBe(404);
+    });
+
+    it("returns 400 when id is not a valid number", async () => {
+
+        const response = await request(app)
+            .get("/api/data/notNum")
+            .send()
+
+        expect(response.statusCode).toEqual(400);
+    });
+
+    it("returns filtered by checked is true ", async () => {
+
+        const response = await request(app)
+            .get("/api/data")
+            .query({checked: true})
+            .send()
+
+        expect(response.statusCode).toEqual(200);
+        const data = response.body;
+        data.forEach(element => {
+            expect(element.checked).toBe(true);
+        });
+    });
+
+    it("returns filtered by checked is false ", async () => {
+
+        const response = await request(app)
+            .get("/api/data")
+            .query({checked: false})
+            .send();
+
+        expect(response.statusCode).toEqual(200);
+        const data = response.body;
+        data.forEach(element => {
+            expect(element.checked).toBe(false);
+        });
+    });
+
+    it("returns 400 on invalid checked query", async () => {
+
+        const response = await request(app)
+            .get("/api/data")
+            .query({checked: "invalid"})
+            .send();
+
+        expect(response.statusCode).toEqual(400);
     });
 });

@@ -14,6 +14,7 @@ const app = express();
 const configure = require("./configurations/configure")(app);
 
 //to handle JSON payloads
+console.log("I am adding bodyparser");
 app.use(bodyParser.json());
 
 //needed to server static files, like HTML, CSS and JS.

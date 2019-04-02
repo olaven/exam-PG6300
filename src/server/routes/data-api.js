@@ -1,24 +1,38 @@
 const express = require('express');
-const { getAll, getById } = require("../database/data"); 
+const { getAll, getById, getByChecked } = require("../database/data"); 
 const router = express.Router();
 
-router.get("/data", async (req, res) => {
-    
-    const allData = await getAll(); 
-    res.send(allData); 
-})
+router.get("/data", (req, res) => {
+
+    const checked = req.query.checked;
+    if (checked === "true" || checked === "false") {
+
+        const data = getByChecked(checked);
+        res.status(200).send(data);
+    } else if (checked !== undefined) {
+        //".checked" is specified, but it is not a boolean
+        res.status(400).send();
+        return;
+    }
+
+    const allData = getAll();
+    res.status(200).send(allData);
+});
 
 router.get("/data/:id", async (req, res) => {
 
-    const data = await getById(req.param.id);
+    const id = parseInt(req.params.id);
+    if (isNaN(id)) {
+        res.status(400).send();
+    }
 
+    const data = getById(id);
     if (!data) {
         res.status(404).send();
         return;
     }
 
-    const payload = JSON.stringify(data);
-    res.status(200).send(payload);
+    res.status(200).send(data);
 }); 
 
 module.exports = router; 
