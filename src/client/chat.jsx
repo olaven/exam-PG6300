@@ -27,7 +27,7 @@ export class Chat extends React.Component {
         });
     }
 
-    onInputChange = (event) => {
+    onInputChange = event => {
         
         const input = event.target.value; 
         this.setState({input}); 
@@ -51,6 +51,7 @@ export class Chat extends React.Component {
 
 
     render() {
+
         return <div id="chat">
             <h1>Chat</h1>
             <div id="messages">

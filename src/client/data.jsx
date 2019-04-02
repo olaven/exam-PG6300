@@ -18,6 +18,12 @@ export class Data extends React.Component {
     updateData = async () => {
 
         const response = await fetch("/api/data"); 
+
+        // in case user is not logged in, but still gains access to this site. 
+        if(response.status === 400) {
+            this.props.history.push("/login");
+        }
+
         const data = await response.json(); 
 
         this.setState({

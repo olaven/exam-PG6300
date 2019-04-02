@@ -30,13 +30,6 @@ const configureWebSocket = (app) => {
         */
         ws.on('message', fromClient => {
 
-            /*
-                what we get from client is a string.
-                not only we need to parse it into a JSON object, but
-                also want to add a unique id to it (which we would need
-                if wanted to handle avoiding sending duplicated msgs)
-            */
-
             const dto = JSON.parse(fromClient);
             const id = idCounter++;
             const msg = {
@@ -51,12 +44,7 @@ const configureWebSocket = (app) => {
             //do a broadcast to all existing clients
             ews.getWss().clients.forEach((client) => {
                 if (client.readyState === WebSocket.OPEN) {
-                    /*
-                        even if a single msg, we will have it in a list of size 1.
-                        This does simplify the code on the client, as it does not
-                        need to distinguish between the download of all msgs on connection
-                        and these following broadcasts, i.e., they ll have the same structure.
-                    */
+                
                     client.send(JSON.stringify([msg]));
                 }
             });
