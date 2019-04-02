@@ -1,26 +1,23 @@
 const express = require('express');
-const data = require("../database/data"); 
+const { getAll, getById } = require("../database/data"); 
 const router = express.Router();
 
 router.get("/data", async (req, res) => {
     
-    const data = await data.getAll(); 
-    res.send(data); 
+    const allData = await getAll(); 
+    res.send(allData); 
 })
 
 router.get("/data/:id", async (req, res) => {
 
-    const data = await data.getAll();
-    const filtered = data.filter(element => 
-        element.id === req.param.id
-    );
+    const data = await getById(req.param.id);
 
-    if (filtered.lenght <= 0) {
+    if (!data) {
         res.status(404).send();
         return;
     }
 
-    const payload = JSON.stringify(filtered[0]);
+    const payload = JSON.stringify(data);
     res.status(200).send(payload);
 }); 
 

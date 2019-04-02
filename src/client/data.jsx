@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export class Data extends React.Component {
 
@@ -50,6 +51,7 @@ export class Data extends React.Component {
                     {this.renderRows()}
                 </tbody>
             </table>
+            <Link to={"/data-graphql"}>Go to graphQL version.</Link>
         </div>
     }
 }

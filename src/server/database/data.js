@@ -38,8 +38,10 @@ const insertData = async (data) => {
 }
 
 module.exports = {
-    getAll: getAll, 
-    getById: getById, 
-    getByChecked: getByChecked, 
-    insertData: insertData
+    getAll,
+    getById, 
+    getByChecked,
+    insertData
 }
+
+
