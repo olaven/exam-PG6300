@@ -1,39 +1,48 @@
-const path = require("path"); 
-const loadJsonFile = require("load-json-file"); 
-const writeJsonFile = require("write-json-file"); 
+const data = [
+    {
+        "id": 1,
+        "message": "some message",
+        "checked": false
+    },
+    {
+        "id": 2,
+        "message": "this message is amazing",
+        "checked": true
+    },
+    {
+        "id": 3,
+        "message": "this message is quite cool",
+        "checked": true
+    },
+    {
+        "id": 4,
+        "message": "what a happy message!",
+        "checked": false
+    },
+    {
+        "id": 5,
+        "message": "coffecoding",
+        "checked": true
+    }
+];
 
-const pathToJson = path.resolve(__dirname, "data.json"); 
+const getAll = () => 
+    data
 
-const getAll = async () => {
+const getById = async (id) => 
+    data.filter(item => item.id === id)[0];
 
-    const all = await loadJsonFile(pathToJson);
-    return all; 
-}
+const getByChecked = async (checked) => 
+    data.filter(item => item.checked === checked)
 
-const getById = async (id) => {
-    
-    const all = await getAll(); 
-    const item = all.filter(item => item.id === id)[0]; 
-    
-    return item; 
-}
+const insertData = async (item) => {
 
-const getByChecked = async (checked) => {
-
-    const all = await getAll();
-    const filtered = all.filter(item => item.checked === checked); 
-    
-    return filtered; 
-}
-
-const insertData = async (data) => {
-
-    const exists = await getById(data.id); 
+    const exists = await getById(item.id); 
     if (exists) {
         return false; 
     }
 
-    writeJsonFile(data, pathToJson); 
+    data.push(item);
     return true; 
 }
 

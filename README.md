@@ -7,8 +7,7 @@
 * notes about copying from course repo 
   * Some files are completely copied. Others are copied, and later modified. This is differentiated in the comment. 
   * JSON-format does not support comments. `package.json`is copied from [this file](https://github.com/arcuri82/web_development_and_api_design/blob/master/exercise-solutions/quiz-game/part-10/package.json)
-* dependencies not used in course 
-  * [load-json-file](https://github.com/sindresorhus/load-json-file)
-  * [write-json-file](https://github.com/sindresorhus/write-json-file)
+* dependencies not used in course
+  * ADD with motivation for using
 * on general style 
   * I could have written some functional components. In particular, the components not having state. However, I stuck with class based components for the sake of consistency. 
