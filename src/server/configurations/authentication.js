@@ -3,10 +3,11 @@
  * NOTE: This file is partially copied from: 
  * https: //github.com/arcuri82/web_development_and_api_design/blob/master/exercise-solutions/quiz-game/part-10/src/server/app.js
  */
+const session = require("express-session");
 const LocalStrategy = require('passport-local').Strategy;
 const passport = require('passport');
 
-const Users = require("./database/users")
+const Users = require("../database/users")
 
 passport.use(new LocalStrategy({
         usernameField: 'username',
@@ -49,6 +50,12 @@ passport.deserializeUser(function (username, done) {
 
 const configureAuthentication = (app) => {
     
+    app.use(session({
+        secret: 'a secret used to encrypt the session cookies',
+        resave: false,
+        saveUninitialized: false
+    }));
+
     app.use(passport.initialize());
     app.use(passport.session());
 }

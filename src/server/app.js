@@ -5,49 +5,23 @@
  */
 const express = require('express');
 const bodyParser = require('body-parser');
-const session = require("express-session");
 const path = require('path');
-
-
-const { configureAuthentication } = require("./authentication");
-const { configureWebSocket } = require("./websocket");
-
-const { ApolloServer, graphiqlExpress } = require('apollo-server-express');
-const resolvers = require('./graphql/resolvers');
-const typeDefs = require('./graphql/schema');
 
 const dataApi = require("./routes/data-api")
 const authApi = require("./routes/auth-api"); 
 
 const app = express();
+const configure = require("./configurations/configure")(app);
 
 //to handle JSON payloads
 app.use(bodyParser.json());
 
-
-
-app.use(session({
-    secret: 'a secret used to encrypt the session cookies',
-    resave: false,
-    saveUninitialized: false
-}));
-
-
 //needed to server static files, like HTML, CSS and JS.
 app.use(express.static('public'));
 
-configureAuthentication(app);
-configureWebSocket(app);
-
-// configuring graphql
-const apollo = new ApolloServer({
-    typeDefs,
-    resolvers
-});
-apollo.applyMiddleware({
-    app,
-    path: "/graphql"
-});
+configure.authentication();
+configure.websocket();
+configure.graphQL();
 
 //--- Routes -----------
 // Routes: 

@@ -79,7 +79,7 @@ export class DataGQL extends React.Component {
 
     renderRows = () =>
         
-    this.state.data.map(item =>
+        this.state.data.map(item =>
             <tr key={item.id} className="dataTableRow">
                 <td>{item.id}</td>
                 <td>{item.message}</td>

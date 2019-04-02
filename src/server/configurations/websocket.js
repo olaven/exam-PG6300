@@ -5,8 +5,7 @@
  */
 const WebSocket = require("ws");
 
-const messages = require("./database/messages");
-
+const messages = require("../database/messages");
 
 let idCounter = 0;
 const configureWebSocket = (app) => {
