@@ -3,7 +3,7 @@
  * https://github.com/arcuri82/web_development_and_api_design/blob/ad18f9a63c5b62316abaf0644072434e02860d7b/les11/forum/src/server/schema.js
  */
 
-const { gql } = require('apollo-server-express');
+const { gql } = require("apollo-server-express");
 
 
 /*

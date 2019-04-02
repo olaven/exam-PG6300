@@ -7,15 +7,15 @@ const { configureGraphQL } = require("./graphql");
  */
 module.exports = (app) => {
 
-    return {
-        authentication: () => {
-            configureAuthentication(app);
-        },
-        websocket: () => {
-            configureWebSocket(app);
-        },
-        graphQL: () => {
-            configureGraphQL(app)
-        }
-    }
-}
+	return {
+		authentication: () => {
+			configureAuthentication(app);
+		},
+		websocket: () => {
+			configureWebSocket(app);
+		},
+		graphQL: () => {
+			configureGraphQL(app);
+		}
+	};
+};

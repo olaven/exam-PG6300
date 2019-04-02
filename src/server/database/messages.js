@@ -3,15 +3,15 @@ const database = [];
 
 const getAll = () => {
 
-    return database;
-}
+	return database;
+};
 
 const addMessage = (message) => {
 
-    database.push(message);
-}
+	database.push(message);
+};
 
 module.exports = {
-    getAll, 
-    addMessage
-}
+	getAll, 
+	addMessage
+};
