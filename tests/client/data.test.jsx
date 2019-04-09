@@ -37,6 +37,7 @@ describe("the data page.", () => {
 
         overrideFetch(app); 
         
+        console.log("fetch defined in test: ", (fetch !== undefined));
         const wrapper = mount(<MemoryRouter initialEntries={["/data"]}>
             <Data />
         </MemoryRouter>);

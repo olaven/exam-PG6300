@@ -1,6 +1,7 @@
 const { configureAuthentication } = require("./authentication");
 const { configureWebSocket } = require("./websocket");
 const { configureGraphQL } = require("./graphql");
+const { configureREST } = require("./rest");
 /**
  * This class exposes configurations that 
  * may be applied to the express app.
@@ -14,8 +15,11 @@ module.exports = (app) => {
 		websocket: () => {
 			configureWebSocket(app);
 		},
-		graphQL: () => {
+		graphql: () => {
 			configureGraphQL(app);
+		},
+		rest: () => {
+			configureREST(app);
 		}
 	};
 };

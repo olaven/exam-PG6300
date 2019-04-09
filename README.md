@@ -4,8 +4,10 @@
 
 ## Before delivering: 
 - [ ] assert test coverage 
+- [ ] test alle scritps
 - [ ] assert that no part of exercise is forgotten
 - [ ] test every feature manually 
+- [ ] test the app without internet connection
 - [ ] deploy most recent version to heroku with "git push heroku master" 
 
 
