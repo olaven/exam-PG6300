@@ -4,6 +4,10 @@ const router = express.Router();
 
 router.get("/data", (req, res) => {
 
+	if(!req.user) {
+		res.status(403).send(); 
+	}
+
 	const checked = req.query.checked;
 	if (checked === "true" || checked === "false") {
 
@@ -21,9 +25,14 @@ router.get("/data", (req, res) => {
 
 router.get("/data/:id", async (req, res) => {
 
+	if (!req.user) {
+		res.status(403).send();
+	}
+
 	const id = parseInt(req.params.id);
 	if (isNaN(id)) {
 		res.status(400).send();
+		return;
 	}
 
 	const data = getById(id);
