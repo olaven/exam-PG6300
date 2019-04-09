@@ -22,8 +22,6 @@ export class Data extends React.Component {
         const response = await fetch("/api/data"); 
         const data = await response.json();
 
-        console.log("RETRIEVED: ", data);
-
         this.setState({
             data: data
         }); 
@@ -43,7 +41,7 @@ export class Data extends React.Component {
         const loggedIn = this.props.username !== null; 
 
         if (!loggedIn) {
-            return <div>
+            return <div id="data-error">
                 You must <Link to={"/login"}>log in</Link>
             </div>
         }

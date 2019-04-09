@@ -7,7 +7,7 @@ export class NotFound extends React.Component {
     render() {
         return <div>
             <h1>This page was not found..</h1>
-            <Link to={"/"}>
+            <Link to={"/"} id="notFound-link">
                 <h2>Go home.</h2>
             </Link>
         </div>

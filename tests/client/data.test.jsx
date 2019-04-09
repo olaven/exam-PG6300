@@ -4,16 +4,17 @@ const { mount, shallow } = require("enzyme");
 const request = require("supertest");
 const { Data } = require("../../src/client/data.jsx");
 const { app } = require("../../src/server/app");
-const { overrideFetch, asyncCheckCondition, stubFetch, overrideFetchWithAgent } = require("./mytest-utils");
+const { asyncCheckCondition, overrideFetchWithAgent } = require("./mytest-utils");
 
-beforeAll(async () => {
+const agent = request.agent(app);
+
+beforeEach(async () => {
 
     // I have to login, as the API is protected.
-	const agent = request.agent(app);
 	let response = await agent
 		.post("/api/signup")
 		.send({
-			username: "foo",
+			username: "foo" + Math.random(1000),
 			password: "bar"
 		})
 		.set("Content-Type", "application/json");
@@ -24,27 +25,53 @@ beforeAll(async () => {
 	overrideFetchWithAgent(agent);
 });
 
+
+
 describe("the data page.", () => {
 
 	it("does show something.", () => {
 
 		const wrapper = mount(<MemoryRouter>
 			<Data />
-		</MemoryRouter>) ;
-		const data = wrapper.find("#data");
+		</MemoryRouter>);
+		const data = wrapper.find("#data").get(0);
 
 		expect(data).not.toBeNull();
 	});
 
+	it("shows header when logged in", () => {
+
+		const wrapper = mount(<MemoryRouter>
+			<Data />
+		</MemoryRouter>);
+		const data = wrapper.find("#data-header").get(0);
+
+		expect(data).not.toBeNull();
+	});
+
+	it("shows error when not logged in", async () => {
+
+		const wrapper = mount(<MemoryRouter>
+			<Data username={null} />
+		</MemoryRouter>);
+
+
+		const data = wrapper.find("#data-header").get(0);
+		const error = wrapper.find("#data-error").get(0);
+
+		expect(data).toBeUndefined();
+		expect(error).toBeDefined();
+	});
+
+	// eslint-disable-next-line no-undef
 	it("renders all items from server.", async () => {
 
 		const wrapper = mount(<MemoryRouter initialEntries={["/data"]}>
-			<Data/>
+			<Data />
 		</MemoryRouter>);
 
 		// have to find actual component inside MemoryRouter
 		const dataComponent = wrapper.find(Data);
-
 		await asyncCheckCondition(() => {
 
 			wrapper.update();
