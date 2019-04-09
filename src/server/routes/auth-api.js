@@ -6,13 +6,15 @@
 
 const express = require("express");
 const passport = require("passport");
+
+const { codes } = require("../../shared/http");
 const Users = require("../database/users"); 
 
 const router = express.Router();
 
 router.post("/login", passport.authenticate("local"), (req, res) => {
 
-	res.status(204).send();
+	res.status(codes.NO_CONTENT).send();
 });
 
 router.post("/signup", function (req, res) {
@@ -21,7 +23,7 @@ router.post("/signup", function (req, res) {
 
 	if (!created) {
         
-		res.status(400).send();
+		res.status(codes.BAD_REQUEST).send();
 		return;
 	}
 
@@ -29,9 +31,9 @@ router.post("/signup", function (req, res) {
 		req.session.save((err) => {
 			if (err) {
 				//shouldn't really happen
-				res.status(500).send();
+				res.status(codes.INTERNAL_SERVER_ERROR).send();
 			} else {
-				res.status(201).send();
+				res.status(codes.CREATED).send();
 			}
 		});
 	});
@@ -40,7 +42,7 @@ router.post("/signup", function (req, res) {
 router.post("/logout", function (req, res) {
 
 	req.logout();
-	res.status(204).send();
+	res.status(codes.NO_CONTENT).send();
 });
 
 
@@ -51,11 +53,11 @@ router.post("/logout", function (req, res) {
 router.get("/user", function (req, res) {
 
 	if (!req.user) {
-		res.status(401).send();
+		res.status(codes.UNAUTHORIZED).send();
 		return;
 	}
 
-	res.status(200).json({
+	res.status(codes.OK).json({
 		username: req.user.username
 		//TODO  add other user data 
 	});

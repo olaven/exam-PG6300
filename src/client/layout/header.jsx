@@ -6,6 +6,8 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 
+import { codes } from "../../shared/http";
+
 export default class Header extends React.Component {
 
     constructor(props) {
@@ -25,7 +27,7 @@ export default class Header extends React.Component {
             return;
         }
 
-        if (response.status !== 204) {
+        if (response.status !== codes.NO_CONTENT) {
             alert("Error when connecting to server: status code " + response.status);
             return;
         }

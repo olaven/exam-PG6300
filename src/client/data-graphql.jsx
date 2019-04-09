@@ -6,6 +6,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import { codes } from "../shared/http";
+
 export class DataGQL extends React.Component {
 
     constructor(props) {
@@ -52,7 +54,7 @@ export class DataGQL extends React.Component {
             return;
         }
 
-        if (response.status === 200) {
+        if (response.status === codes.OK) {
 
             if (payload.errors || !payload.data) {
                 
