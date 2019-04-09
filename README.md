@@ -2,10 +2,18 @@
 
 ## About the application
 
+## Before delivering: 
+- [ ] assert test coverage 
+- [ ] assert that no part of exercise is forgotten
+- [ ] test every feature manually 
+- [ ] deploy most recent version to heroku with "git push heroku master" 
+
+
 ## Extras 
 * I have added some CSS in the react components, using "CSS-in-JS"-style, as described [here](https://reactjs.org/docs/dom-elements.html#style). This is done in the [layout-folder](./src/frontend/layout/)
 * To ensure consistent code-style, I have used [ESlint](https://eslint.org). This is also configured as an extra script.
 * Although not required, I have set up Travis to automatically run tests
+* The app is deployed to [Heroku](https://exam-pg6300.herokuapp.com)
 
 ## General notes
 * notes about copying from course repo 
