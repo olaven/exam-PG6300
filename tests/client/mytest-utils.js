@@ -49,6 +49,48 @@ function stubFetch(
     };
 }
 
+
+function overrideFetchWithAgent(agent) {
+
+    global.fetch = async (url, init) => {
+        let response;
+
+        if (!init || !init.method || init.method.toUpperCase() === "GET") {
+            response = await agent.get(url);
+        } else if (init.method.toUpperCase() === "POST") {
+            response = await agent.post(url)
+                .send(init.body)
+                .set('Content-Type', init.headers ? init.headers['Content-Type'] : "application/json");
+        } else if (init.method.toUpperCase() === "PUT") {
+            response = await agent.put(url)
+                .send(init.body)
+                .set('Content-Type', init.headers ? init.headers['Content-Type'] : "application/json");
+        } else if (init.method.toUpperCase() === "DELETE") {
+            response = await agent.delete(url);
+        } else {
+            throw "Unhandled HTTP method: " + init.method;
+        }
+
+        const payload = response.body;
+
+        return new Promise((resolve, reject) => {
+
+            const httpResponse = {
+                status: response.statusCode,
+                json: () => {
+                    return new Promise(
+                        (res, rej) => {
+                            res(payload);
+                        }
+                    )
+                }
+            };
+
+            resolve(httpResponse);
+        });
+    };
+}
+
 /*
     Override fetch() to make calls to the backend using SuperTest
  */
@@ -223,6 +265,7 @@ module.exports = {
     stubFetch,
     flushPromises,
     overrideFetch,
+    overrideFetchWithAgent,
     asyncCheckCondition,
     checkConnectedWS,
     overrideWebSocket

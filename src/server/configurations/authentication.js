@@ -15,8 +15,6 @@ passport.use(new LocalStrategy({
 },
 function (username, password, done) {
 
-	console.log(username, " / ", password);
-
 	const ok = Users.verifyUser(username, password);
 
 	if (!ok) {
