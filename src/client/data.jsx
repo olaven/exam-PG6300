@@ -37,6 +37,15 @@ export class Data extends React.Component {
         ); 
 
     render() {
+
+        const loggedIn = this.props.username !== null; 
+
+        if (!loggedIn) {
+            return <div>
+                You must <Link to={"/login"}>log in</Link>
+            </div>
+        }
+
         return <div id="data">
             <h2>This data is fetched from server</h2>
             <table>

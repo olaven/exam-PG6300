@@ -89,6 +89,14 @@ export class DataGQL extends React.Component {
 
     render() {
 
+        const loggedIn = this.props.username !== null;
+
+        if (!loggedIn) {
+            return <div>
+                You must <Link to={"/login"}>log in</Link>
+            </div>
+        }
+
         if (this.state.errorMessage) {
 
             return <div>
