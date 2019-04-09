@@ -18,8 +18,8 @@ export class Data extends React.Component {
 
     updateData = async () => {
 
+        console.log("fetch inside of component: ", fetch)
         const response = await fetch("/api/data"); 
-
         const data = await response.json(); 
 
         this.setState({

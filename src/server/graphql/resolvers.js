@@ -5,19 +5,25 @@
  * As of now, this graphQL API is just going to mirror 
  * the REST-API in ../routes
  */
+
+const { AuthenticationError } = require('apollo-server-express');
 const data = require("../database/data");
+
 
 module.exports = {
 
 	Query: {
 		getData: (parent, args, context, info) => {
-			return data.getAll();
+            if (context.user) return data.getAll();
+            return new AuthenticationError("Must log in.");
 		},
 		getDataById: (parent, args, context, info) => {
-			return data.getById(args.id);
+            if (context.user) return data.getById(args.id);
+            return new AuthenticationError("Must log in.");
 		},
 		getDataByChecked: (parent, args, context, info) => {
-			return data.getByChecked(args.checked);
+            if (context.user) return data.getByChecked(args.checked);
+            return new AuthenticationError("Must log in.");
 		}
 	},
 

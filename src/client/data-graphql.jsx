@@ -56,12 +56,12 @@ export class DataGQL extends React.Component {
 
             if (payload.errors || !payload.data) {
                 
+                console.log(payload.errors);
                 this.setState({
-                    errorMessage: "ERROR in request", 
+                    errorMessage: payload.errors[0].message || "ERROR IN REQUEST", 
                     data: []
                 });
             } else {
-                
                 this.setState({
                     errorMessage: null, 
                     data: payload.data.getData
@@ -89,7 +89,7 @@ export class DataGQL extends React.Component {
 
     render() {
 
-        if (this.state.errorMessage !== null) {
+        if (this.state.errorMessage) {
 
             return <div>
                 <h2>Error:</h2>

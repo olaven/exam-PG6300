@@ -15,11 +15,14 @@ const { gql } = require("apollo-server-express");
  */
 
 const typeDefs = gql `
-    # A GraphQL API to handle News
+    
+
     type Query{
         
+        authenticationError: String
+        
         #Get all the news
-        getData: [Data!]
+        getData: [Data]
         
         #Get a single data entry, specified by id
         getDataById(id: Int!) : Data
@@ -28,12 +31,12 @@ const typeDefs = gql `
         getDataByChecked(checked: Boolean!): [Data]
     }
 
-    type Mutation{
+    type Mutation {
         createData(id: Int!, message: String!, checked: Boolean!): String
     }
 
 
-    type Data{
+    type Data {
         id: Int
         message: String
         checked: Boolean

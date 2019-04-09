@@ -3,7 +3,7 @@ const { MemoryRouter } = require('react-router-dom');
 const { mount, shallow } = require('enzyme');
 const { Data } = require("../../src/client/data.jsx");
 const { app } = require("../../src/server/app"); 
-const { overrideFetch, asyncCheckCondition } = require("./mytest-utils"); 
+const { overrideFetch, asyncCheckCondition, stubFetch } = require("./mytest-utils"); 
 
 async function waitForData(wrapper) {
 
@@ -36,8 +36,8 @@ describe("the data page.", () => {
     it("renders all items from server.", async () => {
 
         overrideFetch(app); 
-        //console.log("fetch overriden: ", fetch); 
-        const wrapper = mount(<MemoryRouter>
+        
+        const wrapper = mount(<MemoryRouter initialEntries={["/data"]}>
             <Data />
         </MemoryRouter>);
 
@@ -50,5 +50,4 @@ describe("the data page.", () => {
         expect(rows.length).toEqual(data.length); 
         expect(rows.length).toBeGreaterThan(0);
     }); 
-
 });
