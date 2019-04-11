@@ -87,15 +87,19 @@ export class Login extends React.Component {
             <input 
                 type="text"
                 value={this.state.username}
-                onChange={this.usernameChanged}/>
+                onChange={this.usernameChanged}
+                id="usernameInput"/>
 
             <p>Password</p>
             <input
                 type="password"
                 value={this.state.password}
-                onChange={this.passwordChanged} />
+                onChange={this.passwordChanged}
+                id="passwordInput"/>
 
-            <button onClick={this.login}>Login</button>
+            <button 
+                onClick={this.login}
+                id="loginButton">Login</button>
             {errorMessage}
         </div>
     }

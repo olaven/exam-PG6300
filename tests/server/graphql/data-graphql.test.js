@@ -1,7 +1,5 @@
-const request = require('supertest');
-const {
-    app
-} = require("../../../src/server/app");
+const request = require("supertest");
+const { app } = require("../../../src/server/app");
 
 let agent = undefined;
 let counter = 0;
@@ -12,42 +10,42 @@ let counter = 0;
  */
 beforeEach(async () => {
 
-    agent = await request.agent(app);
-    let response = await agent
-        .post('/api/signup')
-        .send({
-            username: ("foo_" + counter++),
-            password: "bar"
-        })
-        .set('Content-Type', 'application/json');
+	agent = await request.agent(app);
+	let response = await agent
+		.post("/api/signup")
+		.send({
+			username: ("foo_" + counter++),
+			password: "bar"
+		})
+		.set("Content-Type", "application/json");
 
-    expect(response.statusCode).toBe(201);
+	expect(response.statusCode).toBe(201);
 });
 
 const sendQuery = async (query) => {
 
-    let response = await agent
-        .post('/graphql')
-        .send({query});
+	let response = await agent
+		.post("/graphql")
+		.send({query});
 
-    return response.body.data;
-}
+	return response.body.data;
+};
 
 const getBodyFromNewCookieJar = async (query) => {
 
-    let response = await request(app)
-        .post('/graphql')
-        .send({query});
+	let response = await request(app)
+		.post("/graphql")
+		.send({query});
 
-    return response.body;
-}
+	return response.body;
+};
 
 
 describe("GraphQL only sending requested data.", () => {
 
-    it("returns data.", async () => {
+	it("returns data.", async () => {
 
-        const data = await sendQuery(`{
+		const data = await sendQuery(`{
                 getData {
                     id,
                     message, 
@@ -55,47 +53,47 @@ describe("GraphQL only sending requested data.", () => {
                 }
             }`);
         
-        expect(data.getData.length).toBeGreaterThan(0);
-    });
+		expect(data.getData.length).toBeGreaterThan(0);
+	});
 
-    it("returns id and message only", async () => {
+	it("returns id and message only", async () => {
 
-        const data = await sendQuery(`{
+		const data = await sendQuery(`{
             getData {
                 id,
                 message
             }
         }`);
         
-        for(let element of data.getData) {
+		for(let element of data.getData) {
 
-            expect(element.id).toBeDefined();
-            expect(element.message).toBeDefined();
-            expect(element.checked).toBeUndefined(); 
-        }
-    });
+			expect(element.id).toBeDefined();
+			expect(element.message).toBeDefined();
+			expect(element.checked).toBeUndefined(); 
+		}
+	});
 
-    it("returns message and checked only", async () => {
+	it("returns message and checked only", async () => {
 
-        const data = await sendQuery(`{
+		const data = await sendQuery(`{
             getData {
                 message, 
                 checked
             }
         }`);
 
-        for (let element of data.getData) {
+		for (let element of data.getData) {
 
-            expect(element.id).toBeUndefined();
-            expect(element.message).toBeDefined();
-            expect(element.checked).toBeDefined();
-        }
-    });
+			expect(element.id).toBeUndefined();
+			expect(element.message).toBeDefined();
+			expect(element.checked).toBeDefined();
+		}
+	});
 
-    it("returns data by id", async () => {
+	it("returns data by id", async () => {
         
-        const id = 1
-        const data = await sendQuery(`{
+		const id = 1;
+		const data = await sendQuery(`{
             getDataById(id: ${id}) {
                 id,
                 message, 
@@ -103,13 +101,13 @@ describe("GraphQL only sending requested data.", () => {
             }
         }`);
 
-        const retrieved = data.getDataById.id
-        expect(retrieved).toEqual(id)
-    });
+		const retrieved = data.getDataById.id;
+		expect(retrieved).toEqual(id);
+	});
 
-    it("Returns correct message when user is not logged in", async () => {
+	it("Returns correct message when user is not logged in", async () => {
 
-        const data = await getBodyFromNewCookieJar(`{
+		const data = await getBodyFromNewCookieJar(`{
             getData {
                 id,
                 message, 
@@ -117,9 +115,9 @@ describe("GraphQL only sending requested data.", () => {
             }
         }`);
 
-        const message = data.errors[0].message;
-        expect(data.errors).toBeDefined();
-        expect(message).toBe("Must log in.");
-    });
+		const message = data.errors[0].message;
+		expect(data.errors).toBeDefined();
+		expect(message).toBe("Must log in.");
+	});
 });
 

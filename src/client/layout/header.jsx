@@ -42,11 +42,11 @@ export default class Header extends React.Component {
         const loggedIn = this.props.username !== null;
         //TODO: different butons based on logged in. Fotter as well.
 
-        return loggedIn ? <div>
+        return loggedIn ? <div id="header">
             <Link to={"/"}>Go home</Link>
             <button onClick={this.logout}>Logout</button>
         </div>:
-        <div>
+            <div id="header">
             <Link to={"/"}>Go home</Link>
             <Link to={"/login"}>Login</Link>
             <Link to={"/signup"}>Sign up</Link>

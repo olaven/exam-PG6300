@@ -76,7 +76,7 @@ export class Signup extends React.Component {
 
 
         if (response.status === 400) {
-            this.setState({ serverErrorMessage: "Invalid userId/password" });
+            this.setState({ serverErrorMessage: "Invalid username/password" });
             return;
         }
 
@@ -116,20 +116,27 @@ export class Signup extends React.Component {
                 <input
                     type="text"
                     value={this.state.username}
-                    onChange={this.usernameChanged} />
+                    onChange={this.usernameChanged}
+                    id="usernameInput" />
                 <p>Password</p>
                 <input
                     type="password"
                     value={this.state.password}
-                    onChange={this.passwordChanged} />
+                    onChange={this.passwordChanged}
+                    id="passwordInput" />
                 <p>Repeat password</p>
                 <input
                     type="password"
                     value={this.state.repeatPassword}
-                    onChange={this.repeatPasswordChanged} />
+                    onChange={this.repeatPasswordChanged}
+                    id="repeatPasswordInput" />
                 {passwordErrorMessge}
 
-                <button onClick={this.signup}>Sign up</button>
+                <button 
+                    onClick={this.signup}
+                    id="signupButton"
+                    >Sign up</button>
+                    
                 {serverError}
             </div>
         </div>

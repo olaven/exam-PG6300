@@ -1,6 +1,5 @@
 
-//TODO replace with json file 
-const database = new Map();
+let database = new Map();
 
 
 const getUser = (username) => {
@@ -33,8 +32,14 @@ const createUser = (username, password) => {
 	return true;
 };
 
+const clearUsers = () => {
+
+	database = new Map();
+};
+
 module.exports = {
 	getUser,
 	verifyUser,
-	createUser
+	createUser, 
+	clearUsers
 };
