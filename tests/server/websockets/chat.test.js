@@ -10,42 +10,55 @@ const { asyncCheckCondition, checkConnectedWS } = require("../../mytest-utils");
 
 let server;
 let port;
-
-const getSocket = () => 
-	new WS("ws://localhost:" + port);
-
-beforeAll(done => {
-
-	server = app.listen(0, () => {
-
-		port = server.address().port;
-		done();
-	});
-});
-
-afterAll(() => {
-
-	server.close();
-});
-
 const sockets = [];
 
+const getSocket = () => new WS("ws://localhost:" + port);
 
-afterEach(() => {
-	/*
-            make sure to manually free the sockets, otherwise might block Jest and the
-            shutting down of Express...
-        */
-	for (let i = 0; i < sockets.length; i++) {
+const connectSocket = async (onMessage, updatedPredicate) => {
 
-		sockets[i].close();
-	}
-	sockets.length = 0;
-});
+	const socket = new WS("ws://localhost:" + port);
+	sockets.push(socket);
+	socket.on("message", onMessage);
+
+	const connected = await checkConnectedWS(socket, 2000);
+	expect(connected).toBe(true);
+
+	const updated = await asyncCheckCondition(() => 
+		updatedPredicate, 2000, 200);
+	expect(updated).toEqual(true);
+
+	return socket; 
+};
 
 describe("The websocket-setup for chat", () => {
 
-	
+
+	beforeAll(done => {
+
+		server = app.listen(0, () => {
+
+			port = server.address().port;
+			done();
+		});
+	});
+
+	afterAll(() => {
+
+		server.close();
+	});
+
+
+	afterEach(() => {
+		/*
+            make sure to manually free the sockets, otherwise might block Jest and the
+            shutting down of Express...
+        */
+		for (let i = 0; i < sockets.length; i++) {
+
+			sockets[i].close();
+		}
+		sockets.length = 0;
+	});
 
 	it("updates count when a user connects", async () => {
 
@@ -76,21 +89,14 @@ describe("The websocket-setup for chat", () => {
 
 		for(let i = 0; i < n; i++) {
 
-			//register a client using WS
-			const socket = getSocket();
-			sockets.push(socket);
-
-			let updated = false;
-			socket.on("message", data => {
-				counts[i] = JSON.parse(data).userCount;
-				updated = true; 
-			});
-
-			let connected = await checkConnectedWS(socket, 2000);
-			expect(connected).toBe(true);
-
-			await asyncCheckCondition(() => updated, 2000, 200);
-			expect(updated).toEqual(true);	
+			let updated = false; 
+			connectSocket(
+				data => {
+					updated = true;
+					counts[i] = JSON.parse(data).userCount;
+				},
+				() => updated
+			);
 		}
 		
 		await asyncCheckCondition(() => false, 2000, 1000);
@@ -102,6 +108,30 @@ describe("The websocket-setup for chat", () => {
     
 	it("decrements userCount on disconnect", async () => {
 
-		expect(true).toBe(false);
+		let recordedCount;
+
+		const initial = 5; 
+		for(let i = 0; i < initial; i++) {
+			
+			let updated = false;
+			connectSocket(
+				data => {
+					recordedCount = JSON.parse(data).userCount;
+					updated = true;
+				},
+				() => updated
+			);
+		}
+
+		await asyncCheckCondition(() => false, 2000, 1000);
+
+		const decrement = 2; 
+		for (let i = 0; i < decrement; i++) {
+			sockets[i].terminate();
+		}
+
+	
+		await asyncCheckCondition(() => false, 2000, 1000);
+		expect(recordedCount).toEqual(initial - decrement);
 	});
 });
