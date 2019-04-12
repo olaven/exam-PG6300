@@ -9,7 +9,6 @@ const messages = require("../database/messages");
 
 let idCounter = 0;
 
-
 //TODO: REFACTOR ALL THE DUPLICATION
 const chat = (ews) => {
  
@@ -43,6 +42,7 @@ const chat = (ews) => {
 
 const broadcast = (ews, messages) => {
 
+	console.log(ews.getWss().clients.size);
 	const userCount = ews.getWss().clients.size;
 
 	ews.getWss().clients.forEach((client) => {
