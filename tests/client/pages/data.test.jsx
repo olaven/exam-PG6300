@@ -1,10 +1,11 @@
 const React = require("react");
 const { MemoryRouter } = require("react-router-dom");
-const { mount, shallow } = require("enzyme");
+const { mount } = require("enzyme");
 const request = require("supertest");
-const { Data } = require("../../src/client/data.jsx");
-const { app } = require("../../src/server/app");
-const { asyncCheckCondition, overrideFetchWithAgent } = require("./mytest-utils");
+
+const { Data } = require("../../../src/client/pages/data.jsx");
+const { app } = require("../../../src/server/app");
+const { asyncCheckCondition, overrideFetchWithAgent } = require("../mytest-utils");
 
 const agent = request.agent(app);
 

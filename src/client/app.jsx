@@ -5,14 +5,13 @@
  */
 
 import React from "react";
-import ReactDOM from "react-dom";
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-import { Home } from "./home.jsx";
-import { Data } from "./data.jsx";
-import { DataGQL } from "./data-graphql.jsx";
-import { Chat } from "./chat";
-import { NotFound } from "./notFound.jsx"
+import { Home } from "./pages/home.jsx";
+import { Data } from "./pages/data.jsx";
+import { DataGQL } from "./pages/data-graphql.jsx";
+import { Chat } from "./pages/chat";
+import { NotFound } from "./pages/notFound.jsx"
 import { Signup } from "./authentication/signup.jsx";
 import { Login } from "./authentication/login.jsx";
 import { Layout } from "./layout/layout.jsx";

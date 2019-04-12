@@ -1,13 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import { codes } from "../../shared/http";
+
 export class Data extends React.Component {
 
     constructor(props) {
         
         super(props)
         this.state = {
-            data: []
+            data: [], 
+            errorMessage: null 
         }
     }
 
@@ -20,10 +23,18 @@ export class Data extends React.Component {
 
 
         const response = await fetch("/api/data"); 
-        const data = await response.json();
 
+        if (response.status !== codes.OK) {
+            this.setState ({
+                errorMessage: "An error occured: " + response.status
+            });
+            return; 
+        }
+
+        const data = await response.json();
         this.setState({
-            data: data
+            data, 
+            errorMessage: null
         }); 
     };
 
@@ -41,8 +52,18 @@ export class Data extends React.Component {
         const loggedIn = this.props.username !== null; 
 
         if (!loggedIn) {
+            
             return <div id="data-error">
                 You must <Link to={"/login"}>log in</Link>
+            </div>
+        }
+
+        const error = this.state.errorMessage !== null 
+        if (error) {
+
+            return <div>
+                An error occured fetching from the server. <br/>
+                {this.state.errorMessage}
             </div>
         }
 

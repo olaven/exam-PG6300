@@ -1,6 +1,7 @@
 const React = require("react");
 const { shallow } = require("enzyme");
-const { Home } = require("../../src/client/home.jsx");
+
+const { Home } = require("../../../src/client/pages/home.jsx");
 
 const getHome = (props) => {
 

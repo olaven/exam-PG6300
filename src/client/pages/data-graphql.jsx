@@ -6,7 +6,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { codes } from "../shared/http";
+import { codes } from "../../shared/http";
 
 export class DataGQL extends React.Component {
 
