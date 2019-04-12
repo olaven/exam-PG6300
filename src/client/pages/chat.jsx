@@ -1,6 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+
+//TODO: THIS SHOULD USE THE NEW ROUTES /chat and /usercount for ws
+//TODO: Also consider having usercount in header at all times, not in chat
 export class Chat extends React.Component {
 
     constructor(props) {
@@ -8,14 +11,13 @@ export class Chat extends React.Component {
         super(props)
         this.state = {
             input: "",
-            messages: [],
-            userCount: 0
+            messages: []
         }
     }
 
     componentDidMount() {
 
-        this.socket = new WebSocket("ws://" + window.location.host);
+        this.socket = new WebSocket("ws://" + window.location.host + "/chat");
         this.socket.onmessage = (event => {
 
             const data = JSON.parse(event.data);
@@ -26,10 +28,6 @@ export class Chat extends React.Component {
                         {messages: [...previous.messages, ...data.messages]}) 
                 }
             );
-
-            this.setState({
-                userCount: data.userCount
-            });
         });
     }
 
@@ -65,7 +63,7 @@ export class Chat extends React.Component {
         if (loggedIn) {
 
             return <div id="chat">
-                <h1>Chat - {this.state.userCount} users online.</h1>
+                <h1>Chat</h1>
                 <div id="messages">
                     {this.renderMessages()}
                 </div>

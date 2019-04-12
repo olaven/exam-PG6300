@@ -4,26 +4,24 @@
  * * https: //github.com/arcuri82/web_development_and_api_design/blob/master/exercise-solutions/quiz-game/part-09/src/server/ws-handler.js
  */
 const { broadcast } = require("./ws-util");
-let ews; 
-const usercount = (e) => {
 
-	ews = e;
+const usercount = (ews) => {
+
 	return (ws, req) => {
 		
-		broadcastUserCount();
+		broadcastUserCount(ews);
 
 		ws.on("close", () => {
 			
-			broadcastUserCount();
+			broadcastUserCount(ews);
 		});
 	};
 };
 
-const broadcastUserCount = () => {
+const broadcastUserCount = (ews) => {
 
 	// broadcast to all connected clients
 	const clients = ews.getWss().clients;
-    
 	broadcast(clients, { userCount: clients.size });
 };
 
