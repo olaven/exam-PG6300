@@ -166,6 +166,8 @@ function recursiveTimeoutCheck(predicate, totalTimeMS, intervalMS, start, resolv
 	}
 }
 
+
+
 /*
     Tricky: even when simulating a click, we are still on a single thread.
     So, not all Promises in the component might have been resolved.

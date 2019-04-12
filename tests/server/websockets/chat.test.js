@@ -14,37 +14,38 @@ let port;
 const getSocket = () => 
 	new WS("ws://localhost:" + port);
 
+beforeAll(done => {
 
-describe("The websocket-setup for chat", () => {
+	server = app.listen(0, () => {
 
-	beforeAll(done => {
-
-		server = app.listen(0, () => {
-
-			port = server.address().port;
-			done();
-		});
+		port = server.address().port;
+		done();
 	});
+});
 
-	afterAll(() => {
+afterAll(() => {
 
-		server.close();
-	});
-    
-	const sockets = [];
+	server.close();
+});
+
+const sockets = [];
 
 
-	afterEach(() => {
-		/*
+afterEach(() => {
+	/*
             make sure to manually free the sockets, otherwise might block Jest and the
             shutting down of Express...
         */
-		for (let i = 0; i < sockets.length; i++) {
-            
-			sockets[i].close();
-		}
-		sockets.length = 0;
-	});
+	for (let i = 0; i < sockets.length; i++) {
+
+		sockets[i].close();
+	}
+	sockets.length = 0;
+});
+
+describe("The websocket-setup for chat", () => {
+
+	
 
 	it("updates count when a user connects", async () => {
 
@@ -91,7 +92,9 @@ describe("The websocket-setup for chat", () => {
 			await asyncCheckCondition(() => updated, 2000, 200);
 			expect(updated).toEqual(true);	
 		}
-        
+		
+		await asyncCheckCondition(() => false, 2000, 1000);
+		
 		for (let count of counts) {
 			expect(count).toBe(n);
 		}
