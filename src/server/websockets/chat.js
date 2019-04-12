@@ -6,6 +6,7 @@
 
 const WebSocket = require("ws");
 const messages = require("../database/messages");
+const { broadcast } = require("./ws-util");
 
 let idCounter = 0;
 
@@ -15,11 +16,11 @@ const chat = (ews) => {
 	return (ws, req) => {
 
 		// update existing 
-		broadcast(ews, messages.getAll());
+		broadcastMessages(ews, messages.getAll());
 
 		ws.on("close", () => {
 			//do a broadcast to all existing clients
-			broadcast(ews, messages.getAll());
+			broadcastMessages(ews, messages.getAll());
 		});
 
 		ws.on("message", fromClient => {
@@ -35,24 +36,15 @@ const chat = (ews) => {
 			//add to our current local store
 			messages.addMessage(message);
 			//do a broadcast to all existing clients
-			broadcast(ews, [message]);
+			broadcastMessages(ews, [message]);
 		});
 	};
 };
 
-const broadcast = (ews, messages) => {
+const broadcastMessages = (ews, messages) => {
 
-	console.log(ews.getWss().clients.size);
-	const userCount = ews.getWss().clients.size;
-
-	ews.getWss().clients.forEach((client) => {
-		if (client.readyState === WebSocket.OPEN) {
-
-			client.send(JSON.stringify({
-				messages, userCount
-			}));
-		}
-	});
+	const clients = ews.getWss().client;
+	broadcast(clients, { messages });
 };
 
 module.exports = {
