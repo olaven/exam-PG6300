@@ -2,9 +2,7 @@ const React = require("react");
 const { MemoryRouter} = require("react-router-dom");
 const { mount } = require("enzyme");
 
-
 const { NotFound } = require("../../../src/client/pages/notFound.jsx");
-const { Home } = require("../../../src/client/pages/home.jsx");
 
 
 
