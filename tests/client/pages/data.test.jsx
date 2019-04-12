@@ -5,7 +5,7 @@ const request = require("supertest");
 
 const { Data } = require("../../../src/client/pages/data.jsx");
 const { app } = require("../../../src/server/app");
-const { asyncCheckCondition, overrideFetchWithAgent } = require("../mytest-utils");
+const { asyncCheckCondition, overrideFetchWithAgent } = require("../../mytest-utils");
 
 const agent = request.agent(app);
 

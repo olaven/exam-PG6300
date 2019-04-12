@@ -7,7 +7,7 @@ const React = require("react");
 const { mount } = require("enzyme");
 const { MemoryRouter } = require("react-router-dom");
 
-const { overrideFetch, asyncCheckCondition } = require("../mytest-utils");
+const { overrideFetch, asyncCheckCondition } = require("../../mytest-utils");
 const { app } = require("../../../src/server/app");
 const { Login } = require("../../../src/client/authentication/login");
 const { clearUsers, createUser } = require("../../../src/server/database/users");

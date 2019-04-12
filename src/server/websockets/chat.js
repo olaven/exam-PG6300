@@ -10,38 +10,19 @@ const messages = require("../database/messages");
 let idCounter = 0;
 
 
+//TODO: REFACTOR ALL THE DUPLICATION
 const chat = (ews) => {
  
 	return (ws, req) => {
 
-		/*
-            new connection, send all existing messages.
-            TODO: this would not handle the case of a client that already
-            had the data from previous connection, and started a new one (will get duplicates)
-        */
-		const allMessages = messages.getAll();
-		ws.send(JSON.stringify({
-			messages: allMessages,
-			userCount: ews.getWss().clients.size
-		}));
+		// update existing 
+		broadcast(ews, messages.getAll());
 
 		ws.on("close", () => {
 			//do a broadcast to all existing clients
-			ews.getWss().clients.forEach((client) => {
-				if (client.readyState === WebSocket.OPEN) {
-
-					client.send(JSON.stringify({
-						messages: messages.getAll(),
-						userCount: ews.getWss().clients.size
-					}));
-				}
-			});
+			broadcast(ews, messages.getAll());
 		});
 
-		/*
-            Here, we register a callback, which is going to be executed every time a client
-            does a send() to the server
-        */
 		ws.on("message", fromClient => {
 
 			const dto = JSON.parse(fromClient);
@@ -51,22 +32,27 @@ const chat = (ews) => {
 				username: dto.message.username,
 				text: dto.message.text
 			};
-
+			
 			//add to our current local store
 			messages.addMessage(message);
-
 			//do a broadcast to all existing clients
-			ews.getWss().clients.forEach((client) => {
-				if (client.readyState === WebSocket.OPEN) {
-
-					client.send(JSON.stringify({
-						messages: [message],
-						userCount: ews.getWss().clients.size
-					}));
-				}
-			});
+			broadcast(ews, [message]);
 		});
 	};
+};
+
+const broadcast = (ews, messages) => {
+
+	const userCount = ews.getWss().clients.size;
+
+	ews.getWss().clients.forEach((client) => {
+		if (client.readyState === WebSocket.OPEN) {
+
+			client.send(JSON.stringify({
+				messages, userCount
+			}));
+		}
+	});
 };
 
 module.exports = {
