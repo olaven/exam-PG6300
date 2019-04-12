@@ -13,6 +13,22 @@ export default class Header extends React.Component {
     constructor(props) {
 
         super(props);
+        this.state = {
+            userCount: 0
+        }
+    }
+
+    componentDidMount() {
+
+        this.userSocket = new WebSocket("ws://" + window.location.host + "/usercount");
+        this.userSocket.onmessage = event => {
+            console.log(this.userSocket);
+            console.log(event.data);
+            const userCount = JSON.parse(event.data).userCount;
+            this.setState({
+                userCount
+            });
+        }
     }
 
     logout = async () => {
@@ -50,6 +66,9 @@ export default class Header extends React.Component {
             <Link to={"/"}>Go home</Link>
             <Link to={"/login"}>Login</Link>
             <Link to={"/signup"}>Sign up</Link>
+            <div>
+                Users online: {this.state.userCount}
+            </div>
         </div>
     }
 }
