@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Table } from "reactstrap";
 
 import { codes } from "../../shared/http";
 
@@ -69,7 +70,7 @@ export class Data extends React.Component {
 
         return <div id="data">
             <h2>This data is fetched from server</h2>
-            <table>
+            <Table>
                 <thead>
                     <tr>
                         <th>id</th>
@@ -80,7 +81,7 @@ export class Data extends React.Component {
                 <tbody>
                     {this.renderRows()}
                 </tbody>
-            </table>
+            </Table>
             <Link to={"/data-graphql"}>Go to graphQL version.</Link>
         </div>
     }

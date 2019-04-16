@@ -5,6 +5,7 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
+import { Table } from "reactstrap";
 
 import { codes } from "../../shared/http";
 
@@ -109,7 +110,7 @@ export class DataGQL extends React.Component {
 
         return <div id="data">
             <h2>This data is fetched from server</h2>
-            <table>
+            <Table>
                 <thead>
                     <tr>
                         <th>id</th>
@@ -120,7 +121,7 @@ export class DataGQL extends React.Component {
                 <tbody>
                     {this.renderRows()}
                 </tbody>
-            </table>
+            </Table>
             <Link to={"/data"}>Go to rest version</Link>
         </div>
     }

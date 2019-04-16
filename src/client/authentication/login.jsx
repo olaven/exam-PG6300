@@ -4,7 +4,7 @@
  */
 
 import React from "react";
-import { Button } from 'reactstrap';
+import { Button, Input } from 'reactstrap';
 
 export class Login extends React.Component {
 
@@ -83,25 +83,26 @@ export class Login extends React.Component {
 
         return <div>
             <h1>login</h1>
-            
-            <p>Username</p>
-            <input 
+            <Input 
                 type="text"
                 value={this.state.username}
                 onChange={this.usernameChanged}
+                placeholder="username"
                 id="usernameInput"/>
-
-            <p>Password</p>
-            <input
+            <Input
                 type="password"
                 value={this.state.password}
                 onChange={this.passwordChanged}
+                placeholder="password"
                 id="passwordInput"/>
 
             <Button 
-                color="danger"
+                color="primary"
                 onClick={this.login}
-                id="loginButton">Login</Button>
+                id="loginButton">
+                Login
+            </Button>
+            
             {errorMessage}
         </div>
     }

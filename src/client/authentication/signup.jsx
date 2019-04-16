@@ -4,6 +4,7 @@
  */
 
 import React from "react";
+import { Input, Button } from "reactstrap"
 
 export class Signup extends React.Component {
 
@@ -112,30 +113,32 @@ export class Signup extends React.Component {
         return <div>
             <h1>Signup</h1>
             <div>
-                <p>Username</p>
-                <input
+                <Input
                     type="text"
                     value={this.state.username}
                     onChange={this.usernameChanged}
+                    placeholder="username"
                     id="usernameInput" />
-                <p>Password</p>
-                <input
+                <Input
                     type="password"
                     value={this.state.password}
                     onChange={this.passwordChanged}
+                    placeholder="password"
                     id="passwordInput" />
-                <p>Repeat password</p>
-                <input
+                <Input
                     type="password"
                     value={this.state.repeatPassword}
                     onChange={this.repeatPasswordChanged}
+                    placeholder="repeat password"
                     id="repeatPasswordInput" />
                 {passwordErrorMessge}
 
-                <button 
+                <Button 
+                    color="primary"
                     onClick={this.signup}
-                    id="signupButton"
-                    >Sign up</button>
+                    id="signupButton">
+                    Sign up
+                </Button>
                     
                 {serverError}
             </div>

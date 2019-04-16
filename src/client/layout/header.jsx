@@ -5,6 +5,7 @@
  */
 import React from "react";
 import { Link } from 'react-router-dom';
+import { Button, NavLink,  Nav, Navbar, NavItem, NavbarBrand } from "reactstrap";
 
 import { codes } from "../../shared/http";
 
@@ -55,22 +56,33 @@ export default class Header extends React.Component {
         this.props.history.push("/");
     };
 
+    renderLoggedIn = () => <div>
+        <Link to={"/"}>Go home</Link>
+        <Button
+            color="warning"
+            onClick={this.logout}>
+            Logout
+        </Button>
+    </div>
+
+    renderLoggedOut = () => <div>
+        <Link to={"/"}>Go home</Link>
+        <Link to={"/login"}>Login</Link>
+        <Link to={"/signup"}>Sign up</Link>
+    </div>
+
     render() {
 
         const loggedIn = this.props.username !== null;
-        //TODO: different butons based on logged in. Fotter as well.
 
-        return loggedIn ? <div id="header">
-            <Link to={"/"}>Go home</Link>
-            <button onClick={this.logout}>Logout</button>
-        </div>:
-            <div id="header">
-            <Link to={"/"}>Go home</Link>
-            <Link to={"/login"}>Login</Link>
-            <Link to={"/signup"}>Sign up</Link>
-            <div>
+        return <Navbar>
+            <NavbarBrand>Project title</NavbarBrand>
+            {loggedIn ? this.renderLoggedIn(): this.renderLoggedOut()}
+
+            <NavItem>
                 Users online: {this.state.userCount}
-            </div>
-        </div>
+            </NavItem>
+        </Navbar>
+
     }
 }
