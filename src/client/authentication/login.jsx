@@ -4,6 +4,7 @@
  */
 
 import React from "react";
+import { Button } from 'reactstrap';
 
 export class Login extends React.Component {
 
@@ -97,9 +98,10 @@ export class Login extends React.Component {
                 onChange={this.passwordChanged}
                 id="passwordInput"/>
 
-            <button 
+            <Button 
+                color="danger"
                 onClick={this.login}
-                id="loginButton">Login</button>
+                id="loginButton">Login</Button>
             {errorMessage}
         </div>
     }

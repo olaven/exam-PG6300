@@ -74,9 +74,3 @@ export default class Header extends React.Component {
         </div>
     }
 }
-
-const style = {
-    "width": "100vw", 
-    "textAlign": "center", 
-    "top": "0"
-}

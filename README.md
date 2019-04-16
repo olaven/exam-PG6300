@@ -12,7 +12,7 @@
 
 
 ## Extras 
-* I have added some CSS in the react components, using "CSS-in-JS"-style, as described [here](https://reactjs.org/docs/dom-elements.html#style). This is done in the [layout-folder](./src/frontend/layout/)
+* I have added styling with [Reactstrap](https://reactstrap.github.io). This required adding css-loaders to `webpack.config.js`. 
 * To ensure consistent code-style, I have used [ESlint](https://eslint.org). This is also configured as an extra script.
 * Although not required, I have set up Travis to automatically run tests
 * The app is deployed to [Heroku](https://exam-pg6300.herokuapp.com)
