@@ -58,6 +58,7 @@ export class Chat extends React.Component {
 
     render() {
 
+        console.log("The username in component: ", this.props.username);
         const loggedIn = this.props.username !== null;
 
         if (loggedIn) {
@@ -67,8 +68,8 @@ export class Chat extends React.Component {
                 <div id="messages">
                     {this.renderMessages()}
                 </div>
-                <input type="text" onChange={this.onInputChange} value={this.state.input} />
-                <button onClick={this.sendMessage}>Send</button>
+                <input id="chat-input" type="text" onChange={this.onInputChange} value={this.state.input} />
+                <button id="chat-button" onClick={this.sendMessage}>Send</button>
             </div>
         } else {
 

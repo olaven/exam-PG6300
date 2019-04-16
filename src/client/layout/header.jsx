@@ -28,6 +28,9 @@ export default class Header extends React.Component {
                 userCount
             });
         }
+        this.userSocket.onerror = error => {
+            console.error("Websocket error: ", error)
+        }
     }
 
     logout = async () => {

@@ -7,14 +7,13 @@ const React = require("react");
 const { mount } = require("enzyme");
 const { MemoryRouter } = require("react-router-dom");
 
-const { overrideFetch, asyncCheckCondition } = require("../../mytest-utils");
+const { overrideFetch, overrideWebSocket, asyncCheckCondition } = require("../../mytest-utils");
 const { app } = require("../../../src/server/app");
 
 const { Signup } = require("../../../src/client/authentication/signup");
 const { clearUsers, getUser, createUser } = require("../../../src/server/database/users");
 
 
-beforeEach(clearUsers);
 
 
 const fillForm = (wrapper, username, password, repeatPassword) => {
@@ -34,13 +33,16 @@ const fillForm = (wrapper, username, password, repeatPassword) => {
 
 describe("The signup-page", () => {
 
+	beforeAll(() => {
+		overrideWebSocket();
+		overrideFetch(app);
+	});
+
+	beforeEach(clearUsers);
 
 	it("gives error when passwords are unequal", async () => {
 
 		const mismatch = "Passwords do not match";
-
-		overrideFetch(app);
-
 		const wrapper = mount(
 			<MemoryRouter initialEntries={["/signup"]}>
 				<Signup />
@@ -63,8 +65,6 @@ describe("The signup-page", () => {
 
 		const username = "Foo";
 		expect(getUser(username)).toEqual(undefined);
-
-		overrideFetch(app);
 
 		const updateLoggedInUser = () => new Promise(resolve => resolve());
 		let page = null;
@@ -96,9 +96,7 @@ describe("The signup-page", () => {
 		const username = "Foo";
 		const password = "123";
 		createUser(username, password);
-
-		overrideFetch(app);
-
+		
 		const updateLoggedInUser = () => new Promise(resolve => resolve());
 		let page = null;
 		const history = { push: (h) => { page = h; } };

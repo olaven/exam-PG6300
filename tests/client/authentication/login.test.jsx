@@ -13,8 +13,6 @@ const { Login } = require("../../../src/client/authentication/login");
 const { clearUsers, createUser } = require("../../../src/server/database/users");
 
 
-beforeEach(clearUsers);
-
 const fillForm = (wrapper, username, password) => {
 
 	const usernameInput = wrapper.find("#usernameInput").at(0);
@@ -31,8 +29,11 @@ const fillForm = (wrapper, username, password) => {
 describe("The login page", () => {
 
 	beforeAll(() => {
+		
 		overrideFetch(app);
 	});
+
+	beforeEach(clearUsers);
 
 	it("fails to login on invalid input", async () => {
 
