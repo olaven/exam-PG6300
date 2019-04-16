@@ -16,8 +16,8 @@ describe("the not-found page.", () => {
 
 	beforeAll(() => {
 
-		overrideWebSocket()
-	})
+		overrideWebSocket();
+	});
 
 	it("has link to home", () => {
         

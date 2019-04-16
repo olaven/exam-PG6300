@@ -29,15 +29,13 @@ const fillForm = (wrapper, username, password, repeatPassword) => {
 	repeatPasswordInput.simulate("change", { target: { value: repeatPassword } });
 
 	signupButton.simulate("click");
-}
+};
 
 describe("The signup-page", () => {
 
 	beforeAll(() => {
-		overrideWebSocket();
 		overrideFetch(app);
 	});
-
 	beforeEach(clearUsers);
 
 	it("gives error when passwords are unequal", async () => {
@@ -110,7 +108,9 @@ describe("The signup-page", () => {
 		fillForm(wrapper, username, password, password);
 
 		const failed = await asyncCheckCondition(
-			() => { wrapper.update(); return wrapper.html().includes("Invalid username/password"); },
+			() => {
+				wrapper.update();
+				return wrapper.html().includes("Invalid username/password"); },
 			2000, 200);
 
 		expect(failed).toEqual(true);

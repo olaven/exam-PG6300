@@ -25,21 +25,21 @@ export class Signup extends React.Component {
         this.setState({
             username: event.target.value
         });
-    }
+    };
 
     passwordChanged = (event) => {
 
         this.setState({
             password: event.target.value
         });
-    }
+    };
 
     repeatPasswordChanged = (event) => {
 
         this.setState({
             repeatPassword: event.target.value
         });
-    }
+    };
 
     passwordsAreEqual = () => 
         this.state.password === this.state.repeatPassword;
@@ -92,7 +92,7 @@ export class Signup extends React.Component {
         this.setState({ serverErrorMessage: null });
         this.props.updateLoggedInUser(username);
         this.props.history.push("/");
-    }
+    };
 
     render() {
 

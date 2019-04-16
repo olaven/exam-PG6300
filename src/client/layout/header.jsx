@@ -75,7 +75,7 @@ export default class Header extends React.Component {
 
         const loggedIn = this.props.username !== null;
 
-        return <Navbar>
+        return <Navbar id="header">
             <NavbarBrand>Project title</NavbarBrand>
             {loggedIn ? this.renderLoggedIn(): this.renderLoggedOut()}
 

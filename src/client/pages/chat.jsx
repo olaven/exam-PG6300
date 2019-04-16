@@ -2,8 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 
-//TODO: THIS SHOULD USE THE NEW ROUTES /chat and /usercount for ws
-//TODO: Also consider having usercount in header at all times, not in chat
 export class Chat extends React.Component {
 
     constructor(props) {
