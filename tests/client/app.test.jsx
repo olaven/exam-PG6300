@@ -1,9 +1,13 @@
 const React = require("react");
 const { mount } = require("enzyme");
 const { App } = require("../../src/client/app.jsx");
+const { overrideWebSocket } = require("../mytest-utils");
+
 
 
 describe("The app page", () => {
+
+	overrideWebSocket();
 
 	it("renders something", () => {
 

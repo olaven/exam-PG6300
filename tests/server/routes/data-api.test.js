@@ -1,4 +1,4 @@
-const request = require('supertest');
+const request = require("supertest");
 const { app } = require("../../../src/server/app");
 
 let agent = undefined; 
@@ -10,104 +10,104 @@ let counter = 0;
  */
 beforeEach(async () => {
 
-    agent = await request.agent(app);
-    let response = await agent
-        .post('/api/signup')
-        .send({
-            username: ("foo_" + counter++),
-            password: "bar"
-        })
-        .set('Content-Type', 'application/json');
+	agent = await request.agent(app);
+	let response = await agent
+		.post("/api/signup")
+		.send({
+			username: ("foo_" + counter++),
+			password: "bar"
+		})
+		.set("Content-Type", "application/json");
 
-    expect(response.statusCode).toBe(201);
+	expect(response.statusCode).toBe(201);
 });
 
 
 describe("the data REST-API.", () => {
 
-    it("returns data.", async () => {
+	it("returns data.", async () => {
 
-        const response = await agent
-            .get("/api/data")
+		const response = await agent
+			.get("/api/data");
 
-        expect(response.statusCode).toBe(200);
-        expect(response.body.length).toBeGreaterThan(0);
-    });
+		expect(response.statusCode).toBe(200);
+		expect(response.body.length).toBeGreaterThan(0);
+	});
 
-    it("returns by id", async () => {
+	it("returns by id", async () => {
 
-        const response = await agent
-            .get("/api/data/1")
-            .send()
+		const response = await agent
+			.get("/api/data/1")
+			.send();
 
-        const data = response.body
+		const data = response.body;
 
-        expect(response.statusCode).toBe(200);
-        expect(data.id).toBe(1); 
-    });
+		expect(response.statusCode).toBe(200);
+		expect(data.id).toBe(1); 
+	});
 
-    it("returns 404 on resource not found", async () => {
+	it("returns 404 on resource not found", async () => {
 
-        const response = await agent
-            .get("/api/data/99999")
-            .send();
+		const response = await agent
+			.get("/api/data/99999")
+			.send();
             
 
-        expect(response.statusCode).toBe(404);
-    });
+		expect(response.statusCode).toBe(404);
+	});
 
-    it("returns 400 when id is not a valid number", async () => {
+	it("returns 400 when id is not a valid number", async () => {
 
-        const response = await agent
-            .get("/api/data/notNum")
-            .send()
+		const response = await agent
+			.get("/api/data/notNum")
+			.send();
 
-        expect(response.statusCode).toEqual(400);
-    });
+		expect(response.statusCode).toEqual(400);
+	});
 
-    it("returns filtered by checked is true ", async () => {
+	it("returns filtered by checked is true ", async () => {
 
-        const response = await agent
-            .get("/api/data")
-            .query({checked: true})
-            .send()
+		const response = await agent
+			.get("/api/data")
+			.query({checked: true})
+			.send();
 
-        expect(response.statusCode).toEqual(200);
-        const data = response.body;
-        data.forEach(element => {
-            expect(element.checked).toBe(true);
-        });
-    });
+		expect(response.statusCode).toEqual(200);
+		const data = response.body;
+		data.forEach(element => {
+			expect(element.checked).toBe(true);
+		});
+	});
 
-    it("returns filtered by checked is false ", async () => {
+	it("returns filtered by checked is false ", async () => {
 
-        const response = await agent
-            .get("/api/data")
-            .query({checked: false})
-            .send();
+		const response = await agent
+			.get("/api/data")
+			.query({checked: false})
+			.send();
 
-        expect(response.statusCode).toEqual(200);
-        const data = response.body;
-        data.forEach(element => {
-            expect(element.checked).toBe(false);
-        });
-    });
+		expect(response.statusCode).toEqual(200);
+		const data = response.body;
+		data.forEach(element => {
+			expect(element.checked).toBe(false);
+		});
+	});
 
-    it("returns 400 on invalid checked query", async () => {
+	it("returns 400 on invalid checked query", async () => {
 
-        const response = await agent
-            .get("/api/data")
-            .query({checked: "invalid"})
-            .send();
+		const response = await agent
+			.get("/api/data")
+			.query({checked: "invalid"})
+			.send();
 
-        expect(response.statusCode).toEqual(400);
-    });
+		expect(response.statusCode).toEqual(400);
+	});
 
-    it("returns 403 if the user is logged out on all routes", async () => {
+	it("returns 403 if the user is logged out on all routes", async () => {
 
-        const response = await request(app)
-            .get("/api/data")
+		const response = await request(app)
+			.get("/api/data");
 
-        expect(response.statusCode).toBe(403);
-    })    
+		expect(response.statusCode).toBe(403);
+	});    
 });

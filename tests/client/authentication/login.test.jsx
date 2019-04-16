@@ -30,10 +30,11 @@ const fillForm = (wrapper, username, password) => {
 
 describe("The login page", () => {
 
+	beforeAll(() => {
+		overrideFetch(app);
+	});
 
 	it("fails to login on invalid input", async () => {
-
-		overrideFetch(app);
 
 		const wrapper = mount(
 			<MemoryRouter initialEntries={["/login"]}>
@@ -55,8 +56,6 @@ describe("The login page", () => {
 		const username = "Foo";
 		const password = "123";
 		createUser(username, password);
-
-		overrideFetch(app);
 
 		const updateLoggedInUser = () => new Promise(resolve => resolve());
 		let page = null;

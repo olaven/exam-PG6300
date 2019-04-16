@@ -4,23 +4,6 @@ const { app } = require("../../../src/server/app");
 let agent = undefined;
 let counter = 0;
 
-/**
- * Most tests require the client to be logged in. 
- * Therefore, an agent is logged in before each test. 
- */
-beforeEach(async () => {
-
-	agent = await request.agent(app);
-	let response = await agent
-		.post("/api/signup")
-		.send({
-			username: ("foo_" + counter++),
-			password: "bar"
-		})
-		.set("Content-Type", "application/json");
-
-	expect(response.statusCode).toBe(201);
-});
 
 const sendQuery = async (query) => {
 
@@ -41,7 +24,25 @@ const getBodyFromNewCookieJar = async (query) => {
 };
 
 
-describe("GraphQL only sending requested data.", () => {
+describe("The graphql api.", () => {
+
+	/**
+	 * Most tests require the client to be logged in. 
+	 * Therefore, an agent is logged in before each test. 
+	 */
+	beforeEach(async () => {
+
+		agent = await request.agent(app);
+		let response = await agent
+			.post("/api/signup")
+			.send({
+				username: ("foo_" + counter++),
+				password: "bar"
+			})
+			.set("Content-Type", "application/json");
+
+		expect(response.statusCode).toBe(201);
+	});
 
 	it("returns data.", async () => {
 

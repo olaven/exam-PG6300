@@ -22,8 +22,7 @@ export default class Header extends React.Component {
 
         this.userSocket = new WebSocket("ws://" + window.location.host + "/usercount");
         this.userSocket.onmessage = event => {
-            console.log(this.userSocket);
-            console.log(event.data);
+        
             const userCount = JSON.parse(event.data).userCount;
             this.setState({
                 userCount
