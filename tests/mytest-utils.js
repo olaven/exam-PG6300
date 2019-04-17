@@ -1,6 +1,6 @@
 /**
  * 
- * NOTE: This file is copied from 
+ * NOTE: This file is copied(apart from modification on WsStub and overrideFetchWithAgent) from
  * https: //github.com/arcuri82/web_development_and_api_design/blob/master/exercise-solutions/quiz-game/part-10/tests/mytest-utils.js
  */
 
@@ -250,6 +250,12 @@ class WsStub extends WS {
 			this.onopen({
 				data
 			});
+		});
+
+		this.on("error", error => {
+			this.onerror = (error) => {
+			
+			};
 		});
 
 		this.close = () => this.terminate();

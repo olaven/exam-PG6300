@@ -2,7 +2,6 @@ const React = require("react");
 const { shallow } = require("enzyme");
 
 const { Home } = require("../../../src/client/pages/home.jsx");
-const { overrideWebSocket } = require("../../mytest-utils");
 
 const getHome = (props) => {
 
@@ -13,11 +12,6 @@ const getHome = (props) => {
 }; 
 
 describe("the home page.", () => {
-
-	beforeAll(() => {
-		
-		overrideWebSocket();
-	});
 
 	it("renders some content.", () => {
 

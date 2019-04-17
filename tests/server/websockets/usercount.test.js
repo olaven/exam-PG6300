@@ -30,7 +30,7 @@ const connectSocket = async (onMessage, updatedPredicate) => {
 	return socket; 
 };
 
-describe("The websocket-setup for chat", () => {
+describe("Websocket for usercount.", () => {
 
 
 	beforeAll(done => {

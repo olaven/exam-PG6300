@@ -6,7 +6,7 @@ const { overrideWebSocket } = require("../mytest-utils");
 describe("The app page", () => {
 
 	beforeAll(() => {
-		
+
 		overrideWebSocket();
 	});
 

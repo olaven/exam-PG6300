@@ -2,9 +2,9 @@ const React = require("react");
 const { shallow, mount } = require("enzyme");
 const { MemoryRouter } = require("react-router-dom");
 
-const { Chat } = require("../../../src/client/pages/chat.jsx");
 const { app } = require("../../../src/server/app");
-const { overrideWebSocket, asyncCheckCondition } = require("../../mytest-utils");
+const { Chat } = require("../../../src/client/pages/chat.jsx");
+const { asyncCheckCondition, overrideWebSocket, overrideFetch } = require("../../mytest-utils");
 
 const getChat = (props) => {
 
@@ -26,21 +26,26 @@ const sendMessage = (wrapper, message) => {
 	button.simulate("click");
 };
 
-let server;
+let server; 
+let port; 
 
 describe("The chat page.", () => {
 
-	beforeAll(done => {
+	beforeAll((done) => {
 
 		server = app.listen(0, () => {
+			port = server.address().port;
 			done();
 		});
+
+
+		overrideFetch(app);
 		overrideWebSocket();
 	});
 
 	afterAll(() => {
-		server.close();
-	}); 
+		server.close(); 
+	});
 
 	it("renders some content.", () => {
 
@@ -62,17 +67,18 @@ describe("The chat page.", () => {
 		expect(wrapper.html().includes("id=\"chat\"")).toBe(true);
 	});
 
-	it("shows sent message", () => {
+	it("shows sent message", async () => {
 
 		const message = "This is an important message!";
-		const wrapper = getChat({ username: "Fooie" });
+		const wrapper = getChat({username: "fooie"});
         
 		sendMessage(wrapper, message);
         
 		asyncCheckCondition(() => {
 			wrapper.update();
+			console.log("wrapper updated: ", wrapper.html());
 			return wrapper.html().includes(message).toBe(true);
-		}, 2000, 100);
+		}, 4000, 100);
 
 		expect(wrapper.html().includes(message)).toBe(true);
 	});

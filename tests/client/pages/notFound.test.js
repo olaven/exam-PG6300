@@ -1,7 +1,6 @@
 const React = require("react");
 const { MemoryRouter} = require("react-router-dom");
 const { mount } = require("enzyme");
-const { overrideWebSocket} = require("../../mytest-utils");
 const { NotFound } = require("../../../src/client/pages/notFound.jsx");
 
 
@@ -13,11 +12,6 @@ const mountNotFound = (entries) => mount(
 
 
 describe("the not-found page.", () => {
-
-	beforeAll(() => {
-
-		overrideWebSocket();
-	});
 
 	it("has link to home", () => {
         
