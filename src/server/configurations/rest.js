@@ -7,7 +7,7 @@ const configureREST = (app) => {
 	app.use("/api", dataApi);
 	app.use("/api", authApi);
 	// api-routes that are not matched by above routers
-	app.all("/api*", (req, res) => {
+	app.use("/api*", (req, res) => {
 		res.status(codes.NOT_FOUND).send();
 	});
 };
