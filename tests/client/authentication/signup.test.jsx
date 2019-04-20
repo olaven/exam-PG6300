@@ -7,7 +7,7 @@ const React = require("react");
 const { mount } = require("enzyme");
 const { MemoryRouter } = require("react-router-dom");
 
-const { overrideFetch, asyncCheckCondition } = require("../../mytest-utils");
+const { overrideFetch, overrideWebSocket, asyncCheckCondition } = require("../../mytest-utils");
 const { app } = require("../../../src/server/app");
 
 const { Signup } = require("../../../src/client/authentication/signup");
@@ -31,11 +31,27 @@ const fillForm = (wrapper, username, password, repeatPassword) => {
 	signupButton.simulate("click");
 };
 
+let server; 
+let port; 
+
 describe("The signup-page", () => {
 
-	beforeAll(() => {
+
+	beforeAll((done) => {
+
+		server = app.listen(0, () => {
+			port = server.address().port; //?
+			overrideWebSocket(port);
+			done();
+		});
+
 		overrideFetch(app);
 	});
+
+	afterAll(() => {
+		server.close();
+	});
+
 	beforeEach(clearUsers);
 
 	it("gives error when passwords are unequal", async () => {

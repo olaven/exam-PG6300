@@ -1,6 +1,7 @@
 const React = require("react");
 const { shallow, mount } = require("enzyme");
 const { MemoryRouter } = require("react-router-dom");
+const JSDOM = require("jsdom");
 
 const { app } = require("../../../src/server/app");
 const { Chat } = require("../../../src/client/pages/chat.jsx");
@@ -34,13 +35,12 @@ describe("The chat page.", () => {
 	beforeAll((done) => {
 
 		server = app.listen(0, () => {
-			port = server.address().port;
+			port = server.address().port; //?
+			overrideWebSocket(port);
 			done();
 		});
 
-
 		overrideFetch(app);
-		overrideWebSocket();
 	});
 
 	afterAll(() => {
@@ -71,13 +71,12 @@ describe("The chat page.", () => {
 
 		const message = "This is an important message!";
 		const wrapper = getChat({username: "fooie"});
-        
+
 		sendMessage(wrapper, message);
         
-		asyncCheckCondition(() => {
+		await asyncCheckCondition(() => {
 			wrapper.update();
-			console.log("wrapper updated: ", wrapper.html());
-			return wrapper.html().includes(message).toBe(true);
+			return wrapper.html().includes(message); 
 		}, 4000, 100);
 
 		expect(wrapper.html().includes(message)).toBe(true);
