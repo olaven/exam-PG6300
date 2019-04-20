@@ -11,7 +11,6 @@ describe("The API in general.", () => {
 			.get("/api/invalid")
 			.send();
 
-		response;
 		expect(response.statusCode).toEqual(codes.NOT_FOUND);
 	});
 });
