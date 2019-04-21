@@ -103,11 +103,11 @@ describe("the data REST-API.", () => {
 		expect(response.statusCode).toEqual(400);
 	});
 
-	it("returns 403 if the user is logged out on all routes", async () => {
+	it("returns 401 if the user is logged on getting data", async () => {
 
 		const response = await request(app)
 			.get("/api/data");
 
-		expect(response.statusCode).toBe(403);
+		expect(response.statusCode).toBe(401);
 	});    
 });

@@ -1,14 +1,11 @@
 const express = require("express");
 
+const { isAuthenticated } = require("../middleware");
 const { codes } = require("../../shared/http");
 const { getAll, getById, getByChecked } = require("../database/data"); 
 const router = express.Router();
 
-router.get("/data", (req, res) => {
-
-	if(!req.user) {
-		res.status(codes.FORBIDDEN).send(); 
-	}
+router.get("/data", isAuthenticated, (req, res) => {
 
 	const checked = req.query.checked;
 	if (checked === "true" || checked === "false") {
@@ -25,11 +22,7 @@ router.get("/data", (req, res) => {
 	res.status(codes.OK).send(allData);
 });
 
-router.get("/data/:id", async (req, res) => {
-
-	if (!req.user) {
-		res.status(codes.FORBIDDEN).send();
-	}
+router.get("/data/:id", isAuthenticated, async (req, res) => {
 
 	const id = parseInt(req.params.id);
 	if (isNaN(id)) {
