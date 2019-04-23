@@ -7,6 +7,7 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import { Button, NavLink,  Nav, Navbar, NavItem, NavbarBrand } from "reactstrap";
 
+import { getWebSocket } from "../client-utils";
 import { codes } from "../../shared/http";
 
 export default class Header extends React.Component {
@@ -21,7 +22,7 @@ export default class Header extends React.Component {
 
     componentDidMount() {
 
-        this.userSocket = new WebSocket("ws://" + window.location.host + "/usercount");
+        this.userSocket = getWebSocket("/usercount");
         this.userSocket.onmessage = event => {
         
             const userCount = JSON.parse(event.data).userCount;

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+const { getWebSocket } = require("../client-utils");
 
 export class Chat extends React.Component {
 
@@ -15,7 +15,7 @@ export class Chat extends React.Component {
 
     componentDidMount() {
 
-        this.socket = new WebSocket("ws://" + window.location.host + "/chat");
+        this.socket = getWebSocket("/chat");
         this.socket.onmessage = (event => {
 
             const data = JSON.parse(event.data);
