@@ -31,6 +31,11 @@ export default class Header extends React.Component {
         }
     }
 
+    componentWillUnmount() {
+
+        this.userSocket.close();
+    }
+
     logout = async () => {
         const url = "/api/logout";
 
