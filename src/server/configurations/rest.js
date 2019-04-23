@@ -1,6 +1,6 @@
 const { codes } = require("../../shared/http");
-const dataApi = require("../routes/data-api");
-const authApi = require("../routes/auth-api");
+const dataApi = require("../routes/dataApi");
+const authApi = require("../routes/authApi");
 
 const configureREST = (app) => {
 
