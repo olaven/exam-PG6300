@@ -3,3 +3,4 @@ coverage
 public/bundle.js
 .vscode 
 .idea
+wallaby-config.js
