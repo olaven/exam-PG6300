@@ -15,7 +15,6 @@ export class Chat extends React.Component {
 
     componentDidMount() {
 
-        console.log("host: ", window.location.host)
         this.socket = new WebSocket("ws://" + window.location.host + "/chat");
         this.socket.onmessage = (event => {
 
@@ -28,6 +27,11 @@ export class Chat extends React.Component {
                 }
             );
         });
+    }
+
+    componentWillUnmount() {
+
+        this.socket.close();
     }
 
     onInputChange = event => {
