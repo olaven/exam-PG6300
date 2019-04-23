@@ -18,10 +18,14 @@
 * The app is deployed to [Heroku](https://exam-pg6300.herokuapp.com)
 
 ## General notes
+* Modifications to yarn scripts:
+  * configuring `yarn dev` to set environment variable. It indicates wether the server is running in development mode or not. This way, I may add demo data only when application is not in production.
 * notes about copying from course repo 
   * Some files are completely copied. Others are copied, and later modified. This is differentiated in the comment. 
   * JSON-format does not support comments. `package.json`is copied from [this file](https://github.com/arcuri82/web_development_and_api_design/blob/master/exercise-solutions/quiz-game/part-10/package.json)
 * dependencies not used in course
   * [eslint](https://yarnpkg.com/en/package/eslint) and related plugins. This is to create lint-config appropriate for the project (like support for React)
+  *  [cross-env](https://www.npmjs.com/package/cross-env) is used for setting environment variables. I have access to a Mac. This should make sure that environment variable is working fine on non-UNIX systems as well
+  * [style-loader](https://www.npmjs.com/package/style-loader) for loading styles to reactsrap.  
 * on general style 
   * I could have written some functional components. In particular, the components not having state. However, I stuck with class based components for the sake of consistency. 

@@ -1,6 +1,13 @@
 
 let database = new Map();
 
+if (process.env.ENVIRONMENT !== "production") {
+	
+	database.set("dev", {
+		username: "dev", 
+		password: "dev"
+	});
+}
 
 const getUser = (username) => {
 

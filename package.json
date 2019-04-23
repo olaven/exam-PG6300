@@ -10,7 +10,7 @@
     "watch:client": "webpack --watch --mode development",
     "watch:server": "nodemon src/server/server.js --watch src/server --watch public/bundle.js",
     "build": "webpack --mode production",
-    "start": "node src/server/server.js",
+    "start": "cross-env ENVIRONMENT=production node src/server/server.js",
     "lint": "./node_modules/.bin/eslint src/ --fix"
   },
   "dependencies": {
@@ -39,6 +39,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "concurrently": "^4.1.0",
+    "cross-env": "^5.2.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^5.16.0",
