@@ -27,6 +27,42 @@ export class App extends React.Component {
         };
     }
 
+
+    // Updating username if session is set. 
+    componentDidMount() {
+
+        this.fetchAndUpdateUserInfo();
+    }
+
+    fetchAndUpdateUserInfo = async () => {
+
+        const url = "/api/user";
+
+        let response;
+
+        try {
+            response = await fetch(url, {
+                method: "get"
+            });
+        } catch (err) {
+            this.setState({ errorMsg: "Failed to connect to server: " + err });
+            return;
+        }
+
+        if (response.status === 401) {
+            //that is ok
+            this.updateLoggedInUser(null);
+            return;
+        }
+
+        if (response.status !== 200) {
+            //TODO here could have some warning message in the page.
+        } else {
+            const payload = await response.json();
+            this.updateLoggedInUser(payload.username);
+        }
+    };
+
     updateLoggedInUser = (username) => {
 
         this.setState({
