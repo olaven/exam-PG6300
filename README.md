@@ -6,6 +6,7 @@
 - [ ] explicitly state that I am aming for A and every extra effort I have done. 
 - [ ] report coverage in readme 
 - [ ] assert test coverage 
+- [ ] remove REST-posts if not used
 - [ ] test alle scritps
 - [ ] clean up after wallaby 
 - [ ] assert that no part of exercise is forgotten

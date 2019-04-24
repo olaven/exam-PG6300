@@ -30,7 +30,7 @@ router.get("/posts/:id", async (req, res) => {
 	}
     
 	if (hasAccess(post, req.user)) {
-		res.status(codes.UNAUTHORIZED).send(); 
+		res.status(codes.FORBIDDEN).send(); 
 		return; 
 	}
 

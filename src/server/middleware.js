@@ -8,7 +8,6 @@ const posts = require("./database/posts");
 const isAuthenticated = (req, res, next) => {
 
 	if (!req.user) {
-
 		const status = http.codes.UNAUTHORIZED;
 		res.status(status).send();
 	} else {
