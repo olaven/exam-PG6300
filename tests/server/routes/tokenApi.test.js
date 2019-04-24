@@ -8,13 +8,13 @@ describe("The API in general.", () => {
     it("401 if not authenticated", async () => {
 
         const response = await request(app)
-            .get("/api/token")
+            .post("/api/token")
             .send();
 
         expect(response.statusCode).toEqual(401);
     }); 
 
-	it.only("returns a token when authenticated", async () => {
+	it("returns a token when authenticated", async () => {
 
         const devUser = getDevUser(); 
 		const agent = await request.agent(app);
@@ -29,10 +29,10 @@ describe("The API in general.", () => {
         expect(loginResponse.statusCode).toBe(204);
         
         const tokenResponse = await agent
-            .get("/api/token")
+            .post("/api/token")
             .send(); 
         
-        expect(tokenResponse.statusCode).toBe(200); 
+        expect(tokenResponse.statusCode).toBe(201); 
         expect(tokenResponse.body.token).toBeDefined();
 	});
 });

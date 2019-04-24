@@ -39,7 +39,7 @@ const connectSocket = async (onMessage, updatedPredicate) => {
     return socket;
 };
 
-describe.only("Websocket for usercount.", () => {
+describe("Websocket for usercount.", () => {
 
 
     beforeEach(done => {
@@ -54,7 +54,11 @@ describe.only("Websocket for usercount.", () => {
 
     afterEach(async () => {
 
-        await server.close();
+        await server.close(); 
+    })
+
+    afterAll(async () => {
+
         for (let i = 0; i < sockets.length; i++) {
 
             await sockets[i].close();

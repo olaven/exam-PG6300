@@ -21,28 +21,46 @@ export class Timeline extends React.Component {
     componentDidMount() {
         
         this.getToken(); 
+
+        this.postsSocket = getWebSocket("/posts");
+        this.postsSocket.onmessage = (event => {
+
+            const dto = JSON.parse(event.data);
+
+            if (dto === null || dto === undefined || dto.topic !== "update") {
+                this.setState({ errorMessage: "Invalid response from server." });
+                return;
+            }
+
+            if (dto.error !== null && dto.error !== undefined) {
+                this.setState({ errorMessage: dto.error });
+                return;
+            }
+
+            this.setState({
+                errorMessage: null 
+            }); 
+
+            const data = dto.data;
+            console.log(data, " from postsSocket"); 
+        });
     }
 
     componentWillUnmount() {
 
-        if (this.postsSocket) {
-            this.postsSocket.close(); 
-        }
+        this.postsSocket.close(); 
     }
 
     getToken = async () => {
 
         try {
-            const response = await fetch("/api/token");
+            const response = await fetch("/api/token", { method: "post" });
             const payload = await response.json();
             const token = payload.token; 
 
+            this.onReceiveToken(token); 
             this.setState({
-                token, 
                 errorMessage: null 
-            }, () => { 
-                // cb to make sure state is set 
-                this.onReceiveToken(); 
             }); 
         } catch (error) {
             
@@ -52,10 +70,19 @@ export class Timeline extends React.Component {
         }
     }
 
-    onReceiveToken = () => {
+    onReceiveToken = token => {
 
-        console.log("received a token: ", this.state.token); 
-        this.postsSocket = getWebSocket("/posts");
+        console.log("received a token: ", token); 
+        const payload = {
+            token, 
+            topic: "login"
+        }
+
+        //payloadi nneholder token. 
+        //sender med send  
+
+        console.log(this.postsSocket); 
+        this.postsSocket.send(JSON.stringify(payload));    
     }
 
     renderPosts = () => 
