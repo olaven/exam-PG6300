@@ -49,8 +49,9 @@ export class Signup extends React.Component {
 
     dateOfBirthChanged = (event) => {
 
+        const date = new Date(event.target.value); 
         this.setState({
-            dateOfBirth: event.target.value
+            dateOfBirth: date.toLocaleDateString()
         });
     };
 
@@ -178,8 +179,7 @@ export class Signup extends React.Component {
                     placeholder="Last name"
                     id="familyNameInput" />
                 <Input
-                    type="text"
-                    value={this.state.dateOfBirth}
+                    type="date"
                     onChange={this.dateOfBirthChanged}
                     placeholder="Date of birth"
                     id="dateOfBirthInput" />
