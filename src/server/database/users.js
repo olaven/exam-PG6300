@@ -36,8 +36,7 @@ const createUser = (email, givenName, familyName, dateOfBirth, location, passwor
 		dateOfBirth: dateOfBirth, 
 		location: location,
 		password: password,
-		friendEmails: [],
-		postIds: [], 
+		friendEmails: []
 	};
 
 

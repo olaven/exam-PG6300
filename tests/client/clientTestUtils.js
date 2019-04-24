@@ -1,6 +1,6 @@
 
 
-const getTestUser = (friendEmails, postIds) => {
+const getTestUser = (friendEmails) => {
 
 	return {
 		email: "test@user.com",
@@ -9,8 +9,7 @@ const getTestUser = (friendEmails, postIds) => {
 		familyName: "TEST_FAMILY",
 		dateOfBirth: "24/04/1980", 
 		location: "Oslo",
-		friendEmails: friendEmails,
-		postIds: postIds
+		friendEmails: friendEmails
 	};
 };
 

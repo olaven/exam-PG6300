@@ -38,8 +38,7 @@ passport.serializeUser(function (user, done) {
 		familyName: user.familyName,
 		dateOfBirth: user.dateOfBirth,
 		location: user.location,
-		friendEmails: user.friendEmails,
-		postIds: user.postIds
+		friendEmails: user.friendEmails
 	}; 
 
 	done(null, serializedUser);
