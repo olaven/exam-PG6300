@@ -19,23 +19,46 @@ export class Signup extends React.Component {
             location: "", 
             password: "",
             repeatPassword: "",
-            serverErrorMessage: null
+            serverErrorMessage: null, 
+            inputError: true 
         };
     }
 
+    validateInput = () => {
+        // found on https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
+        const mailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 
+        let valid; 
+
+        if (!this.passwordsAreEqual() ||
+            !mailRegex.test(this.state.email) ||
+            this.state.givenName.length <= 0 ||
+            this.state.familyName.length <= 0 ||
+            this.state.location.length <= 0 
+        )  {
+            valid = false; 
+        } else {
+            valid = true; 
+        }
+
+        console.log("validated to: ", valid); 
+
+        this.setState({
+            validInput: valid
+        }); 
+    }
 
     emailChanged = (event) => {
 
         this.setState({
             email: event.target.value
-        });
+        }, () => {this.validateInput()});
     };
 
     givenNameChanged = (event) => {
 
         this.setState({
             givenName: event.target.value
-        });
+        }, () => { this.validateInput() });
     };
 
 
@@ -43,7 +66,7 @@ export class Signup extends React.Component {
 
         this.setState({
             familyName: event.target.value
-        });
+        }, () => { this.validateInput() });
     };
 
 
@@ -52,14 +75,14 @@ export class Signup extends React.Component {
         const date = new Date(event.target.value); 
         this.setState({
             dateOfBirth: date.toLocaleDateString()
-        });
+        }, () => { this.validateInput() });
     };
 
     locationChanged = (event) => {
 
         this.setState({
             location: event.target.value
-        });
+        }, () => { this.validateInput() });
     };
 
         
@@ -68,14 +91,14 @@ export class Signup extends React.Component {
 
         this.setState({
             password: event.target.value
-        });
+        }, () => { this.validateInput() });
     };
 
     repeatPasswordChanged = (event) => {
 
         this.setState({
             repeatPassword: event.target.value
-        });
+        }, () => { this.validateInput() });
     };
 
     passwordsAreEqual = () => 
@@ -83,8 +106,7 @@ export class Signup extends React.Component {
 
     signup = async () => {
         
-        const { email, password, repeatPassword } = this.state;
-
+        const { email, givenName, familyName, dateOfBirth, location, password, repeatPassword } = this.state;
 
         if (repeatPassword !== password) {
             this.setState({ serverErrorMessage: "Passwords do not match" });
@@ -92,7 +114,11 @@ export class Signup extends React.Component {
         }
 
         const url = "/api/signup";
-        const payload = { email: email, password: password };
+        const payload = { 
+            email, givenName, familyName, 
+            dateOfBirth, location, password, 
+            repeatPassword
+        };
         
         let response;
 
@@ -106,9 +132,7 @@ export class Signup extends React.Component {
             });
 
         } catch (err) {
-            console.log(
-                "error connecting to server"
-            )
+     
             this.setState({ serverErrorMessage: "Failed to connect to server: " + err });
             return;
         }
@@ -203,12 +227,19 @@ export class Signup extends React.Component {
                     id="repeatPasswordInput" />
                 {passwordErrorMessge}
 
-                <Button 
+                {this.state.validInput?
+                <Button
+                    color="primary"
+                    disabled
+                >
+                    Sign up
+                </Button>: 
+                <Button
                     color="primary"
                     onClick={this.signup}
                     id="signupButton">
                     Sign up
-                </Button>
+                </Button>}
                     
                 {serverError}
             </div>
