@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import http from "../../shared/http";
 import { PostView } from "./postView"; 
 import { getWebSocket } from "../client-utils"; 
- 
 
 export class Timeline extends React.Component {
 

@@ -10,7 +10,7 @@ const getDevUser = () => {
         password: "dev",
         givenName: "DEV_GIVEN",
         familyName: "DEV_FAMILY_NAME",
-        dateOfBirth: "24/04/1080", //new Date().toLocaleDateString(),
+        dateOfBirth: "04-24-1960", 
         location: "Oslo",
         friendEmails: ["gandalf@arda.com", "sam@shire.com"],
         postIds: []
@@ -27,7 +27,7 @@ const demoUsers = [
         password: "secretly_wanting_that_ring",
         givenName: "Frodo",
         familyName: "Baggins",
-        dateOfBirth: "22/09/2968", 
+        dateOfBirth: "09-24/1968", 
         location: "The Shire",
         friendEmails: ["sam@shire.com", "merry@shire", "pippin@shire", "gandalf@arda.com"], 
         postIds: [] //TODO: reference some posts 
@@ -37,7 +37,7 @@ const demoUsers = [
         password: "rosie",
         givenName: "Sam",
         familyName: "Gamgee",
-        dateOfBirth: "29/04/2980", 
+        dateOfBirth: "04-29-1980", 
         location: "The Shire",
         friendEmails: ["frodo@shire.com", "merry@shire.com", "pippin@shire.com"], 
         postIds: [] //TODO: reference some posts 
@@ -47,7 +47,7 @@ const demoUsers = [
         password: "pints!",
         givenName: "Meriadoc",
         familyName: "Brandybuck",
-        dateOfBirth: "11/04/2982",
+        dateOfBirth: "04-11-1982",
         location: "The Shire",
         friendEmails: ["frodo@shire.com", "sam@shire.com", "pippin@shire.com"], 
         postIds: [] //TODO: reference some posts 
@@ -57,7 +57,7 @@ const demoUsers = [
         password: "Not-a-fool.",
         givenName: "Peregrin",
         familyName: "Took",
-        dateOfBirth: "24/12/2990", 
+        dateOfBirth: "12-12-1990", 
         location: "The Shire",
         friendEmails: ["frodo@shire.com", "sam@shire.com", "merry@shire.com"],
         postIds: [] //TODO: reference some posts 
@@ -67,7 +67,7 @@ const demoUsers = [
         password: "runrunrun",
         givenName: "Gandalf",
         familyName: "the Grey",
-        dateOfBirth: "10/12/300",
+        dateOfBirth: "10-12-300",
         location: "Everywhere, really",
         friendEmails: ["frodo@shire.com"],
         postIds: [] 

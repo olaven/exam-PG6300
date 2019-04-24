@@ -8,6 +8,7 @@ const express = require("express");
 const passport = require("passport");
 
 const { codes } = require("../../shared/http");
+const { isAuthenticated } = require("../middleware"); 
 const Users = require("../database/users"); 
 
 const router = express.Router();
@@ -58,12 +59,7 @@ router.post("/logout", function (req, res) {
 /*
     Return data about the user if the session cookie is valid 
  */
-router.get("/user", function (req, res) {
-	
-	if (!req.user) {
-		res.status(codes.UNAUTHORIZED).send();
-		return;
-	}
+router.get("/user", isAuthenticated, (req, res) => {
 
 	const user = Users.getUser(req.user.email); 
 
@@ -75,6 +71,38 @@ router.get("/user", function (req, res) {
 		dateOfBirth: user.dateOfBirth
 	}); 
 });
+
+/**
+ * Return data about user if user has access
+ */
+router.get("/user/:email", isAuthenticated, (req, res) => {
+
+	if (!req.params.email) {
+		res.status(codes.BAD_REQUEST).send(); 
+		return; 
+	}
+
+	const loggedInUser = Users.getUser(req.user.loggedInUser); 
+	const areFriends = loggedInUser.friendEmails.includes(req.params.email); 
+	if (!areFriends) {
+		res.status(codes.FORBIDDEN).send(); 
+		return; 
+	}
+
+	const payload = getUserInformation(req.user); 
+	res.status(codes.OK).send(payload); 
+}); 
+
+const getUserInformation = user => {
+	
+	return {
+		email: user.email,
+		givenName: user.givenName,
+		familyName: user.familyName,
+		location: user.location,
+		dateOfBirth: user.dateOfBirth
+	}
+}
 
 
 module.exports = router;

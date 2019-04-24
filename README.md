@@ -9,6 +9,7 @@
 - [ ] remove REST-posts if not used
 - [ ] test alle scritps
 - [ ] clean up after wallaby 
+- [ ] optimaliseri mports 
 - [ ] assert that no part of exercise is forgotten
 - [ ] test every feature manually 
 - [ ] test the app without internet connection

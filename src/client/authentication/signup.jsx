@@ -72,7 +72,7 @@ export class Signup extends React.Component {
 
         const date = new Date(event.target.value); 
         this.setState({
-            dateOfBirth: date.toLocaleDateString()
+            dateOfBirth: date.toDateString()//?
         }, () => { this.validateInput() });
     };
 

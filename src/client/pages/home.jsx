@@ -22,7 +22,9 @@ export class Home extends React.Component {
                     <Link to={"/chat"}>
                         <Button color="secondary">Go to chat</Button>
                     </Link>
-
+                    <Link to={"/profile"}>
+                        <Button color="secondary">Go to your profile</Button>
+                    </Link>
                     <hr/>
                     <Timeline />
                 </div>:
