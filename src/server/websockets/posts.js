@@ -4,7 +4,10 @@
  */
 const { broadcast } = require("./ws-util");
 const { retrieveForUser } = require("../database/posts"); 
-const { consumeToken } = require("../database/tokens"); 
+const tokens = require("../database/tokens"); 
+const users = require("../database/users");
+
+const SocketsToEmails = new Map(); 
 
 const posts = (ews) => {
 
@@ -12,12 +15,12 @@ const posts = (ews) => {
 
         console.log('established a post connection');
 
-        // ws.messageHanders = new Map(); 
-        //ws.addMessageHandler("login", handleLogin);
+        // // ws.messageHanders = new Map(); 
+        // //ws.addMessageHandler("login", handleLogin);
 
-        const user = req.session.passport.user; 
-        const posts = retrieveForUser(user); 
-        sendInitialPostsToUser(posts, user, ews); 
+        // const user = req.session.passport.user; 
+        // const posts = retrieveForUser(user); 
+        // sendInitialPostsToUser(posts, user, ews); 
         
 
         ws.on("message", fromClient => {
@@ -25,7 +28,11 @@ const posts = (ews) => {
             const dto = JSON.parse(fromClient); 
             
             if (dto.topic === "login") {
-                handleLogin(dto, ws); 
+                
+                const loggedIn = websocketLogin(dto, ws); 
+                if (loggedIn) {
+                    sendInitialPosts(ws); 
+                }
             } 
             //TODO: broadcast new post to relevant users
         });
@@ -36,9 +43,15 @@ const posts = (ews) => {
     };
 };
 
-const sendInitialPostsToUser = (posts, user, ews) => {
-
-    ews//? 
+const sendInitialPosts = socket => {
+    
+    const email = SocketsToEmails.get(socket); 
+    console.log(email); 
+    const user = users.getUser(email); 
+    const postsForUser = retrieveForUser(user); 
+    const payload = JSON.stringify(postsForUser); 
+    
+    socket.send(payload);
 }
 
 const broadcastNewPost = ews => {
@@ -51,29 +64,25 @@ const broadcastNewPost = ews => {
 };
 
 
-const handleLogin = (dto, socket) => {
+const websocketLogin = (dto, socket) => {
 
     const token = dto.token;
-    
-    console.log("------------------------------------")
-    console.log("received atoken from client: ", token);
-    console.log("------------------------------------")
 
     if (token === null || token === undefined) {
         socket.send(JSON.stringify({
             error: "Missing token"
         }));
-        return;
+        return null;
     }
 
     //token can be used only once to authenticate only a single socket
-    const userId = tokens.consumeToken(token);
-    //NESTE: vit at userId er riktig, finn ut hvordan du skal erstatte ActivPlayers
-    if (userId === null || userId === undefined) {
+    const email = tokens.consumeToken(token);
+    
+    if (email === null || email === undefined) {
         socket.send(JSON.stringify({
             error: "Invalid token"
         }));
-        return;
+        return null;
     }
 
     /*
@@ -81,9 +90,9 @@ const handleLogin = (dto, socket) => {
         association with the given user for that token and the
         current socket
      */
-    ActivePlayers.registerSocket(socket, userId);
-
-    console.log("User '" + userId + "' is now connected with a websocket.");
+    SocketsToEmails.set(socket, email)
+    console.log("User '" + email + "' is now connected with a websocket.");
+    return socket
 }
 
 module.exports = {

@@ -96,7 +96,6 @@ export class App extends React.Component {
 
     render() {
 
-        console.log("user in state", this.state.user); 
         return <BrowserRouter>
             <Layout
                 user={this.state.user}

@@ -7,7 +7,6 @@ export default class Layout extends React.Component {
 
         const loggedIn = this.props.user !== null;
 
-        console.log(this.props.user); 
         return <Row className="fixed-bottom bg-info clearfix">
             <Col sm="12" md="12" lg="12">
                 <h4 className="align-self-center">

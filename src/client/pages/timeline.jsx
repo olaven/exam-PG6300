@@ -25,7 +25,9 @@ export class Timeline extends React.Component {
         this.postsSocket = getWebSocket("/posts");
         this.postsSocket.onmessage = (event => {
 
-            const dto = JSON.parse(event.data);
+            
+            const dto = JSON.parse(event.data); 
+            console.log(event, dto); 
 
             if (dto === null || dto === undefined || dto.topic !== "update") {
                 this.setState({ errorMessage: "Invalid response from server." });

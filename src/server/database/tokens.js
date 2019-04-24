@@ -16,7 +16,9 @@ const createTokenFor = email => {
 
 const consumeToken = token => {
 
+    const email = tokens.get(token); 
     tokens.delete(token)
+    return email; 
 }
 
 module.exports = {
