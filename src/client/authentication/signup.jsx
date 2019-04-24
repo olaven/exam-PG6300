@@ -12,7 +12,11 @@ export class Signup extends React.Component {
         
         super(props);
         this.state = {
-            username: "",
+            email: "",
+            givenName: "",
+            familyName: "", 
+            dateOfBirth: "", 
+            location: "", 
             password: "",
             repeatPassword: "",
             serverErrorMessage: null
@@ -20,12 +24,44 @@ export class Signup extends React.Component {
     }
 
 
-    usernameChanged = (event) => {
+    emailChanged = (event) => {
 
         this.setState({
-            username: event.target.value
+            email: event.target.value
         });
     };
+
+    givenNameChanged = (event) => {
+
+        this.setState({
+            givenName: event.target.value
+        });
+    };
+
+
+    familyNameChanged = (event) => {
+
+        this.setState({
+            familyName: event.target.value
+        });
+    };
+
+
+    dateOfBirthChanged = (event) => {
+
+        this.setState({
+            dateOfBirth: event.target.value
+        });
+    };
+
+    locationChanged = (event) => {
+
+        this.setState({
+            location: event.target.value
+        });
+    };
+
+        
 
     passwordChanged = (event) => {
 
@@ -46,7 +82,7 @@ export class Signup extends React.Component {
 
     signup = async () => {
         
-        const { username, password, repeatPassword } = this.state;
+        const { email, password, repeatPassword } = this.state;
 
 
         if (repeatPassword !== password) {
@@ -55,8 +91,8 @@ export class Signup extends React.Component {
         }
 
         const url = "/api/signup";
-        const payload = { username: username, password: password };
-
+        const payload = { email: email, password: password };
+        
         let response;
 
         try {
@@ -67,6 +103,7 @@ export class Signup extends React.Component {
                 },
                 body: JSON.stringify(payload)
             });
+
         } catch (err) {
             console.log(
                 "error connecting to server"
@@ -77,7 +114,7 @@ export class Signup extends React.Component {
 
 
         if (response.status === 400) {
-            this.setState({ serverErrorMessage: "Invalid username/password" });
+            this.setState({ serverErrorMessage: "Invalid email/password" });
             return;
         }
 
@@ -90,7 +127,16 @@ export class Signup extends React.Component {
         }
 
         this.setState({ serverErrorMessage: null });
-        this.props.updateLoggedInUser(username);
+        
+        const loggedInUser = {
+            email: this.state.email,
+            givenName: this.state.givenName,
+            familyName: this.state.familyName,
+            dateOfBirth: this.state.dateOfBirth,
+            location: this.state.location
+        }; 
+
+        this.props.updateLoggedInUser(loggedInUser);
         this.props.history.push("/");
     };
 
@@ -115,10 +161,34 @@ export class Signup extends React.Component {
             <div>
                 <Input
                     type="text"
-                    value={this.state.username}
-                    onChange={this.usernameChanged}
-                    placeholder="username"
-                    id="usernameInput" />
+                    value={this.state.email}
+                    onChange={this.emailChanged}
+                    placeholder="email"
+                    id="emailInput" />
+                <Input
+                    type="text"
+                    value={this.state.givenName}
+                    onChange={this.givenNameChanged}
+                    placeholder="First name"
+                    id="givenNameInput" />
+                <Input
+                    type="text"
+                    value={this.state.familyName}
+                    onChange={this.familyNameChanged}
+                    placeholder="Last name"
+                    id="familyNameInput" />
+                <Input
+                    type="text"
+                    value={this.state.dateOfBirth}
+                    onChange={this.dateOfBirthChanged}
+                    placeholder="Date of birth"
+                    id="dateOfBirthInput" />
+                <Input
+                    type="text"
+                    value={this.state.location}
+                    onChange={this.locationChanged}
+                    placeholder="Location"
+                    id="locatonInput" />
                 <Input
                     type="password"
                     value={this.state.password}

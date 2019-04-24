@@ -1,6 +1,7 @@
 const React = require("react");
 const { shallow } = require("enzyme");
 
+const { getTestUser } = require("../clientTestUtils"); 
 const { Home } = require("../../../src/client/pages/home.jsx");
 
 const getHome = (props) => {
@@ -31,7 +32,7 @@ describe("the home page.", () => {
 	it("renders message to login when user logged out", () => {
 
 		const wrapper = getHome({
-			username: null 
+			user: null 
 		}); 
 		const messages = wrapper.find(".homeMessage"); 
         
@@ -42,7 +43,7 @@ describe("the home page.", () => {
 	it("renders data-message when user logged in", () => {
 
 		const wrapper = getHome({
-			username: "Charlie Banks"
+			user: getTestUser()
 		}); 
 		const messages = wrapper.find(".homeMessage");
 		expect(messages.length).toEqual(1);

@@ -14,7 +14,7 @@
 
 ## Special users 
 * When running in development mode, it is possible to log in with: 
-  * username: dev
+  * email: dev@admin.com
   * password: dev
 
 ## Extras 

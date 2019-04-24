@@ -6,17 +6,17 @@
 const { app } = require("../../../src/server/app");
 const WS = require("ws");
 
-const { asyncCheckCondition, checkConnectedWS } = require("../../mytest-utils");
+const { asyncCheckCondition, checkConnectedWS, overrideWebSocket } = require("../../mytest-utils");
 
 let server;
 let port;
 const sockets = [];
 
-const getSocket = () => new WS("ws://localhost:" + port + "/usercount");
 
 const connectSocket = async (onMessage, updatedPredicate) => {
 
-	const socket = getSocket();
+	const socket = new WS("ws://localhost:" + port + "/usercount");
+	
 	sockets.push(socket);
 	socket.on("message", onMessage);
 
@@ -38,6 +38,7 @@ describe("Websocket for usercount.", () => {
 		server = app.listen(0, () => {
 
 			port = server.address().port;
+			overrideWebSocket(port); 
 			done();
 		});
 	});
@@ -121,7 +122,7 @@ describe("Websocket for usercount.", () => {
 
 		const decrement = 2; 
 		for (let i = 0; i < decrement; i++) {
-			await sockets[i].close();
+			sockets[i].close();
 		}
 
 		await asyncCheckCondition(() => false, 1000, 100);

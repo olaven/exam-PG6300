@@ -12,16 +12,16 @@ export class Login extends React.Component {
         
         super(props);
         this.state = {
-            username: "",
+            email: "",
             password: "",
             serverErrorMessage: null
         }
     }
 
-    usernameChanged = (event) => {
+    emailChanged = (event) => {
 
         this.setState({
-            username: event.target.value
+            email: event.target.value
         });
     }
 
@@ -34,10 +34,13 @@ export class Login extends React.Component {
 
     login = async () => {
         
-        const { username, password } = this.state;
+        const { email, password } = this.state;
         const url = "/api/login";
 
-        const payload = { username: username, password: password };
+        const payload = { 
+            email: email, 
+            password: password 
+        };
 
         let response;
 
@@ -55,7 +58,7 @@ export class Login extends React.Component {
         }
 
         if (response.status === 401) {
-            this.setState({ serverErrorMessage: "Invalid username/password" });
+            this.setState({ serverErrorMessage: "Invalid email/password" });
             return;
         }
 
@@ -67,8 +70,13 @@ export class Login extends React.Component {
             return;
         }
 
+    
+
         this.setState({ serverErrorMessage: null });
-        this.props.updateLoggedInUser(username);
+        this.props.updateLoggedInUser({
+            email: this.state.email,
+            //TODO: Add more user data
+        });
         this.props.history.push("/");
     }
 
@@ -85,17 +93,16 @@ export class Login extends React.Component {
             <h1>login</h1>
             <Input 
                 type="text"
-                value={this.state.username}
-                onChange={this.usernameChanged}
-                placeholder="username"
-                id="usernameInput"/>
+                value={this.state.email}
+                onChange={this.emailChanged}
+                placeholder="email"
+                id="emailInput"/>
             <Input
                 type="password"
                 value={this.state.password}
                 onChange={this.passwordChanged}
                 placeholder="password"
                 id="passwordInput"/>
-
             <Button 
                 color="primary"
                 onClick={this.login}

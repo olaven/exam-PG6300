@@ -1,5 +1,5 @@
 const React = require("react");
-const { shallow } = require("enzyme");
+const { mount } = require("enzyme");
 const { app } = require("../../src/server/app");
 const { App } = require("../../src/client/app.jsx");
 const { overrideWebSocket } = require("../mytest-utils");
@@ -26,15 +26,15 @@ describe("The app page", () => {
 
 	it("renders something", () => {
 
-		const html = shallow(<App />).html();
+		const html = mount(<App />).html();
 		expect(html).toBeDefined();
 	});
 
- 	it("has no logged in user on startup", () => {
+	it("has no logged in user on startup", () => {
 
-		const wrapper = shallow(<App />);
-		const username = wrapper.state().username;
+		const wrapper = mount(<App />);
+		const user = wrapper.state().user;
 
-		expect(username).toBeNull();
+		expect(user).toBeNull();
 	});
 });

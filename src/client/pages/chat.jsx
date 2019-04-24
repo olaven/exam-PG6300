@@ -44,7 +44,7 @@ export class Chat extends React.Component {
         
         const payload = JSON.stringify({ 
             message: {
-                username: this.props.username,
+                username: this.props.user.email,
                 text: this.state.input 
             }
         });
@@ -55,13 +55,13 @@ export class Chat extends React.Component {
 
     renderMessages = () => 
         this.state.messages.map((message, index) =>
-            <p key={index}>{message.username} - {message.text}</p>
+            <p key={index}>{message.user.email} - {message.text}</p>
         ); 
 
 
     render() {
 
-        const loggedIn = this.props.username !== null;
+        const loggedIn = this.props.user !== null;
 
         if (loggedIn) {
 

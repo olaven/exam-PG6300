@@ -15,6 +15,10 @@ const usercount = (ews) => {
 			
 			broadcastUserCount(ews);
 		});
+
+		ws.on("error", () => {
+			console.log("error in usercount-websocket.."); 
+		}); 
 	};
 };
 

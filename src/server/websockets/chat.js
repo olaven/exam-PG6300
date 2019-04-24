@@ -9,7 +9,7 @@ const { broadcast } = require("./ws-util");
 
 let idCounter = 0;
 
-//TODO: REFACTOR ALL THE DUPLICATION
+
 const chat = (ews) => {
  
 	return (ws, req) => {
@@ -32,6 +32,10 @@ const chat = (ews) => {
 			messages.addMessage(message);
 			//do a broadcast to all existing clients
 			broadcastMessages(ews, [message]);
+		});
+
+		ws.on("error", () => {
+			console.log("error in chat-websocket..");
 		});
 	};
 };

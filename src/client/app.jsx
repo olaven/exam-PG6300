@@ -20,13 +20,13 @@ export class App extends React.Component {
         super(props);
 
         this.state = {
-            username: null,
+            user: null,
             userCount: 1
         };
     }
 
 
-    // Updating username if session is set. 
+    // Updating user if session is set. 
     componentDidMount() {
 
         this.fetchAndUpdateUserInfo();
@@ -56,15 +56,15 @@ export class App extends React.Component {
         if (response.status !== 200) {
             //TODO here could have some warning message in the page.
         } else {
-            const payload = await response.json();
-            this.updateLoggedInUser(payload.username);
+            const user = await response.json();
+            this.updateLoggedInUser(user);
         }
     };
 
-    updateLoggedInUser = (username) => {
+    updateLoggedInUser = (user) => {
 
         this.setState({
-            username: username
+            user: user
         });
     }
 
@@ -73,7 +73,7 @@ export class App extends React.Component {
         return <Route exact path={path}
             render={props =>
                 <Component {...props}
-                    username={this.state.username}
+                    user={this.state.user}
                     updateLoggedInUser={this.updateLoggedInUser}
                 />
             }
@@ -85,7 +85,7 @@ export class App extends React.Component {
 
         return <BrowserRouter>
             <Layout
-                username={this.state.username}
+                user={this.state.user}
                 updateLoggedInUser={this.updateLoggedInUser}>
 
                 <Switch>

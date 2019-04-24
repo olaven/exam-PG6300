@@ -19,8 +19,10 @@ router.post("/login", passport.authenticate("local"), (req, res) => {
 
 router.post("/signup", function (req, res) {
     
-	const created = Users.createUser(req.body.username, req.body.password);
+	let created = Users.createUser(req.body.email, req.body.password);
 
+	// const created = Users.createUser(req.body.user, req.body.password);
+	
 	if (!created) {
         
 		res.status(codes.BAD_REQUEST).send();
@@ -58,9 +60,8 @@ router.get("/user", function (req, res) {
 	}
 
 	res.status(codes.OK).json({
-		username: req.user.username
-		//TODO  add other user data 
-	});
+		email: req.user.email
+	}); 
 });
 
 

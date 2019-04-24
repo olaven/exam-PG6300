@@ -16,15 +16,15 @@ const { clearUsers, getUser, createUser } = require("../../../src/server/databas
 
 
 
-const fillForm = (wrapper, username, password, repeatPassword) => {
+const fillForm = (wrapper, email, password, repeatPassword) => {
 
-	const usernameInput = wrapper.find("#usernameInput").at(0);
+	const emailInput = wrapper.find("#emailInput").at(0);
 	const passwordInput = wrapper.find("#passwordInput").at(0);
 	const repeatPasswordInput = wrapper.find("#repeatPasswordInput").at(0);
 	const signupButton = wrapper.find("#signupButton").at(0);
 
 
-	usernameInput.simulate("change", { target: { value: username } });
+	emailInput.simulate("change", { target: { value: email } });
 	passwordInput.simulate("change", { target: { value: password } });
 	repeatPasswordInput.simulate("change", { target: { value: repeatPassword } });
 
@@ -48,8 +48,9 @@ describe("The signup-page", () => {
 		overrideFetch(app);
 	});
 
-	afterAll(() => {
-		server.close();
+	afterAll(async (done) => {
+		await server.close();
+		done(); 
 	});
 
 	beforeEach(clearUsers);
@@ -77,8 +78,8 @@ describe("The signup-page", () => {
 
 	it("can create a user", async () => {
 
-		const username = "Foo";
-		expect(getUser(username)).toEqual(undefined);
+		const email = "Foo";
+		expect(getUser(email)).toEqual(undefined);
 
 		const updateLoggedInUser = () => new Promise(resolve => resolve());
 		let page = null;
@@ -92,7 +93,7 @@ describe("The signup-page", () => {
 
 		const password = "123";
 
-		fillForm(wrapper, username, password, password);
+		fillForm(wrapper, email, password, password);
 
 
 		const redirected = await asyncCheckCondition(
@@ -101,15 +102,15 @@ describe("The signup-page", () => {
 
 		expect(redirected).toEqual(true);
 
-		expect(getUser(username).username).toEqual(username);
+		expect(getUser(email).email).toEqual(email);
 	});
 
 
 	it("fails if the user already exists", async () => {
 
-		const username = "Foo";
+		const email = "foo@test.com";
 		const password = "123";
-		createUser(username, password);
+		createUser(email, password);
 		
 		const updateLoggedInUser = () => new Promise(resolve => resolve());
 		let page = null;
@@ -121,13 +122,13 @@ describe("The signup-page", () => {
 			</MemoryRouter>
 		);
 
-		fillForm(wrapper, username, password, password);
+		fillForm(wrapper, email, password, password);
 
 		const failed = await asyncCheckCondition(
 			() => {
 				wrapper.update();
-				return wrapper.html().includes("Invalid username/password"); },
-			2000, 200);
+				return wrapper.html().includes("Invalid email/password"); },
+			3000, 200);
 
 		expect(failed).toEqual(true);
 	});

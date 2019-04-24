@@ -10,7 +10,7 @@ export class Home extends React.Component {
 
     render() {
 
-        const loggedIn = this.props.username !== null;
+        const loggedIn = this.props.user !== null;
 
         return <div id="home">
             <h1>This is home</h1>

@@ -22,19 +22,26 @@ export default class Header extends React.Component {
 
     componentDidMount() {
 
-        this.userSocket = getWebSocket("/usercount");
-        this.userSocket.onmessage = event => {
+        this.socket = getWebSocket("/usercount");
+        this.socket.onmessage = event => {
         
             const userCount = JSON.parse(event.data).userCount;
             this.setState({
-                userCount
+                userCount, 
+                errorMEssage: null 
             });
+        }
+        this.socket.onerror = event => {
+
+            this.setState({
+                errorMessage: event.data
+            }); 
         }
     }
 
     componentWillUnmount() {
 
-        this.userSocket.close();
+        this.socket.close();
     }
 
     logout = async () => {
@@ -76,16 +83,15 @@ export default class Header extends React.Component {
 
     render() {
 
-        const loggedIn = this.props.username !== null;
+        const loggedIn = this.props.user !== null;
 
         return <Navbar id="header">
             <NavbarBrand>Project title</NavbarBrand>
             {loggedIn ? this.renderLoggedIn(): this.renderLoggedOut()}
 
             <NavItem>
-                Users online: {this.state.userCount}
+                Users online: {this.state.userCount} {this.state.errorMessage ? "(error getting)": ""}
             </NavItem>
         </Navbar>
-
     }
 }

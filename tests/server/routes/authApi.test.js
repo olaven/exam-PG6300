@@ -15,7 +15,7 @@ test("Test fail login", async () => {
 	const response = await request(app)
 		.post("/api/login")
 		.send({
-			username: "foo_" + (counter++),
+			email: "foo_@mail.com" + (counter++),
 			password: "bar"
 		})
 		.set("Content-Type", "application/json");
@@ -35,12 +35,12 @@ test("Test fail access data of non-existent user", async () => {
 
 test("Test create user, but fail get data", async () => {
 
-	const username = "foo_" + (counter++);
+	const email = "foo_@something." + (counter++);
 
 	let response = await request(app)
 		.post("/api/signup")
 		.send({
-			username,
+			email,
 			password: "bar"
 		})
 		.set("Content-Type", "application/json");
@@ -57,7 +57,7 @@ test("Test create user, but fail get data", async () => {
 
 test("Test create user and get data", async () => {
 
-	const username = "foo_" + (counter++);
+	const email = "foo@test.com" + (counter++);
 
 	//use same cookie jar for the HTTP requests
 	const agent = request.agent(app);
@@ -65,7 +65,7 @@ test("Test create user and get data", async () => {
 	let response = await agent
 		.post("/api/signup")
 		.send({
-			username,
+			email,
 			password: "bar"
 		})
 		.set("Content-Type", "application/json");
@@ -77,20 +77,20 @@ test("Test create user and get data", async () => {
 	response = await agent.get("/api/user");
 
 	expect(response.statusCode).toBe(200);
-	expect(response.body.username).toBe(username);
+	expect(response.body.email).toBe(email);
 	expect(response.body.password).toBeUndefined();
 });
 
 
 test("Test create user, login in a different session and get data", async () => {
 
-	const username = "foo_" + (counter++);
+	const email = "foo_@test.com" + (counter++);
 
 	//create user, but ignore cookie set with the HTTP response
 	let response = await request(app)
 		.post("/api/signup")
 		.send({
-			username,
+			email,
 			password: "bar"
 		})
 		.set("Content-Type", "application/json");
@@ -104,7 +104,7 @@ test("Test create user, login in a different session and get data", async () => 
 	response = await agent
 		.post("/api/login")
 		.send({
-			username,
+			email,
 			password: "bar"
 		})
 		.set("Content-Type", "application/json");
@@ -115,7 +115,7 @@ test("Test create user, login in a different session and get data", async () => 
 	response = await agent.get("/api/user");
 
 	expect(response.statusCode).toBe(200);
-	expect(response.body.username).toBe(username);
+	expect(response.body.email).toBe(email);
 	expect(response.body.password).toBeUndefined();
 });
 
@@ -123,7 +123,7 @@ test("Test create user, login in a different session and get data", async () => 
 
 test("Test login after logout", async () => {
 
-	const username = "foo_" + (counter++);
+	const email = "foo_@someone.com" + (counter++);
 
 	//use same cookie jar for the HTTP requests
 	const agent = request.agent(app);
@@ -132,7 +132,7 @@ test("Test login after logout", async () => {
 	let response = await agent
 		.post("/api/signup")
 		.send({
-			username,
+			email,
 			password: "bar"
 		})
 		.set("Content-Type", "application/json");
@@ -157,7 +157,7 @@ test("Test login after logout", async () => {
 	response = await agent
 		.post("/api/login")
 		.send({
-			username,
+			email,
 			password: "bar"
 		})
 		.set("Content-Type", "application/json");

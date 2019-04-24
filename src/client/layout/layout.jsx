@@ -16,7 +16,7 @@ export class Layout extends React.Component {
                 {...this.props}/>   
                 {this.props.children}
             <Footer
-                username={this.props.username}/> 
+                {...this.props}/> 
         </div>
     }
 }
