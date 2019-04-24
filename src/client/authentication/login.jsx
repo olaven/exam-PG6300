@@ -75,8 +75,7 @@ export class Login extends React.Component {
 
         this.setState({ serverErrorMessage: null });
         this.props.updateLoggedInUser({
-            email: this.state.email,
-            //TODO: Add more user data
+            email: this.state.email
         });
         this.props.history.push("/");
     }

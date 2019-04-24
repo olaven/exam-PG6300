@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom"; 
+import { Button } from "reactstrap"; 
+import { ToLogIn } from "../components/toLogIn";
 
 export class Home extends React.Component {
 
@@ -13,17 +15,17 @@ export class Home extends React.Component {
         const loggedIn = this.props.user !== null;
 
         return <div id="home">
-            <h1>This is home</h1>
+            <h1>Welcome to SocialSite!</h1>
             {loggedIn ? 
                 <div>
-                    <Link to={"/data"}>
-                        <p className="homeMessage">Go to data page</p>
+                    <Link to={"/timeline"}>
+                        <Button className="homeMessage" color="primary">See your timeline</Button>
                     </Link>
                     <Link to={"/chat"}>
-                        Chat
+                        <Button color="secondary">Go to chat</Button>
                     </Link>
                 </div>:
-                <p className="homeMessage">You must log in.</p>}
+                <ToLogIn className="homeMessage" />}
         </div>
     }
 }

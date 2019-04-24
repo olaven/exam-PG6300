@@ -56,18 +56,23 @@ router.post("/logout", function (req, res) {
 
 
 /*
-    Just return the id of the user, if the request is
-    authenticated with a valid session cookie
+    Return data about the user if the session cookie is valid 
  */
 router.get("/user", function (req, res) {
-
+	
 	if (!req.user) {
 		res.status(codes.UNAUTHORIZED).send();
 		return;
 	}
 
+	const user = Users.getUser(req.user.email); 
+
 	res.status(codes.OK).json({
-		email: req.user.email
+		email: user.email, 
+		givenName: user.givenName, 
+		familyName: user.familyName, 
+		location: user.location, 
+		dateOfBirth: user.dateOfBirth
 	}); 
 });
 

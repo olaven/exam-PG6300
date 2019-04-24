@@ -8,6 +8,7 @@ import React from "react";
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import { Home } from "./pages/home.jsx";
+import { Timeline } from "./pages/timeline";
 import { Chat } from "./pages/chat";
 import { NotFound } from "./pages/notFound.jsx"
 import { Signup } from "./authentication/signup.jsx";
@@ -61,11 +62,23 @@ export class App extends React.Component {
         }
     };
 
-    updateLoggedInUser = (user) => {
+    // I do not want to fetch for user info when user is (for instance) logged out 
+    updateLoggedInUser = async (doFetch) => {
 
-        this.setState({
-            user: user
-        });
+        let user = null; 
+        if (doFetch) {
+
+            const response = await fetch("/api/user");
+            const user = await response.json();
+            
+            this.setState({
+                user
+            }); 
+        } else {
+            this.setState({
+                user: null
+            });
+        }
     }
 
     renderRouteWithUser = (path, Component) => {
@@ -83,6 +96,7 @@ export class App extends React.Component {
 
     render() {
 
+        console.log("user in state", this.state.user); 
         return <BrowserRouter>
             <Layout
                 user={this.state.user}
@@ -90,6 +104,7 @@ export class App extends React.Component {
 
                 <Switch>
                     {this.renderRouteWithUser("/", Home)}
+                    {this.renderRouteWithUser("/timeline", Timeline)}
                     {this.renderRouteWithUser("/chat", Chat)}
                     {this.renderRouteWithUser("/signup", Signup)}
                     {this.renderRouteWithUser("/login", Login)}

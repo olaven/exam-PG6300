@@ -14,6 +14,7 @@ router.get("/posts", isAuthenticated, (req, res) => {
 
 router.get("/posts/:id", async (req, res) => {
 
+    
     const id = req.params.id
     id//? 
 	if (!id) {
