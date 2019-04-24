@@ -1,14 +1,14 @@
-//TODO replace with json file 
-const database = [];
+
+const messagse = [];
 
 const getAll = () => {
 
-	return database;
+	return messagse;
 };
 
 const addMessage = (message) => {
 
-	database.push(message);
+	messagse.push(message);
 };
 
 module.exports = {
