@@ -37,6 +37,11 @@ const retrieveByUser = (user) => Array.from(posts.values())
 		post.authorEmail === user.email 
 	);
 
+const retrieveByAuthorEmails = (emails) => Array.from(posts.values())
+		.filter(post => 
+			emails.includes(post.authorEmail)	
+		); 
+
 const retrieve = id =>
 	posts.get(id);
     
@@ -74,6 +79,7 @@ module.exports = {
 	retrieveForUser,
 	retrieveAll, 
 	retrieveByUser,
+	retrieveByAuthorEmails,
 	update,
 	remove,
 	clear,

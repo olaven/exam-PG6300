@@ -17,39 +17,7 @@ const broadcast = (clients, data) => {
 	});
 };
 
-const websocketLogin = (dto, socket, SocketsToEmails) => {
-
-	const token = dto.token;
-
-	if (token === null || token === undefined) {
-		socket.send(JSON.stringify({
-			error: "Missing token"
-		}));
-		return null;
-	}
-
-	//token can be used only once to authenticate only a single socket
-	const email = tokens.consumeToken(token);
-
-	if (email === null || email === undefined) {
-		socket.send(JSON.stringify({
-			error: "Invalid token"
-		}));
-		return null;
-	}
-
-	/*
-	if token was valid, then we can create an authenticated
-	association with the given user for that token and the
-	current socket
-	 */
-	SocketsToEmails.set(socket, email);
-	console.log("User '" + email + "' is now connected with a websocket.");
-	return socket;
-};
-
 
 module.exports = {
-	broadcast, 
-	websocketLogin
+	broadcast
 };

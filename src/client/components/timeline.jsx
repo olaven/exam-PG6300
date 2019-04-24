@@ -8,7 +8,9 @@ import { getWebSocket } from "../client-utils";
 /**
  * Renders a timeline of posts 
  * Specify if timeline should be merged or solo with 
- * merged=true/false
+ * merged=true/false. 
+ * 
+ * Should also receive User to determine what posts to fetch
  */
 export class Timeline extends React.Component {
 
@@ -26,8 +28,8 @@ export class Timeline extends React.Component {
         
         this.getToken(); 
 
-        const endpoint = (this.props.merged? "/mergedTimeline": "/soloTimeline")
-        this.postsSocket = getWebSocket(endpoint);
+        //const endpoint = (this.props.merged? "/mergedTimeline": "/soloTimeline")
+        this.postsSocket = getWebSocket("/timeline");
         this.postsSocket.onmessage = (event => {
 
             
@@ -76,8 +78,10 @@ export class Timeline extends React.Component {
 
     onReceiveToken = token => {
 
+        const merged = this.props.merged //TODO: replace old support for merged with some logic here
         const payload = {
             token, 
+            merged, 
             topic: "login"
         }; 
 
