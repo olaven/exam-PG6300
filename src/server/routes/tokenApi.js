@@ -10,11 +10,11 @@ const router = express.Router();
  */
 router.post("/token", isAuthenticated, (req, res) => {
 
-    //NOTE: req.user is defined, as user has to be authenticated at this point
-    const email = req.user.email; 
-    const token = tokens.createTokenFor(email); 
+	//NOTE: req.user is defined, as user has to be authenticated at this point
+	const email = req.user.email; 
+	const token = tokens.createTokenFor(email); 
 
-    res.status(http.codes.CREATED).send({ token }); 
+	res.status(http.codes.CREATED).send({ token }); 
 });
 
 

@@ -9,19 +9,19 @@ const tokens = new Map();
 
 const createTokenFor = email => {
     
-    const token = nanoid(); 
-    tokens.set(token, email); 
-    return token; 
-}
+	const token = nanoid(); 
+	tokens.set(token, email); 
+	return token; 
+};
 
 const consumeToken = token => {
 
-    const email = tokens.get(token); 
-    tokens.delete(token)
-    return email; 
-}
+	const email = tokens.get(token); 
+	tokens.delete(token);
+	return email; 
+};
 
 module.exports = {
-    createTokenFor, 
-    consumeToken
-}
+	createTokenFor, 
+	consumeToken
+};

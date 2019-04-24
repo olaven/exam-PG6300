@@ -101,8 +101,8 @@ const getUserInformation = user => {
 		familyName: user.familyName,
 		location: user.location,
 		dateOfBirth: user.dateOfBirth
-	}
-}
+	};
+};
 
 
 module.exports = router;

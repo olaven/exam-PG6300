@@ -43,10 +43,10 @@ const websocketLogin = (dto, socket, SocketsToEmails) => {
 	association with the given user for that token and the
 	current socket
 	 */
-	SocketsToEmails.set(socket, email)
+	SocketsToEmails.set(socket, email);
 	console.log("User '" + email + "' is now connected with a websocket.");
-	return socket
-}
+	return socket;
+};
 
 
 module.exports = {
