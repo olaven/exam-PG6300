@@ -6,7 +6,7 @@ const router = express.Router();
 
 /**
  * This is queried to get a token. This token can then be used 
- * connecting to the /posts WS-endpoint. 
+ * connecting to the /timeline WS-endpoints. 
  */
 router.post("/token", isAuthenticated, (req, res) => {
 

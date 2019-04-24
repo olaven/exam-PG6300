@@ -29,8 +29,7 @@ const demoUsers = [
         familyName: "Baggins",
         dateOfBirth: "09-24/1968", 
         location: "The Shire",
-        friendEmails: ["sam@shire.com", "merry@shire", "pippin@shire", "gandalf@arda.com"], 
-        postIds: [] //TODO: reference some posts 
+        friendEmails: ["sam@shire.com", "merry@shire", "pippin@shire", "gandalf@arda.com"]
     }, 
     {
         email: "sam@shire.com",
@@ -39,8 +38,7 @@ const demoUsers = [
         familyName: "Gamgee",
         dateOfBirth: "04-29-1980", 
         location: "The Shire",
-        friendEmails: ["frodo@shire.com", "merry@shire.com", "pippin@shire.com"], 
-        postIds: [] //TODO: reference some posts 
+        friendEmails: ["frodo@shire.com", "merry@shire.com", "pippin@shire.com"]
     }, 
     {
         email: "merry@shire.com",
@@ -49,8 +47,7 @@ const demoUsers = [
         familyName: "Brandybuck",
         dateOfBirth: "04-11-1982",
         location: "The Shire",
-        friendEmails: ["frodo@shire.com", "sam@shire.com", "pippin@shire.com"], 
-        postIds: [] //TODO: reference some posts 
+        friendEmails: ["frodo@shire.com", "sam@shire.com", "pippin@shire.com"]
     }, 
     {
         email: "pippin@shire.com",
@@ -59,8 +56,7 @@ const demoUsers = [
         familyName: "Took",
         dateOfBirth: "12-12-1990", 
         location: "The Shire",
-        friendEmails: ["frodo@shire.com", "sam@shire.com", "merry@shire.com"],
-        postIds: [] //TODO: reference some posts 
+        friendEmails: ["frodo@shire.com", "sam@shire.com", "merry@shire.com"]
     }, 
     {
         email: "gandalf@arda.com",
@@ -69,8 +65,7 @@ const demoUsers = [
         familyName: "the Grey",
         dateOfBirth: "10-12-300",
         location: "Everywhere, really",
-        friendEmails: ["frodo@shire.com"],
-        postIds: [] 
+        friendEmails: ["frodo@shire.com"]
     }
 ]
 

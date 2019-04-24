@@ -30,7 +30,12 @@ const persist = post => {
 const retrieveForUser = (user) => Array.from(posts.values())
     .filter(post => 
         post.authorEmail === user.email || user.friendEmails.includes(post.authorEmail)
-    ); 
+	); 
+	
+const retrieveByUser = (user) => Array.from(posts.values())
+	.filter(post =>
+		post.authorEmail === user.email 
+	);
 
 const retrieve = id =>
     posts.get(id);
@@ -67,7 +72,8 @@ module.exports = {
 	persist,
 	retrieve,
     retrieveForUser,
-    retrieveAll, 
+	retrieveAll, 
+	retrieveByUser,
 	update,
 	remove,
 	clear,

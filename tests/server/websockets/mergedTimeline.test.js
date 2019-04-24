@@ -22,7 +22,7 @@ const sockets = [];
 
 const connectSocket = async (onMessage, updatedPredicate) => {
 
-    const socket = new WS("ws://localhost:" + port + "/posts");
+    const socket = new WS("ws://localhost:" + port + "/mergedTimeline");
 
     sockets.push(socket);
     socket.on("message", onMessage);

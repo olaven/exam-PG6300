@@ -26,7 +26,7 @@ export class Home extends React.Component {
                         <Button color="secondary">Go to your profile</Button>
                     </Link>
                     <hr/>
-                    <Timeline />
+                    <Timeline merged={true}/>
                 </div>:
                 <ToLogIn className="homeMessage" />}
         </div>

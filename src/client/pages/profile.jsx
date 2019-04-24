@@ -1,5 +1,6 @@
 import React from "react";import { UserDetailsView } from "../components/userDetails";
 import { ToLogIn } from "../components/toLogIn";
+import { Timeline } from "../components/timeline";
  "react-router-dom";
 
 
@@ -19,10 +20,11 @@ export class Profile extends React.Component {
         }
 
         return <div>
-            <UserDetailsView user={this.props.user} />
             ADD ADDING OF POSTS 
-            ADD TIMELINE WITH JUST ME 
             ADD EDITING OF OWN DETAILS
+            <UserDetailsView user={this.props.user} />
+            <h2>Personal timeline</h2>
+            <Timeline merged={false}/>
         </div>
     }
 }

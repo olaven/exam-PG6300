@@ -5,6 +5,11 @@ import http from "../../shared/http";
 import { PostView } from "./postView"; 
 import { getWebSocket } from "../client-utils"; 
 
+/**
+ * Renders a timeline of posts 
+ * Specify if timeline should be merged or solo with 
+ * merged=true/false
+ */
 export class Timeline extends React.Component {
 
     constructor(props) {
@@ -21,7 +26,8 @@ export class Timeline extends React.Component {
         
         this.getToken(); 
 
-        this.postsSocket = getWebSocket("/posts");
+        const endpoint = (this.props.merged? "/mergedTimeline": "/soloTimeline")
+        this.postsSocket = getWebSocket(endpoint);
         this.postsSocket.onmessage = (event => {
 
             
@@ -41,8 +47,6 @@ export class Timeline extends React.Component {
                 errorMessage: null, 
                 posts: dto.posts
             }); 
-
-            const data = dto.data;
         });
     }
 
@@ -72,16 +76,11 @@ export class Timeline extends React.Component {
 
     onReceiveToken = token => {
 
-        console.log("received a token: ", token); 
         const payload = {
             token, 
             topic: "login"
-        }
+        }; 
 
-        //payloadi nneholder token. 
-        //sender med send  
-
-        console.log(this.postsSocket); 
         this.postsSocket.send(JSON.stringify(payload));    
     }
 
