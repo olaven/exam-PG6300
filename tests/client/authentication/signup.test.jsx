@@ -44,8 +44,9 @@ let port;
 describe("The signup-page", () => {
 
 
-	beforeAll((done) => {
+	beforeEach((done) => {
 
+		clearUsers(); 
 		server = app.listen(0, () => {
 			port = server.address().port; //?
 			overrideWebSocket(port);
@@ -55,7 +56,7 @@ describe("The signup-page", () => {
 		overrideFetch(app);
 	});
 
-	afterAll(async (done) => {
+	afterEach(async (done) => {
 		await server.close();
 		done(); 
 	});
@@ -121,6 +122,7 @@ describe("The signup-page", () => {
 			() => { return page === "/"; },
 			2000, 200);
 
+		
 		expect(redirected).toEqual(true);
 
 		expect(getUser(email).email).toEqual(email);

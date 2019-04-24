@@ -29,7 +29,7 @@ const persist = post => {
 
 const retrieveForUser = (user) => Array.from(posts.values())
     .filter(post => 
-        post.authorEmail === user.email ||user.friendEmails.includes(post.authorEmail)
+        post.authorEmail === user.email || user.friendEmails.includes(post.authorEmail)
     ); 
 
 const retrieve = id =>

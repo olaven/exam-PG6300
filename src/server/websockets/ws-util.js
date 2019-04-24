@@ -7,7 +7,7 @@ const broadcast = (clients, data) => {
 		if (client.readyState === WebSocket.OPEN) {
 
 			client.send(JSON.stringify(data));
-		}       
+		}
 	});
 };
 

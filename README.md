@@ -31,6 +31,7 @@
   * JSON-format does not support comments. `package.json`is partially copied from [this file](https://github.com/arcuri82/web_development_and_api_design/blob/master/exercise-solutions/quiz-game/part-10/package.json)
 * dependencies not used in course
   * [eslint](https://yarnpkg.com/en/package/eslint) and related plugins. This is to create lint-config appropriate for the project (like support for React)
+* [nanoid](https://www.npmjs.com/package/nanoid) is used for generating random IDs. The library was updated recently, takes         minimal amount of space, and has 700k weekly downloads. 
   *  [cross-env](https://www.npmjs.com/package/cross-env) is used for setting environment variables. I have access to a Mac. This should make sure that environment variable is working fine on non-UNIX systems as well
   * [style-loader](https://www.npmjs.com/package/style-loader) for loading styles to reactsrap.  
 * on general style 

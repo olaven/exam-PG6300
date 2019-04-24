@@ -33,7 +33,7 @@ const connectSocket = async (onMessage, updatedPredicate) => {
 describe("Websocket for usercount.", () => {
 
 
-	beforeAll(done => {
+	beforeEach(done => {
 
 		server = app.listen(0, () => {
 
@@ -43,17 +43,9 @@ describe("Websocket for usercount.", () => {
 		});
 	});
 
-	afterAll(async () => {
+	afterEach(async () => {
 
 		await server.close();
-	});
-
-
-	afterEach(async () => {
-		/*
-            make sure to manually free the sockets, otherwise might block Jest and the
-            shutting down of Express...
-        */
 		for (let i = 0; i < sockets.length; i++) {
 
 			await sockets[i].close();
@@ -82,7 +74,7 @@ describe("Websocket for usercount.", () => {
 	
 		const n = 3;
 		const counts = new Array(n);
-
+		
 
 		for(let i = 0; i < n; i++) {
 

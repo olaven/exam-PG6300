@@ -1,18 +1,27 @@
+const nanoid = require("nanoid"); 
+
 /**
  * Adding demo data for use in development mode 
  */
 
-const demoUsers = [
-    {
+const getDevUser = () => {
+    return {
         email: "dev@admin.com",
         password: "dev",
         givenName: "DEV_GIVEN",
         familyName: "DEV_FAMILY_NAME",
         dateOfBirth: "24/04/1080", //new Date().toLocaleDateString(),
         location: "Oslo",
-        friendEmails: ["gandalf@arda.com", "sam@shire.com"], 
-        postIds: [] 
-    }, 
+        friendEmails: ["gandalf@arda.com", "sam@shire.com"],
+        postIds: []
+    }
+}
+
+
+
+
+const demoUsers = [
+    getDevUser(), 
     {
         email: "frodo@shire.com",
         password: "secretly_wanting_that_ring",
@@ -24,7 +33,7 @@ const demoUsers = [
         postIds: [] //TODO: reference some posts 
     }, 
     {
-        email: "sam@gamgee.com",
+        email: "sam@shire.com",
         password: "rosie",
         givenName: "Sam",
         familyName: "Gamgee",
@@ -67,36 +76,43 @@ const demoUsers = [
 
 const demoPosts = [
     {
+        id: nanoid(), 
         authorEmail: "gandalf@arda.com", 
         content: "Had a lovely trip with Shadowfax today!",
         timestamp: new Date().getMilliseconds() 
     }, 
     {
+        id: nanoid(),
         authorEmail: "gandalf@arda.com",
         content: "Come visit me for some ice cream!",
         timestamp: new Date().getMilliseconds()
     }, 
     {
+        id: nanoid(),
         authorEmail: "frodo@shire.com",
         content: "I went for a walk in the woods.",
         timestamp: new Date().getMilliseconds()
     }, 
     {
+        id: nanoid(),
         authorEmail: "gandalf@arda.com",
         content: "I am smoking from my pipe today. And tomorrow.",
         timestamp: new Date().getMilliseconds()
     }, 
     {
+        id: nanoid(),
         authorEmail: "pippin@shire.com",
         content: "Let me know if anything happens!",
         timestamp: new Date().getMilliseconds()
     }, 
     {
+        id: nanoid(),
         authorEmail: "merry@shire.com",
         content: "I have been getting taller lately.",
         timestamp: new Date().getMilliseconds()
     }, 
     {
+        id: nanoid(),
         authorEmail: "sam@shire.com",
         content: "Master Frodo is almost as nice as my plants at home.",
         timestamp: new Date().getMilliseconds()
@@ -117,5 +133,6 @@ const addDemoPosts = posts => {
 
 module.exports = {
     addDemoUsers, 
-    addDemoPosts
+    addDemoPosts,
+    getDevUser
 }

@@ -40,7 +40,6 @@ describe("The chat page.", () => {
 			done();
 		});
 
-		overrideFetch(app);
 	});
 
 	afterAll(() => {
