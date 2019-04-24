@@ -54,8 +54,8 @@ export class Chat extends React.Component {
     }
 
     renderMessages = () => 
-        this.state.messages.map(message =>
-            <p>{message.username} - {message.text}</p>
+        this.state.messages.map((message, index) =>
+            <p key={index}>{message.username} - {message.text}</p>
         ); 
 
 
