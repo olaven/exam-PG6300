@@ -23,7 +23,7 @@ beforeEach(async () => {
 });
 
 
-describe("the data REST-API.", () => {
+describe.skip("the data REST-API.", () => {
 
 	it("returns data.", async () => {
 

@@ -8,8 +8,6 @@ import React from "react";
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import { Home } from "./pages/home.jsx";
-import { Data } from "./pages/data.jsx";
-import { DataGQL } from "./pages/data-graphql.jsx";
 import { Chat } from "./pages/chat";
 import { NotFound } from "./pages/notFound.jsx"
 import { Signup } from "./authentication/signup.jsx";
@@ -92,8 +90,6 @@ export class App extends React.Component {
 
                 <Switch>
                     {this.renderRouteWithUser("/", Home)}
-                    {this.renderRouteWithUser("/data", Data)}
-                    {this.renderRouteWithUser("/data-graphql", DataGQL)}
                     {this.renderRouteWithUser("/chat", Chat)}
                     {this.renderRouteWithUser("/signup", Signup)}
                     {this.renderRouteWithUser("/login", Login)}

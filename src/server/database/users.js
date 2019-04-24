@@ -31,7 +31,7 @@ const createUser = (username, password) => {
     
 	const user = {
 		username: username, 
-		password: password 
+		password: password
 		//TODO: add more user data 
 	};
 

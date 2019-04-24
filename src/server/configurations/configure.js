@@ -15,9 +15,9 @@ module.exports = (app) => {
 		websocket: () => {
 			configureWebSocket(app);
 		},
-		graphql: () => {
-			configureGraphQL(app);
-		},
+		// graphql: () => {
+		// 	configureGraphQL(app);
+		// },
 		rest: () => {
 			configureREST(app);
 		}

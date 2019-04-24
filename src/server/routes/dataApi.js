@@ -2,7 +2,7 @@ const express = require("express");
 
 const { isAuthenticated } = require("../middleware");
 const { codes } = require("../../shared/http");
-const { getAll, getById, getByChecked } = require("../database/data"); 
+// const { getAll, getById, getByChecked } = require("../database/data"); 
 const router = express.Router();
 
 router.get("/data", isAuthenticated, (req, res) => {
