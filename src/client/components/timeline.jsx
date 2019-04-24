@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 import http from "../../shared/http";
 import { PostView } from "./postView"; 
 import { getWebSocket } from "../client-utils"; 
+import { AddPost } from "./addPost";
 
 /**
- * Renders a timeline of posts 
- * Specify if timeline should be merged or solo with 
- * merged=true/false. 
- * 
- * Should also receive User to determine what posts to fetch
+ * Renders a timeline. 
+ * Takes the following props: 
+ * 1: merged: Bool (specify wether the timeline is merged or solo)
+ * 2: email: The author of new posts
  */
 export class Timeline extends React.Component {
 
@@ -99,6 +99,8 @@ export class Timeline extends React.Component {
 
         return <div id="home">
             <h1>Timeline:</h1>
+            <h2>Add a new post:</h2>
+            <AddPost author={this.props.email} socket={this.postsSocket} />
             {this.renderPosts()}
         </div>
     }

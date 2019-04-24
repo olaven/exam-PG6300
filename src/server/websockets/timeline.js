@@ -1,5 +1,5 @@
 const { broadcast } = require("./ws-util");
-const { retrieveByAuthorEmails } = require("../database/posts");
+const { retrieveByAuthorEmails, persist } = require("../database/posts");
 const users = require("../database/users");
 const tokens = require("../database/tokens"); 
 
@@ -12,6 +12,7 @@ const timeline = (ews) => {
 
 		ws.on("message", fromClient => {
 
+			console.log("received some message", fromClient); 
 			const dto = JSON.parse(fromClient);
 
 			if (dto.topic === "login") {
@@ -20,8 +21,11 @@ const timeline = (ews) => {
 				if (loggedIn) {
 					sendInitialPosts(ws);
 				}
-			} else {
+			} 
+			if (dto.post) {
 				
+				persist(dto.post);
+				broadcastNewPost(dto.post, ws)
 			}
 			//TODO: broadcast new post to relevant users
 		});
@@ -29,28 +33,40 @@ const timeline = (ews) => {
 		ws.on("error", () => {
 			console.log("error in posts-websocket..");
 		});
+
+		ws.on("close", () => {
+			
+			// remove the socket from the ones I listen to 
+		})
 	};
 };
 
 const sendInitialPosts = socket => {
 
 	const subscriptions = SocketToSubscriptions.get(socket); 
-	console.log("SUBS AFTER MAP: ", subscriptions); 
 	const postsFromSubscriptions = retrieveByAuthorEmails(subscriptions); 
-	
 	const dto = {
 		posts: postsFromSubscriptions
 	}
 
-	console.log("DTO: ", dto); 
 	const payload = JSON.stringify(dto);  
 	socket.send(payload); 
 };
 
+
+const broadcastNewPost = (post, socket) => {
+
+	const payload = JSON.stringify({
+		posts: [post]
+	}); 
+	//TODO: finn subscriptions og hent  tilbake. Kanskje jeg kan iterere gjennom values ("baklengs") på map? 
+};
+
+
 const websocketLogin = (dto, socket) => {
 
 	const token = dto.token;
-	const merged = dto.merged; 
+	const merged = dto.merged;
 
 	if (merged == null || merged === undefined) {
 		socket.send(JSON.stringify({
@@ -80,26 +96,17 @@ const websocketLogin = (dto, socket) => {
 	if token was valid, we continue to set up associations for the socket
 	 */
 	const user = users.getUser(email);
-	let subscriptions = [user.email]; 
+	let subscriptions = [user.email];
 
 	if (merged) {
-		subscriptions = subscriptions.concat(user.friendEmails); 
-	} 
+		subscriptions = subscriptions.concat(user.friendEmails);
+	}
 
-	SocketToSubscriptions.set(socket, subscriptions); 
+	SocketToSubscriptions.set(socket, subscriptions);
 	console.log("User '" + email + "' is now connected with timeline-websocket.");
 	return socket;
 };
 
-
-const broadcastNewPost = ews => {
-
-	//TODO: only relevant clients 
-	const clients = ews.getWss().clients;
-	broadcast(clients, {
-		userCount: clients.size
-	});
-};
 
 
 module.exports = {

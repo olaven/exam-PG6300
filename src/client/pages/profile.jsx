@@ -24,7 +24,7 @@ export class Profile extends React.Component {
             ADD EDITING OF OWN DETAILS
             <UserDetailsView user={this.props.user} />
             <h2>Personal timeline</h2>
-            <Timeline merged={false} user={this.props.user}/>
+            <Timeline merged={false} email={this.props.user.email}/>
         </div>
     }
 }

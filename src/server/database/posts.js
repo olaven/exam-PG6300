@@ -23,6 +23,7 @@ const persist = post => {
 	}
 
 	post.id = id;
+	post.timestamp = new Date().getMilliseconds();
 	posts.set(id, post);
 	return id;
 };
