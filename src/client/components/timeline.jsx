@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ToLogIn } from "../components/toLogIn";
 
-import { PostView } from "../components/postView"; 
+import http from "../../shared/http";
+import { PostView } from "./postView"; 
 import { getWebSocket } from "../client-utils"; 
-import http from "../../shared/http"; 
+ 
 
 export class Timeline extends React.Component {
 
@@ -91,21 +91,13 @@ export class Timeline extends React.Component {
 
     render() {
 
-        const loggedIn = this.props.user !== null;
-
-        if (!loggedIn) {
-            return <ToLogIn /> 
-        }
-
         if(this.state.errorMessage) {
             return <h1>{this.state.errorMessage}</h1>
         }
 
         return <div id="home">
             <h1>Timeline:</h1>
-            {loggedIn ?
-                this.renderPosts():
-                <p className="homeMessage">You must log in.</p>}
+            {this.renderPosts()}
         </div>
     }
 }
