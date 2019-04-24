@@ -77,42 +77,49 @@ const demoUsers = [
 const demoPosts = [
     {
         id: nanoid(), 
+        title: "Amazing trip", 
         authorEmail: "gandalf@arda.com", 
         content: "Had a lovely trip with Shadowfax today!",
         timestamp: new Date().getMilliseconds() 
     }, 
     {
         id: nanoid(),
+        title: "Vanilla or chocolate?",
         authorEmail: "gandalf@arda.com",
         content: "Come visit me for some ice cream!",
         timestamp: new Date().getMilliseconds()
     }, 
     {
         id: nanoid(),
+        title: "The woods.",
         authorEmail: "frodo@shire.com",
         content: "I went for a walk in the woods.",
         timestamp: new Date().getMilliseconds()
     }, 
     {
         id: nanoid(),
+        title: "Smokey.",
         authorEmail: "gandalf@arda.com",
         content: "I am smoking from my pipe today. And tomorrow.",
         timestamp: new Date().getMilliseconds()
     }, 
     {
         id: nanoid(),
+        title: "Let me know!",
         authorEmail: "pippin@shire.com",
         content: "Let me know if anything happens!",
         timestamp: new Date().getMilliseconds()
     }, 
     {
         id: nanoid(),
+        title: "How's it down there?",
         authorEmail: "merry@shire.com",
         content: "I have been getting taller lately.",
         timestamp: new Date().getMilliseconds()
     }, 
     {
         id: nanoid(),
+        title: "Frodo and gardening.",
         authorEmail: "sam@shire.com",
         content: "Master Frodo is almost as nice as my plants at home.",
         timestamp: new Date().getMilliseconds()

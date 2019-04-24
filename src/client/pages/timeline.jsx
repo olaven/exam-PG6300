@@ -44,7 +44,6 @@ export class Timeline extends React.Component {
             }); 
 
             const data = dto.data;
-            console.log(data, " from postsSocket"); 
         });
     }
 

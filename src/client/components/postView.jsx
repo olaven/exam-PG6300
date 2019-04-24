@@ -14,7 +14,7 @@ export class PostView extends React.Component {
     render() {
         return <div>
             <Card>
-                <CardHeader tag="h3">POST TITLE</CardHeader>
+                <CardHeader tag="h3">{this.props.post.title}</CardHeader>
                 <CardBody>
                     <CardText>{this.props.post.content}</CardText>
                     <Button>LIKE!</Button>
