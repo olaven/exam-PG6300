@@ -20,6 +20,9 @@ export class Profile extends React.Component {
 
         return <div>
             <UserDetailsView user={this.props.user} />
+            ADD ADDING OF POSTS 
+            ADD TIMELINE WITH JUST ME 
+            ADD EDITING OF OWN DETAILS
         </div>
     }
 }

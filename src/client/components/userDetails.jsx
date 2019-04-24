@@ -60,8 +60,10 @@ export class UserDetailsView extends React.Component {
     }
 
     calculateAge = () => {
-        console.log(this.state.user.dateOfBirth); 
-        return new Date().getFullYear(); 
+        //modified version of: https://stackoverflow.com/questions/8152426/how-can-i-calculate-the-number-of-years-betwen-two-dates
+        const ageDifMs = Date.now() - new Date(this.state.user.dateOfBirth); 
+        const ageDate = new Date(ageDifMs); // miliseconds from epoch
+        return Math.abs(ageDate.getUTCFullYear() - 1970);
     }
     
 
