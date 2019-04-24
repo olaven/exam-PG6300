@@ -13,16 +13,6 @@ const posts = (ews) => {
 
     return (ws, req) => {
 
-        console.log('established a post connection');
-
-        // // ws.messageHanders = new Map(); 
-        // //ws.addMessageHandler("login", handleLogin);
-
-        // const user = req.session.passport.user; 
-        // const posts = retrieveForUser(user); 
-        // sendInitialPostsToUser(posts, user, ews); 
-        
-
         ws.on("message", fromClient => {
 
             const dto = JSON.parse(fromClient); 
@@ -38,18 +28,19 @@ const posts = (ews) => {
         });
 
         ws.on("error", () => {
-            console.log("error in usercount-websocket..");
+            console.log("error in posts-websocket..");
         });
     };
 };
 
 const sendInitialPosts = socket => {
     
-    const email = SocketsToEmails.get(socket); 
-    console.log(email); 
+    const email = SocketsToEmails.get(socket);  
     const user = users.getUser(email); 
     const postsForUser = retrieveForUser(user); 
-    const payload = JSON.stringify(postsForUser); 
+    const payload = JSON.stringify({
+        posts: postsForUser
+    }); 
     
     socket.send(payload);
 }

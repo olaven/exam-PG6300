@@ -27,9 +27,8 @@ export class Timeline extends React.Component {
 
             
             const dto = JSON.parse(event.data); 
-            console.log(event, dto); 
 
-            if (dto === null || dto === undefined || dto.topic !== "update") {
+            if (dto === null || dto === undefined) {
                 this.setState({ errorMessage: "Invalid response from server." });
                 return;
             }
@@ -40,7 +39,8 @@ export class Timeline extends React.Component {
             }
 
             this.setState({
-                errorMessage: null 
+                errorMessage: null, 
+                posts: dto.posts
             }); 
 
             const data = dto.data;
