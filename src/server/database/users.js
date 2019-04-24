@@ -28,7 +28,21 @@ const verifyUser = (email, password) => {
 	return user.password === password;
 };
 
-const createUser = (email, password) => {
+/**
+ * 
+ * @param {
+ * req.body.email,
+ 	req.body.givenName,
+ 	req.body.familyName,
+ 	req.body.dateOfBirth,
+ 	req.body.location,
+ 	req.body.password
+ }
+ email
+ * @param {*} password 
+ */
+
+const createUser = (email, givenName, familyName, dateOfBirth, location, password) => {
 
 	const exists = database.get(email);
 	if (exists) {
@@ -38,9 +52,15 @@ const createUser = (email, password) => {
 	
 	const user = {
 		email: email, 
-		password: password
-		//TODO: add more user data 
+		givenName: givenName, 
+		familyName: familyName, 
+		dateOfBirth: dateOfBirth, 
+		location: location,
+		password: password,
+		friendEmails: [],
+		postIds: [], 
 	};
+
 
 	database.set(email, user);
 	return true;

@@ -20,7 +20,7 @@ export class Signup extends React.Component {
             password: "",
             repeatPassword: "",
             serverErrorMessage: null, 
-            inputError: true 
+            validInput: true 
         };
     }
 
@@ -39,8 +39,6 @@ export class Signup extends React.Component {
         } else {
             valid = true; 
         }
-
-        console.log("validated to: ", valid); 
 
         this.setState({
             validInput: valid
@@ -212,7 +210,7 @@ export class Signup extends React.Component {
                     value={this.state.location}
                     onChange={this.locationChanged}
                     placeholder="Location"
-                    id="locatonInput" />
+                    id="locationInput" />
                 <Input
                     type="password"
                     value={this.state.password}
@@ -228,18 +226,19 @@ export class Signup extends React.Component {
                 {passwordErrorMessge}
 
                 {this.state.validInput?
-                <Button
-                    color="primary"
-                    disabled
-                >
-                    Sign up
-                </Button>: 
-                <Button
-                    color="primary"
-                    onClick={this.signup}
-                    id="signupButton">
-                    Sign up
-                </Button>}
+                    <Button
+                        color="primary"
+                        onClick={this.signup}
+                        id="signupButton">
+                        Sign up
+                    </Button>:
+                    <Button
+                        color="primary"
+                        disabled
+                    >
+                        Sign up
+                    </Button>
+                }
                     
                 {serverError}
             </div>

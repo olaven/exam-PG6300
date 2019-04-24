@@ -13,13 +13,20 @@ const Users = require("../database/users");
 const router = express.Router();
 
 router.post("/login", passport.authenticate("local"), (req, res) => {
-
+	
 	res.status(codes.NO_CONTENT).send();
 });
 
 router.post("/signup", function (req, res) {
     
-	let created = Users.createUser(req.body.email, req.body.password);
+	let created = Users.createUser(
+		req.body.email, 
+		req.body.givenName, 
+		req.body.familyName, 
+		req.body.dateOfBirth,
+		req.body.location, 
+		req.body.password
+	);
 
 	// const created = Users.createUser(req.body.user, req.body.password);
 	

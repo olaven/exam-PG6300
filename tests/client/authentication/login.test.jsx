@@ -54,10 +54,14 @@ describe("The login page", () => {
 
 	it("lets user log in with valid input", async () => {
 
-		const email = "Foo";
+		const email = "foo@test.com";
+		const givenName = "test given"; 
+		const familyname = "test family"; 
+		const location = "some location"; 
+		const dateOfBirth = "24/12/2000"; 
 		const password = "123";
-		createUser(email, password);
-
+		createUser(email, givenName, familyname, dateOfBirth, location, password);
+		
 		const updateLoggedInUser = () => new Promise(resolve => resolve());
 		let page = null;
 		const history = { push: (h) => { page = h; } };

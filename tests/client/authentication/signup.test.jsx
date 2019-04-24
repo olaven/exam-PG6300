@@ -14,17 +14,24 @@ const { Signup } = require("../../../src/client/authentication/signup");
 const { clearUsers, getUser, createUser } = require("../../../src/server/database/users");
 
 
-
-
-const fillForm = (wrapper, email, password, repeatPassword) => {
+//NOTE: date-format: yy-mm-dd
+const fillForm = (wrapper, email, givenName, familyName, location, dateOfBirth, password, repeatPassword) => {
 
 	const emailInput = wrapper.find("#emailInput").at(0);
+	const givenNameInput = wrapper.find("#givenNameInput").at(0); 
+	const familyNameInput = wrapper.find("#familyNameInput").at(0); 
+	const locationInput = wrapper.find("#locationInput").at(0); 
+	const dateOfBirthInput = wrapper.find("#dateOfBirthInput").at(0); 
 	const passwordInput = wrapper.find("#passwordInput").at(0);
 	const repeatPasswordInput = wrapper.find("#repeatPasswordInput").at(0);
 	const signupButton = wrapper.find("#signupButton").at(0);
 
 
 	emailInput.simulate("change", { target: { value: email } });
+	givenNameInput.simulate("change", { target: { value: givenName } });
+	familyNameInput.simulate("change", { target: { value: familyName } });
+	locationInput.simulate("change", { target: { value: location } });
+	dateOfBirthInput.simulate("change", { target: { value: dateOfBirth } });
 	passwordInput.simulate("change", { target: { value: password } });
 	repeatPasswordInput.simulate("change", { target: { value: repeatPassword } });
 
@@ -57,7 +64,14 @@ describe("The signup-page", () => {
 
 	it("gives error when passwords are unequal", async () => {
 
-		const mismatch = "Passwords do not match";
+		const email = "foo@test.com";
+		const givenName = "foo";
+		const familyName = "test";
+		const location = "some location";
+		const dateOfBirth = "10-10-10";
+		const password = "123";
+
+		const mismatch = "Passwords must match!";
 		const wrapper = mount(
 			<MemoryRouter initialEntries={["/signup"]}>
 				<Signup />
@@ -66,7 +80,7 @@ describe("The signup-page", () => {
 
 		expect(wrapper.html().includes(mismatch)).toEqual(false);
 
-		fillForm(wrapper, "foo", "123", "not-matching");
+		fillForm(wrapper, email, givenName, familyName, location, dateOfBirth, password, "not matching");
 
 		const error = await asyncCheckCondition(
 			() => { wrapper.update(); return wrapper.html().includes(mismatch); },
@@ -78,7 +92,14 @@ describe("The signup-page", () => {
 
 	it("can create a user", async () => {
 
-		const email = "Foo";
+		const email = "foo@test.com";
+		const givenName = "foo";
+		const familyName = "test";
+		const location = "some location";
+		const dateOfBirth = "10-10-10";
+		const password = "123";
+
+
 		expect(getUser(email)).toEqual(undefined);
 
 		const updateLoggedInUser = () => new Promise(resolve => resolve());
@@ -91,9 +112,9 @@ describe("The signup-page", () => {
 			</MemoryRouter>
 		);
 
-		const password = "123";
+		
 
-		fillForm(wrapper, email, password, password);
+		fillForm(wrapper, email, givenName, familyName, location, dateOfBirth, password, password);
 
 
 		const redirected = await asyncCheckCondition(
@@ -109,11 +130,15 @@ describe("The signup-page", () => {
 	it("fails if the user already exists", async () => {
 
 		const email = "foo@test.com";
+		const givenName = "foo"; 
+		const familyName = "test"; 
+		const location = "some location"; 
+		const dateOfBirth = "10-10-10"; 
 		const password = "123";
 		createUser(email, password);
 		
 		const updateLoggedInUser = () => new Promise(resolve => resolve());
-		let page = null;
+		
 		const history = { push: (h) => { page = h; } };
 
 		const wrapper = mount(
@@ -122,7 +147,7 @@ describe("The signup-page", () => {
 			</MemoryRouter>
 		);
 
-		fillForm(wrapper, email, password, password);
+		fillForm(wrapper, email, givenName, familyName, location, dateOfBirth, password, password);
 
 		const failed = await asyncCheckCondition(
 			() => {
