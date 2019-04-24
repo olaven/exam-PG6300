@@ -56,6 +56,7 @@ describe("Websocket for usercount.", () => {
 		for (let i = 0; i < sockets.length; i++) {
 
 			sockets[i].close();
+			sockets[i].terminate(); 
 		}
 		sockets.length = 0;
 	});
@@ -124,8 +125,7 @@ describe("Websocket for usercount.", () => {
 			sockets[i].terminate();
 		}
 
-
-		await asyncCheckCondition(() => false, 2000, 1000);
+		await asyncCheckCondition(() => false, 1000, 100);
 		expect(recordedCount).toEqual(initial - decrement);
 	});
 });
