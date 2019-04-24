@@ -1,6 +1,8 @@
-const request = require("supertest");
-const { app } = require("../../../src/server/app");
+const { app  } = require("../../../src/server/app");
+const request = require("supertest")(app);
+
 const { getDevUser } = require("../../../src/server/database/demo"); 
+const posts = require("../../../src/server/database/posts");
 
 let agent = undefined;
 const devUser = getDevUser();
@@ -8,7 +10,7 @@ const devUser = getDevUser();
  * Most tests require the client to be logged in. 
  * Therefore, an agent is logged in before each test. 
  */
-beforeEach(async () => {
+beforeAll(async () => {
 
     agent = await request.agent(app); 
     let response = await agent
@@ -21,6 +23,8 @@ beforeEach(async () => {
 
     expect(response.statusCode).toBe(204);
 });
+
+
 
 
 describe("the post REST-API.", () => {
@@ -71,4 +75,19 @@ describe("the post REST-API.", () => {
             expect(friends.includes(post.authorEmail)).toBe(true); 
         })
     });
+
+    it.only("can give post by id", async () => {
+
+        const post = posts.retrieveAll().find(post => devUser.friendEmails.includes(post.authorEmail)); 
+        const url = "api/posts/" + post.id; 
+        url//? 
+        expect(post).toBeDefined(); 
+        
+        agent//? 
+        const response = await agent
+            .get(url).send(); 
+
+        expect(response.statusCode).toEqual(200);
+        expect(response.body).toBeDefined(); 
+    }); 
 });

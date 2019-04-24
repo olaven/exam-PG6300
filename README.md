@@ -7,6 +7,7 @@
 - [ ] report coverage in readme 
 - [ ] assert test coverage 
 - [ ] test alle scritps
+- [ ] clean up after wallaby 
 - [ ] assert that no part of exercise is forgotten
 - [ ] test every feature manually 
 - [ ] test the app without internet connection

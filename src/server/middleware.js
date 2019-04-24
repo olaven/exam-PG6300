@@ -1,6 +1,8 @@
 const http = require("../shared/http");
+const posts = require("./database/posts"); 
+
 /**
- * Express middleware. 
+ * Middleware for authentication.
  * Returns 401 if not authenticated
  */
 const isAuthenticated = (req, res, next) => {
@@ -13,6 +15,8 @@ const isAuthenticated = (req, res, next) => {
 		next();
 	}
 };
+
+
 
 module.exports = {
 

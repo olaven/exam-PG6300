@@ -33,7 +33,10 @@ const retrieveForUser = (user) => Array.from(posts.values())
     ); 
 
 const retrieve = id =>
-	posts.get(id);
+    posts.get(id);
+    
+const retrieveAll = () => 
+    Array.from(posts.values()); 
 
 
 const update = (post) => {
@@ -63,7 +66,8 @@ const clear = () => {
 module.exports = {
 	persist,
 	retrieve,
-	retrieveForUser,
+    retrieveForUser,
+    retrieveAll, 
 	update,
 	remove,
 	clear,

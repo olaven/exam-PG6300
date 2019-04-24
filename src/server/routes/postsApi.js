@@ -12,11 +12,12 @@ router.get("/posts", isAuthenticated, (req, res) => {
     res.status(codes.OK).send(timelinePosts);
 });
 
-router.get("/posts/:id", isAuthenticated, async (req, res) => {
+router.get("/posts/:id", async (req, res) => {
 
-	const id = parseInt(req.params.id);
-	if (isNaN(id)) {
-		res.status(codes.BAD_REQUEST).send();
+    const id = req.params.id
+    id//? 
+	if (!id) {
+		res.status(codes.BAD_REQUEST).send("id must be included");
 		return;
 	}
 
@@ -27,7 +28,7 @@ router.get("/posts/:id", isAuthenticated, async (req, res) => {
 		return;
 	}
     
-	if (post.authorEmail !== req.user.email) {
+	if (hasAccess(post, req.user)) {
 		res.status(codes.UNAUTHORIZED).send(); 
 		return; 
 	}
@@ -35,5 +36,14 @@ router.get("/posts/:id", isAuthenticated, async (req, res) => {
 	res.status(codes.OK).send(post);
 });
 
+router.delete("/posts/:id", isAuthenticated, async (req, res) => {
+
+}); 
+
+const hasAccess = (post, user) => {
+    if (user.email === post.authorEmail) return true; 
+    if (user.friendEmails.includes(post.authorEmail)) return true; 
+    return false; 
+}
 
 module.exports = router;
