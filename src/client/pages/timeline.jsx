@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ToLogIn } from "../components/toLogIn";
 
 import { PostView } from "../components/postView"; 
+import { getWebSocket } from "../client-utils"; 
 import http from "../../shared/http"; 
 
 export class Timeline extends React.Component {
@@ -12,36 +13,53 @@ export class Timeline extends React.Component {
         super(props);
         this.state = {
             posts: [], 
-            errorMessage: null
+            errorMessage: null, 
+            token: null 
         }
     }
 
     componentDidMount() {
         
-        this.fetchPosts(); 
+        this.getToken(); 
     }
 
-    fetchPosts = async () => {
+    componentWillUnmount() {
 
-        const response = await fetch("/api/posts"); 
-        if (response.status !== http.codes.OK) {
-            
-            this.setState({
-                errorMessage: "An error occured. Please try to log out and then log back in."
-            })
-        } else {
-
-            const posts = await response.json();
-            this.setState({
-                posts, 
-                errorMessage: null
-            });
+        if (this.postsSocket) {
+            this.postsSocket.close(); 
         }
     }
 
+    getToken = async () => {
+
+        try {
+            const response = await fetch("/api/token");
+            const payload = await response.json();
+            const token = payload.token; 
+
+            this.setState({
+                token, 
+                errorMessage: null 
+            }, () => { 
+                // cb to make sure state is set 
+                this.onReceiveToken(); 
+            }); 
+        } catch (error) {
+            
+            this.setState({
+                errorMessage: "some error occured when getting posts"
+            }); 
+        }
+    }
+
+    onReceiveToken = () => {
+
+        console.log("received a token: ", this.state.token); 
+        this.postsSocket = getWebSocket("/posts");
+    }
+
     renderPosts = () => 
-        this.state.posts
-        //this.state.posts.map(post => <PostView post={post} key={post.id}/>)
+        this.state.posts.map(post => <PostView post={post} key={post.id}/>)
 
     render() {
 

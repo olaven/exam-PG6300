@@ -261,6 +261,7 @@ function overrideWebSocket(port) {
 		onerror(error) {
 
 		}
+
 		send(data, options, cb) {
 
 			if (this.readyState !== WS.OPEN) {
@@ -274,6 +275,7 @@ function overrideWebSocket(port) {
 			}
 		}
 	}
+	
 	global.WebSocket = WsStub;
 }
 

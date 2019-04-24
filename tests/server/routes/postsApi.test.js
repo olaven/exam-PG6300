@@ -27,7 +27,7 @@ beforeAll(async () => {
 
 
 
-describe("the post REST-API.", () => {
+describe.skip("the post REST-API.", () => {
 
     it("returns 401 if not authenticated", async () => {
 
@@ -76,7 +76,7 @@ describe("the post REST-API.", () => {
         })
     });
 
-    it.only("can give post by id", async () => {
+    it("can give post by id", async () => {
 
         const post = posts.retrieveAll().find(post => devUser.friendEmails.includes(post.authorEmail)); 
         const url = "api/posts/" + post.id; 
