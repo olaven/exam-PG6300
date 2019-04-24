@@ -42,21 +42,20 @@ describe("Websocket for usercount.", () => {
 		});
 	});
 
-	afterAll(() => {
+	afterAll(async () => {
 
-		server.close();
+		await server.close();
 	});
 
 
-	afterEach(() => {
+	afterEach(async () => {
 		/*
             make sure to manually free the sockets, otherwise might block Jest and the
             shutting down of Express...
         */
 		for (let i = 0; i < sockets.length; i++) {
 
-			sockets[i].close();
-			sockets[i].terminate(); 
+			await sockets[i].close();
 		}
 		sockets.length = 0;
 	});
@@ -122,7 +121,7 @@ describe("Websocket for usercount.", () => {
 
 		const decrement = 2; 
 		for (let i = 0; i < decrement; i++) {
-			sockets[i].terminate();
+			await sockets[i].close();
 		}
 
 		await asyncCheckCondition(() => false, 1000, 100);
