@@ -11,10 +11,8 @@ const timeline = (ews) => {
 
 	return (ws, req) => {
 
-		console.log("got a connection on timeline"); 
 		ws.on("message", fromClient => {
 
-			console.log("received some message", fromClient); 
 			const dto = JSON.parse(fromClient);
 
 			if (dto.topic === "login") {
@@ -27,7 +25,7 @@ const timeline = (ews) => {
 			if (dto.post) {
 				
 				const persisted = persist(dto.post);
-				broadcastNewPost(persisted, ws)
+				broadcastNewPost(persisted, ws);
 			}
 			//TODO: broadcast new post to relevant users
 		});
@@ -35,12 +33,6 @@ const timeline = (ews) => {
 		ws.on("error", () => {
 			console.log("error in posts-websocket..");
 		});
-
-		ws.on("close", () => {
-			
-			
-			// remove the socket from the ones I listen to 
-		}); 
 	};
 };
 
@@ -50,7 +42,7 @@ const sendInitialPosts = socket => {
 	const postsFromSubscriptions = retrieveByAuthorEmails(subscriptions); 
 	const dto = {
 		posts: postsFromSubscriptions
-	}
+	};
 
 	const payload = JSON.stringify(dto);  
 	socket.send(payload); 
@@ -77,7 +69,6 @@ const websocketLogin = (dto, socket) => {
 	const token = dto.token;
 	const merged = dto.merged;
 	const unMergedFriend = dto.unMergedFriend; //NOTE: specified if viewing profile of friend
-	console.log(dto); 
 
 	if (merged == null || merged === undefined) {
 		socket.send(JSON.stringify({
@@ -115,8 +106,6 @@ const websocketLogin = (dto, socket) => {
 		subscriptions = [unMergedFriend]; 
 	}
 
-	console.log(unMergedFriend); 
-	console.log("These are subscriptions: ", subscriptions); 
 
 	SocketToSubscriptions.set(socket, subscriptions);
 	EmailToSocket.set(email, socket); 

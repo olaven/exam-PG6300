@@ -26,7 +26,7 @@ const addMessage = (author, text, participants) => {
 		author, 
 		text, 
 		timestamp: new Date().getMilliseconds() 
-	}
+	};
 	//add to existing conversation if present. 
 	if (conversation) {
 		conversation.messages.push(message); 
@@ -54,7 +54,7 @@ const retrieveByParticipants = participants => {
 	}); 
 
 	return conversation; 
-}
+};
 
 
 module.exports = {

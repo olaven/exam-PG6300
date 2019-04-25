@@ -6,29 +6,29 @@ const router = express.Router();
 
 router.get("/search/:searchQuery", isAuthenticated, (req, res) => {
 
-    //NOTE: req.user is defined, as user has to be authenticated at this point
-    const searchQuery = req.params.searchQuery; 
-    searchQuery//? 
-    if (searchQuery == "undefined" || searchQuery == "null") {
-        res.status(http.codes.BAD_REQUEST).send(); 
-        return; 
-    }
+	//NOTE: req.user is defined, as user has to be authenticated at this point
+	const searchQuery = req.params.searchQuery; 
+	searchQuery;//? 
+	if (searchQuery == "undefined" || searchQuery == "null") {
+		res.status(http.codes.BAD_REQUEST).send(); 
+		return; 
+	}
 
-    const results = getAllUsers().filter(user => {
-        const searchName = (user.givenName + " " + user.familyName).toLowerCase(); 
-        return searchName.includes(searchQuery.toLowerCase()); 
-    }).map(user => {
-        //NOTE: I do not want to send more information, as search is for every user, not just friends
-        return {
-            email: user.email,
-            givenName: user.givenName,
-            familyName: user.familyName
-        }
-    }); 
+	const results = getAllUsers().filter(user => {
+		const searchName = (user.givenName + " " + user.familyName).toLowerCase(); 
+		return searchName.includes(searchQuery.toLowerCase()); 
+	}).map(user => {
+		//NOTE: I do not want to send more information, as search is for every user, not just friends
+		return {
+			email: user.email,
+			givenName: user.givenName,
+			familyName: user.familyName
+		};
+	}); 
 
-    res.status(http.codes.OK).send({
-        results
-    });
+	res.status(http.codes.OK).send({
+		results
+	});
 });
 
 

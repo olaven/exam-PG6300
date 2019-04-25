@@ -1,42 +1,42 @@
 const nanoid = require("nanoid"); 
-let friendRequests = []
+let friendRequests = [];
 
 const persist = (from, to) => {
 
-    const request = {
-        from: from,
-        to: to,
-        id: nanoid()
-    }; 
+	const request = {
+		from: from,
+		to: to,
+		id: nanoid()
+	}; 
     
-    friendRequests.push(request); 
-    return request.id; 
-}
+	friendRequests.push(request); 
+	return request.id; 
+};
 
 const retrieveFrom = from => 
-    friendRequests.filter(request => request.from === from); //? 
+	friendRequests.filter(request => request.from === from); //? 
 
 const retrieveTo = to => 
-    friendRequests.filter(request => request.to === to); 
+	friendRequests.filter(request => request.to === to); 
 
 const retrieveById = id => 
-    friendRequests.find(request => request.id === id); 
+	friendRequests.find(request => request.id === id); 
 
 const remove = id => {
-    friendRequests = friendRequests
-        .filter(request => request.id !== id)
-}
+	friendRequests = friendRequests
+		.filter(request => request.id !== id);
+};
 
 const clear = () => {
-    friendRequests.length = 0; 
-}
+	friendRequests.length = 0; 
+};
 
 
 module.exports = {
-    persist,
-    retrieveFrom, 
-    retrieveTo, 
-    retrieveById,
-    remove, 
-    clear
-}
+	persist,
+	retrieveFrom, 
+	retrieveTo, 
+	retrieveById,
+	remove, 
+	clear
+};

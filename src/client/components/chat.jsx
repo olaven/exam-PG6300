@@ -43,7 +43,7 @@ export class Chat extends React.Component {
                     messages: (oldMessages.concat([message]))
                 }); 
             } else if (data.messages) {
-                console.log("received multiple messages"); 
+
                 this.setState(
                     previous => {
                         return (previous.messages === null ?
@@ -103,7 +103,6 @@ export class Chat extends React.Component {
             }
         }); 
 
-        words.forEach(word => console.log(word)); 
         const parsed = words.join(" ");  
         return parsed; 
     }

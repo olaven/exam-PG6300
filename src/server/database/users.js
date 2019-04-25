@@ -22,18 +22,18 @@ const verifyUser = (email, password) => {
 
 const addFriends = (first, second) => {
 
-	first//? 
-	second//?
+	first;//? 
+	second;//?
 	// NOTE: just making absolutely sure they are not friends already
 	if (
 		users.get(first).friendEmails.includes(second) || 
 		users.get(second).friendEmails.includes(first)) {
-			return; 
-		}
+		return; 
+	}
 
 	users.get(first).friendEmails.push(second); 
 	users.get(second).friendEmails.push(first);
-}
+};
 
 const getAllUsers = () => 
 	Array.from(users.values()); 

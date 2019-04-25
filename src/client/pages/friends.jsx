@@ -1,5 +1,4 @@
 import React from "react"; import { UserDetailsView } from "../components/userDetails";
-import { Input } from "reactstrap";
 
 import { codes } from "../../shared/http";
 import { ToLogIn } from "../components/toLogIn";

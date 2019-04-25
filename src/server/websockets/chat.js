@@ -19,7 +19,7 @@ const chat = (ews) => {
 			
 			if(dto.topic === "message") {
 				
-				const message = conversations.addMessage(dto.author, dto.text, dto.participants)
+				const message = conversations.addMessage(dto.author, dto.text, dto.participants);
 				broadcastNewMessage(dto.participants, message);
 			} else if (dto.topic === "opened") {
 
@@ -41,7 +41,7 @@ const chat = (ews) => {
 					socket: ws 
 				}); 
 				//EmailToSockets.set(email, ws); //NOTE: needed when sending back
-				sendExistingMessages(dto.participants, ws)
+				sendExistingMessages(dto.participants, ws);
 			}
 		});
 
@@ -65,7 +65,7 @@ const sendExistingMessages = (participants, socket) => {
 	socket.send(JSON.stringify({
 		messages
 	}));  
-}
+};
 
 const broadcastNewMessage = (participants, message) => {
 	
@@ -90,17 +90,17 @@ const broadcastNewMessage = (participants, message) => {
 					const socket = possibility.socket;
 					socket.send(payload);
 				}
-			})
+			});
 		}
-	})
-}
+	});
+};
 
 const closeAllSockets = initialRequest => {
 
 	const email = initialRequest.session.passport.user.email;
 	EmailToSockets.set(email, null); 
-}
+};
 
 module.exports = {
 	chat
-}
+};

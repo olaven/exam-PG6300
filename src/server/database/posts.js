@@ -43,9 +43,9 @@ const retrieveByUser = (user) => Array.from(posts.values())
 	);
 
 const retrieveByAuthorEmails = (emails) => Array.from(posts.values())
-		.filter(post => 
-			emails.includes(post.authorEmail)	
-		); 
+	.filter(post => 
+		emails.includes(post.authorEmail)	
+	); 
 
 const retrieve = id =>
 	posts.get(id);
