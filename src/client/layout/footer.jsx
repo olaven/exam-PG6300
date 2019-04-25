@@ -10,7 +10,7 @@ export default class Layout extends React.Component {
         return <Row className="fixed-bottom bg-info clearfix">
             <Col sm="12" md="12" lg="12">
                 <h4 className="align-self-center">
-                    Thanks for using this site, {loggedIn ?
+                    Thanks for using this SocialSite, {loggedIn ?
                         this.props.user.givenName :
                         "you great person"
                     }

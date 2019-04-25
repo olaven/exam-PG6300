@@ -20,6 +20,10 @@ const verifyUser = (email, password) => {
 	return user.password === password;
 };
 
+const getAllUsers = () => 
+	Array.from(users.values()); 
+
+
 
 const createUser = (email, givenName, familyName, dateOfBirth, location, password) => {
 
@@ -51,6 +55,7 @@ const clearUsers = () => {
 
 module.exports = {
 	getUser,
+	getAllUsers, 
 	verifyUser,
 	createUser, 
 	clearUsers

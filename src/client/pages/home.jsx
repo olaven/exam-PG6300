@@ -18,17 +18,20 @@ export class Home extends React.Component {
         return <div id="home">
             <h1>Welcome to SocialSite!</h1>
             {loggedIn ? 
-                <div>
-                    <Link to={"/chat"}>
+                <div id="homeMessage">
+                    <Link to={"/chat"} id="linkToChat">
                         <Button color="secondary">Go to chat</Button>
                     </Link>
                     <Link to={"/profile"}>
-                        <Button color="secondary">Go to your profile</Button>
+                        <Button color="secondary" id="linkToProfile">Go to your profile</Button>
+                    </Link>
+                    <Link to={"/search"}>
+                        <Button color="secondary" id="linkToProfile">Search for users</Button>
                     </Link>
                     <hr/>
                     <Timeline merged={true} email={this.props.user.email}/>
                 </div>:
-                <ToLogIn className="homeMessage" />}
+                <ToLogIn className="toLogIn"/>}
         </div>
     }
 }

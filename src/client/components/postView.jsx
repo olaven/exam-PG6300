@@ -12,7 +12,7 @@ export class PostView extends React.Component {
     }
 
     render() {
-        console.log("render is called"); 
+        
         return <div>
             <Card>
                 <CardHeader tag="h3">{this.props.post.title}</CardHeader>
