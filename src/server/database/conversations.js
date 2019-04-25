@@ -44,9 +44,9 @@ const addMessage = (author, text, participants) => {
 const retrieveByParticipants = participants => 
 	conversations.find(conversation =>
 		conversation.participants
-		.every(participant =>
-			participants.includes(participant)
-		)
+			.every(participant =>
+				participants.includes(participant)
+			)
 	)
 
 

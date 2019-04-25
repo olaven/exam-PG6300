@@ -27,7 +27,6 @@ const chat = (ews) => {
 				console.log(email + " did connect"); 
 				if (email !== dto.email) {
 					
-					console.log(dto + " did not match session " + dto.email) 
 					ws.close();
 					return;  
 				} 
@@ -35,9 +34,14 @@ const chat = (ews) => {
 				if (!EmailToSockets.get(email)) {
 					EmailToSockets.set(email, []); 
 				}
-				EmailToSockets.get(email).push(ws); 
+				
+				//reason: when participants are a and b, _this_ socket will be used
+				EmailToSockets.get(email).push({
+					participants: dto.participants, 
+					socket: ws 
+				}); 
 				//EmailToSockets.set(email, ws); //NOTE: needed when sending back
-				sendExistingMessages(dto.participants, ws) //TODO: Implement
+				sendExistingMessages(dto.participants, ws)
 			}
 		});
 
@@ -65,17 +69,41 @@ const sendExistingMessages = (participants, socket) => {
 
 const broadcastNewMessage = (participants, message) => {
 	//iterer gjennom map 
-	
-	participants.forEach(email => {
-		const sockets = EmailToSockets.get(email); 
-		if (sockets) { //i.e. they are online/have "logged in"
-			sockets.forEach(socket => {
-				socket.send(JSON.stringify({
-					singleMessage: message
-				}));
-			}) 
-		}
+	/**
+	 * Structure of map: 
+	 * {
+	 * 	participants [mail, mail]
+	 * 	socket
+	 * }
+	 */
+	const payload = JSON.stringify({
+		singleMessage: message 
 	}); 
+
+	participants.forEach(email => {
+
+		const possibilities = EmailToSockets.get(email); 
+		if (possibilities) {
+			possibilities.forEach(possibility => {
+				if (possibility.participants.every(p => participants.includes(p))) {
+					const socket = possibility.socket;
+					socket.send(payload);
+				}
+			})
+		}
+	})
+	// console.log("participants: ", participants);
+	// participants.forEach(email => {
+	// 	//TODO: FEIL. sender til alle
+	// 	const sockets = EmailToSockets.get(email); 
+	// 	if (sockets) { //i.e. they are online/have "logged in"
+	// 		sockets.forEach(socket => {
+	// 			socket.send(JSON.stringify({
+	// 				singleMessage: message
+	// 			}));
+	// 		}) 
+	// 	}
+	// }); 
 }
 
 const closeAllSockets = initialRequest => {
