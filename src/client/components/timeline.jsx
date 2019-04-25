@@ -95,9 +95,12 @@ export class Timeline extends React.Component {
     onReceiveToken = token => {
 
         const merged = this.props.merged 
+        const unMergedFriend = (this.props.viewingFriend? this.props.email: null); 
+        console.log(this.props.viewingFriend, " viewing friend"); 
         const payload = {
             token, 
             merged, 
+            unMergedFriend,
             topic: "login"
         }; 
 

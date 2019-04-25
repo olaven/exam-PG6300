@@ -21,7 +21,7 @@ export class Profile extends React.Component {
         return <div>
             <UserDetailsView user={this.props.user} />
             <h2>Personal timeline</h2>
-            <Timeline merged={false} email={this.props.user.email}/>
+            <Timeline merged={false} email={this.props.user.email} viewingFriend={this.props.viewingFriend}/>
         </div>
     }
 }

@@ -28,7 +28,7 @@ export class FriendProfile extends React.Component {
             <h3>{this.props.friend.givenName}</h3>
             <Button onClick={this.toggleHidden} color="primary">Toggle details</Button>
             {this.state.hidden?
-                <Profile user={this.props.friend}/>:
+                <Profile user={this.props.friend} viewingFriend={true}/>:
                 ""
             }
         </div>

@@ -40,7 +40,7 @@ const timeline = (ews) => {
 			
 			
 			// remove the socket from the ones I listen to 
-		})
+		}); 
 	};
 };
 
@@ -64,8 +64,6 @@ const broadcastNewPost = (post, socket) => {
 	}); 
 	SocketToSubscriptions.get(socket).forEach(email => {
 
-		console.log(email, " is among subscriptions")
-		console.log("all emails registered:", EmailToSocket.entries()); 
 		const s = EmailToSocket.get(email); 
 		if (s) { // user is active
 			s.send(payload); 
@@ -78,6 +76,8 @@ const websocketLogin = (dto, socket) => {
 
 	const token = dto.token;
 	const merged = dto.merged;
+	const unMergedFriend = dto.unMergedFriend; //NOTE: specified if viewing profile of friend
+	console.log(dto); 
 
 	if (merged == null || merged === undefined) {
 		socket.send(JSON.stringify({
@@ -111,7 +111,12 @@ const websocketLogin = (dto, socket) => {
 
 	if (merged) {
 		subscriptions = subscriptions.concat(user.friendEmails);
+	} else if (unMergedFriend) {
+		subscriptions = [unMergedFriend]; 
 	}
+
+	console.log(unMergedFriend); 
+	console.log("These are subscriptions: ", subscriptions); 
 
 	SocketToSubscriptions.set(socket, subscriptions);
 	EmailToSocket.set(email, socket); 

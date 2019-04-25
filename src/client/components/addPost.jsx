@@ -82,8 +82,8 @@ export class AddPost extends React.Component {
                 type="textarea"
                 value={this.state.content}
                 onChange={this.contentChanged}
-                placeholder="password"
-                id="passwordInput" />
+                placeholder="content"
+                id="contentInput" />
             {this.state.validInput?
                 <Button
                     color="primary"
