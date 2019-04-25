@@ -85,8 +85,28 @@ export class Chat extends React.Component {
 
     renderMessages = () => 
         this.state.messages.map((message, index) =>
-            <p key={index}>{message.author} - {message.text}</p>
+            <div>
+                <p key={index}>{message.author}</p>
+                <p>{this.parseLinks(message.text)}</p>
+            </div>
         ); 
+
+    parseLinks = text => {
+        //TODO: FIX ME 
+        //unescaped: http(s) ?://([a-z]|[A-Z])*.[a-z]*
+        
+        const pattern = /http(s)?/
+        const words = text.split(" "); 
+        words.forEach((word, index) => { 
+            if (pattern.test(word)) {
+                words[index] = <a href={word}>{word}</a>
+            }
+        }); 
+
+        words.forEach(word => console.log(word)); 
+        const parsed = words.join(" ");  
+        return parsed; 
+    }
 
 
     render() {
