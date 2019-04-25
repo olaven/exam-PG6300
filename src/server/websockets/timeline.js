@@ -11,6 +11,7 @@ const timeline = (ews) => {
 
 	return (ws, req) => {
 
+		console.log("got a connection on timeline"); 
 		ws.on("message", fromClient => {
 
 			console.log("received some message", fromClient); 
@@ -36,6 +37,7 @@ const timeline = (ews) => {
 		});
 
 		ws.on("close", () => {
+			
 			
 			// remove the socket from the ones I listen to 
 		})
@@ -69,7 +71,6 @@ const broadcastNewPost = (post, socket) => {
 			s.send(payload); 
 		}
 	}); 
-	//TODO: finn subscriptions og hent  tilbake. Kanskje jeg kan iterere gjennom values ("baklengs") på map? 
 };
 
 
@@ -113,7 +114,6 @@ const websocketLogin = (dto, socket) => {
 	}
 
 	SocketToSubscriptions.set(socket, subscriptions);
-
 	EmailToSocket.set(email, socket); 
 
 	console.log("User '" + email + "' is now connected with timeline-websocket.");

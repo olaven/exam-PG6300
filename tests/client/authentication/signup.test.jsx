@@ -17,7 +17,7 @@ const { clearUsers, getUser, createUser } = require("../../../src/server/databas
 //NOTE: date-format: yy-mm-dd
 const fillForm = (wrapper, email, givenName, familyName, location, dateOfBirth, password, repeatPassword) => {
 
-	const emailInput = wrapper.find("#emailInput").at(0);
+	const emailInput = wrapper.find("#emailInput").at(0); 
 	const givenNameInput = wrapper.find("#givenNameInput").at(0); 
 	const familyNameInput = wrapper.find("#familyNameInput").at(0); 
 	const locationInput = wrapper.find("#locationInput").at(0); 
@@ -70,15 +70,10 @@ describe("The signup-page", () => {
 		const password = "123";
 
 		const mismatch = "Passwords must match!";
-		const wrapper = shallow(
-			<MemoryRouter initialEntries={["/signup"]}>
-				<Signup />
-			</MemoryRouter>
-		);
-
-		expect(wrapper.html().includes(mismatch)).toEqual(false);
-
-		fillForm(wrapper, email, givenName, familyName, location, dateOfBirth, password, "not matching");
+		const wrapper = mount(<Signup />)
+		wrapper.setState({
+			email, givenName, familyName, location, dateOfBirth, password
+		})
 
 		const error = await asyncCheckCondition(
 			() => { wrapper.update(); return wrapper.html().includes(mismatch); },
@@ -105,7 +100,7 @@ describe("The signup-page", () => {
 		const history = { push: (h) => { page = h; } };
 
 		const wrapper = mount(
-			<Signup />
+			<Signup updateLoggedInUser={updateLoggedInUser} history={history}/>
 		);
 
 		
@@ -119,7 +114,6 @@ describe("The signup-page", () => {
 
 		
 		expect(redirected).toEqual(true);
-
 		expect(getUser(email).email).toEqual(email);
 	});
 

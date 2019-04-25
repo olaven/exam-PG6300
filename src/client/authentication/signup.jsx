@@ -159,6 +159,7 @@ export class Signup extends React.Component {
             location: this.state.location
         }; 
 
+    
         this.props.updateLoggedInUser(loggedInUser);
         this.props.history.push("/");
     };

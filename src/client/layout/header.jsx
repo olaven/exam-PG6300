@@ -10,7 +10,7 @@ import { Button, NavLink,  Nav, Navbar, NavItem, NavbarBrand } from "reactstrap"
 import { getWebSocket } from "../client-utils";
 import { codes } from "../../shared/http";
 
-export default class Header extends React.Component {
+export class Header extends React.Component {
 
     constructor(props) {
 
@@ -67,8 +67,9 @@ export default class Header extends React.Component {
     };
 
     renderLoggedIn = () => <div>
-        <Link to={"/"}>Go home</Link>
+        <Link id="header-link-loggedout-home" to={"/"}>Go home</Link>
         <Button
+            id="header-button-logout"
             color="warning"
             onClick={this.logout}>
             Logout
@@ -76,9 +77,9 @@ export default class Header extends React.Component {
     </div>
 
     renderLoggedOut = () => <div>
-        <Link to={"/"}>Go home</Link>
-        <Link to={"/login"}>Login</Link>
-        <Link to={"/signup"}>Sign up</Link>
+        <Link id="header-link-home" to={"/"}>Go home</Link>
+        <Link id="header-link-login" to={"/login"}>Login</Link>
+        <Link id="header-link-signup" to={"/signup"}>Sign up</Link>
     </div>
 
     render() {

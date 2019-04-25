@@ -70,7 +70,7 @@ describe("Websocket for usercount.", () => {
 		expect(count).toEqual(1);
 	});
     
-	it("updates every connected socket", async () => {
+	it.skip("updates every connected socket", async () => {
 	
 		const n = 3;
 		const counts = new Array(n);

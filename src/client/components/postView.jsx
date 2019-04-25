@@ -15,11 +15,11 @@ export class PostView extends React.Component {
         
         return <div>
             <Card>
-                <CardHeader tag="h3">{this.props.post.title}</CardHeader>
+                <CardHeader className="post-view-title" tag="h3">{this.props.post.title}</CardHeader>
                 <CardBody>
-                    <CardText>{this.props.post.content}</CardText>
+                    <CardText className="post-view-content">{this.props.post.content}</CardText>
                 </CardBody>
-                <CardFooter className="text-muted">Author: {this.props.post.authorEmail}</CardFooter>
+                <CardFooter className="text-muted post-view-author">Author: {this.props.post.authorEmail}</CardFooter>
             </Card>
         </div>
     }

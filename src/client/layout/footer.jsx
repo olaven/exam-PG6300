@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col } from "reactstrap";
 
-export default class Layout extends React.Component {
+export class Footer extends React.Component {
 
     render() {
 
@@ -10,7 +10,7 @@ export default class Layout extends React.Component {
         return <Row className="fixed-bottom bg-info clearfix">
             <Col sm="12" md="12" lg="12">
                 <h4 className="align-self-center">
-                    Thanks for using this SocialSite, {loggedIn ?
+                    Thanks for using SocialSite, {loggedIn ?
                         this.props.user.givenName :
                         "you great person"
                     }

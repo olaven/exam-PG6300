@@ -5,7 +5,7 @@
   "main": "src/server/server.js",
   "license": "MIT",
   "scripts": {
-    "test": "jest --coverage --verbose --detectOpenHandles",
+    "test": "jest --coverage --verbose",
     "dev": "concurrently \"yarn watch:client\" \"yarn watch:server\"",
     "watch:client": "webpack --watch --mode development",
     "watch:server": "nodemon src/server/server.js --watch src/server --watch public/bundle.js",

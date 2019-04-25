@@ -101,7 +101,7 @@ function overrideFetch(app) {
     
 	global.fetch = async (url, init) => {
 		let response;
-
+		
 		if (!init || !init.method || init.method.toUpperCase() === "GET") {
 			response = await agent.get(url);
 		} else if (init.method.toUpperCase() === "POST") {
@@ -119,9 +119,9 @@ function overrideFetch(app) {
 		}
 
 		const payload = response.body;
-
+		
 		return new Promise((resolve, reject) => {
-
+			
 			const httpResponse = {
 				status: response.statusCode,
 				json: () => {

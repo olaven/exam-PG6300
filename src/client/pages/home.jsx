@@ -29,6 +29,9 @@ export class Home extends React.Component {
                     <Link to={"/search"}>
                         <Button color="secondary" id="linkToProfile">Search for users</Button>
                     </Link>
+                    <Link to={"/friends"}>
+                        <Button color="secondary" id="linkToFriends">Your friends</Button>
+                    </Link>
                     <hr/>
                     <FriendRequestsView email={this.props.user.email} /> 
                     <Timeline merged={true} email={this.props.user.email}/>

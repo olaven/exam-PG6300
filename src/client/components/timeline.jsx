@@ -26,10 +26,14 @@ export class Timeline extends React.Component {
 
     componentDidMount() {
         
-        this.getToken(); 
+        //this.getToken(); 
 
         //const endpoint = (this.props.merged? "/mergedTimeline": "/soloTimeline")
         this.postsSocket = getWebSocket("/timeline");
+        this.postsSocket.onopen = event => {
+
+            this.getToken();
+        }
         this.postsSocket.onmessage = (event => {
 
             
@@ -90,7 +94,7 @@ export class Timeline extends React.Component {
 
     onReceiveToken = token => {
 
-        const merged = this.props.merged //TODO: replace old support for merged with some logic here
+        const merged = this.props.merged 
         const payload = {
             token, 
             merged, 

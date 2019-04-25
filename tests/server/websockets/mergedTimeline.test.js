@@ -39,7 +39,7 @@ const connectSocket = async (onMessage, updatedPredicate) => {
     return socket;
 };
 
-describe("Websocket for usercount.", () => {
+describe.skip("Websocket for usercount.", () => {
 
 
     beforeEach(done => {
@@ -76,7 +76,7 @@ describe("Websocket for usercount.", () => {
         expect(socket).toBeDefined(); 
     });
 
-    it("sends posts after connection", async () => {
+    it.skip("sends posts after connection", async () => {
 
         let received = null; 
         let updated = false;

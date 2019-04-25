@@ -33,10 +33,10 @@ export class Search extends React.Component {
     }
 
     fetchUsers = async () => {
-
+        
         const query = this.state.searchQuery; 
         const response = await fetch("api/search/" + query); 
-
+        
         if (response.status !== codes.OK) {
             
             this.setState({
@@ -54,7 +54,7 @@ export class Search extends React.Component {
     }
 
     renderResults = () => this.state.results.map(user => 
-        <UserSearchResult displayedUser={user} loggedInUser={this.props.user} key={user.email}/>
+        <UserSearchResult className="user-search-result" displayedUser={user} loggedInUser={this.props.user} key={user.email}/>
     )
 
 
@@ -68,7 +68,7 @@ export class Search extends React.Component {
         return <div>
             <h1>Search for users: </h1>
             {this.state.errorMessage?<p>{this.state.errorMessage}</p>: ""}
-            <Input type="text" value={this.state.searchQuery} onChange={this.handleInput} placeholder="enter name"/>
+            <Input id="search-input" type="text" value={this.state.searchQuery} onChange={this.handleInput} placeholder="enter name"/>
             {this.renderResults()}
         </div>
     }

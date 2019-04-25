@@ -15,6 +15,7 @@ import { Layout } from "./layout/layout.jsx";
 import { Profile } from "./pages/profile.jsx";
 import { Search } from "./pages/search";
 import { Conversations } from "./pages/conversations.jsx";
+import { Friends } from "./pages/friends.jsx";
 
 export class App extends React.Component {
 
@@ -107,6 +108,7 @@ export class App extends React.Component {
                     {this.renderRouteWithUser("/conversations", Conversations)}
                     {this.renderRouteWithUser("/profile", Profile)}
                     {this.renderRouteWithUser("/search", Search)}
+                    {this.renderRouteWithUser("/friends", Friends)}
                     {this.renderRouteWithUser("/signup", Signup)}
                     {this.renderRouteWithUser("/login", Login)}
                     <Route component={NotFound} />

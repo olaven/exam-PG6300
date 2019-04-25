@@ -104,9 +104,6 @@ export class UserDetailsView extends React.Component {
                         </tbody>
                     </Table>
                 </CardBody>
-                <CardFooter>
-                    <Button >SOMe button wow</Button>    
-                </CardFooter>
             </Card>
         </div>
     }
