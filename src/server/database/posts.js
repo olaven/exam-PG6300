@@ -8,6 +8,10 @@ if (process.env.ENVIRONMENT !== "production") {
 	addDemoPosts(posts); 
 }
 
+/**
+ *  Persist into db. 
+ * 	Returns the persisted item (with timestamp and id)
+ */
 const persist = post => {
 
 	/* 
@@ -25,7 +29,7 @@ const persist = post => {
 	post.id = id;
 	post.timestamp = new Date().getMilliseconds();
 	posts.set(id, post);
-	return id;
+	return post; 
 };
 
 const retrieveForUser = (user) => Array.from(posts.values())

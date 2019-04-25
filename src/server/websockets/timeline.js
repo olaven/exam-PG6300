@@ -5,6 +5,7 @@ const tokens = require("../database/tokens");
 
 // holds emails that socket should get update sfrom 
 const SocketToSubscriptions = new Map(); 
+const EmailToSocket = new Map(); 
 
 const timeline = (ews) => {
 
@@ -24,8 +25,8 @@ const timeline = (ews) => {
 			} 
 			if (dto.post) {
 				
-				persist(dto.post);
-				broadcastNewPost(dto.post, ws)
+				const persisted = persist(dto.post);
+				broadcastNewPost(persisted, ws)
 			}
 			//TODO: broadcast new post to relevant users
 		});
@@ -57,7 +58,16 @@ const sendInitialPosts = socket => {
 const broadcastNewPost = (post, socket) => {
 
 	const payload = JSON.stringify({
-		posts: [post]
+		singlePost: post
+	}); 
+	SocketToSubscriptions.get(socket).forEach(email => {
+
+		console.log(email, " is among subscriptions")
+		console.log("all emails registered:", EmailToSocket.entries()); 
+		const s = EmailToSocket.get(email); 
+		if (s) { // user is active
+			s.send(payload); 
+		}
 	}); 
 	//TODO: finn subscriptions og hent  tilbake. Kanskje jeg kan iterere gjennom values ("baklengs") på map? 
 };
@@ -103,6 +113,9 @@ const websocketLogin = (dto, socket) => {
 	}
 
 	SocketToSubscriptions.set(socket, subscriptions);
+
+	EmailToSocket.set(email, socket); 
+
 	console.log("User '" + email + "' is now connected with timeline-websocket.");
 	return socket;
 };

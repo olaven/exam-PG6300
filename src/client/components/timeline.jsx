@@ -45,9 +45,18 @@ export class Timeline extends React.Component {
                 return;
             }
 
+            let posts; 
+            if (dto.singlePost) {
+
+                posts = this.state.posts.concat(dto.singlePost); 
+            } else if (dto.posts) {
+
+                posts = dto.posts; 
+            }
+
             this.setState({
-                errorMessage: null, 
-                posts: dto.posts
+                posts, 
+                errorMessage: null
             }); 
         });
     }
@@ -88,8 +97,8 @@ export class Timeline extends React.Component {
         this.postsSocket.send(JSON.stringify(payload));    
     }
 
-    renderPosts = () => 
-        this.state.posts.map(post => <PostView post={post} key={post.id}/>)
+    renderPosts = () =>  
+            this.state.posts.map(post => <PostView post={post} key={post.id}/>); 
 
     render() {
 

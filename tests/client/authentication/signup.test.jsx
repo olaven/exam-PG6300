@@ -4,7 +4,7 @@
  */
 
 const React = require("react");
-const { mount } = require("enzyme");
+const { mount, shallow } = require("enzyme");
 const { MemoryRouter } = require("react-router-dom");
 
 const { overrideFetch, overrideWebSocket, asyncCheckCondition } = require("../../mytest-utils");
@@ -48,20 +48,17 @@ describe("The signup-page", () => {
 
 		clearUsers(); 
 		server = app.listen(0, () => {
-			port = server.address().port; //?
+			port = server.address().port; 
+			overrideFetch(app);
 			overrideWebSocket(port);
 			done();
 		});
-
-		overrideFetch(app);
 	});
 
 	afterEach(async (done) => {
 		await server.close();
 		done(); 
 	});
-
-	beforeEach(clearUsers);
 
 	it("gives error when passwords are unequal", async () => {
 
@@ -73,7 +70,7 @@ describe("The signup-page", () => {
 		const password = "123";
 
 		const mismatch = "Passwords must match!";
-		const wrapper = mount(
+		const wrapper = shallow(
 			<MemoryRouter initialEntries={["/signup"]}>
 				<Signup />
 			</MemoryRouter>
@@ -108,9 +105,7 @@ describe("The signup-page", () => {
 		const history = { push: (h) => { page = h; } };
 
 		const wrapper = mount(
-			<MemoryRouter initialEntries={["/signup"]}>
-				<Signup updateLoggedInUser={updateLoggedInUser} history={history} />
-			</MemoryRouter>
+			<Signup />
 		);
 
 		

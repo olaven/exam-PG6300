@@ -12,12 +12,12 @@ export class PostView extends React.Component {
     }
 
     render() {
+        console.log("render is called"); 
         return <div>
             <Card>
                 <CardHeader tag="h3">{this.props.post.title}</CardHeader>
                 <CardBody>
                     <CardText>{this.props.post.content}</CardText>
-                    <Button>LIKE!</Button>
                 </CardBody>
                 <CardFooter className="text-muted">Author: {this.props.post.authorEmail}</CardFooter>
             </Card>
