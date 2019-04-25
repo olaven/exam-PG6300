@@ -3,7 +3,15 @@ import { Link } from "react-router-dom";
 const { getWebSocket } = require("../client-utils");
 
 
-//TODO: UPDATE ME TO BE BETWEEN TWO USERS 
+/**
+ * Takes one common socket as props: 
+ * This way, user only connects to chat once. 
+ * 
+ * Props: 
+ * socket: WS
+ * author: String (email)
+ * participants: String[] (emails, including author)
+ */
 export class Chat extends React.Component {
 
     constructor(props) {
@@ -17,8 +25,7 @@ export class Chat extends React.Component {
 
     componentDidMount() {
 
-        this.socket = getWebSocket("/chat");
-        this.socket.onmessage = (event => {
+        this.props.socket.onmessage = (event => {
 
             const data = JSON.parse(event.data);
             this.setState(
@@ -29,15 +36,10 @@ export class Chat extends React.Component {
                 }
             );
         });
-        this.socket.onerror = error => {
+        this.props.socket.onerror = error => {
             
             console.log("some websocket error occured."); 
         }
-    }
-
-    componentWillUnmount() {
-
-        this.socket.close();
     }
 
     onInputChange = event => {
@@ -49,19 +51,18 @@ export class Chat extends React.Component {
     sendMessage = () => {
         
         const payload = JSON.stringify({ 
-            message: {
-                username: this.props.user.email,
-                text: this.state.input 
-            }
+            author: this.props.author,
+            participants: this.props.participants,
+            text: this.state.input 
         });
 
-        this.socket.send(payload);
+        this.props.socket.send(payload);
         this.setState({input: ""});
     }
 
     renderMessages = () => 
         this.state.messages.map((message, index) =>
-            <p key={index}>{message.user.email} - {message.text}</p>
+            <p key={index}>{message.author} - {message.text}</p>
         ); 
 
 
