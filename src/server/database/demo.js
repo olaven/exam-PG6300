@@ -38,7 +38,10 @@ const demoUsers = [
 		familyName: "Gamgee",
 		dateOfBirth: "04-29-1980", 
 		location: "The Shire",
-		friendEmails: ["frodo@shire.com", "merry@shire.com", "pippin@shire.com"]
+		friendEmails: [
+			"dev@admin.com", "frodo@shire.com", 
+			"merry@shire.com", "pippin@shire.com"
+		]
 	}, 
 	{
 		email: "merry@shire.com",
@@ -65,7 +68,7 @@ const demoUsers = [
 		familyName: "the Grey",
 		dateOfBirth: "10-12-300",
 		location: "Everywhere, really",
-		friendEmails: ["frodo@shire.com"]
+		friendEmails: ["frodo@shire.com", "dev@admin.com"]
 	}
 ];
 

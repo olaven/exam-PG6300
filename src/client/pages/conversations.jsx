@@ -19,14 +19,9 @@ export class Conversations extends React.Component {
     componentDidMount() {
 
         this.fetchFriends()
-        this.socket = getWebSocket("/chat");
     }
 
-    componentWillUnmount() {
 
-        this.socket.close();
-    }
-    
     fetchFriends = async () => {
 
         try {
@@ -49,7 +44,7 @@ export class Conversations extends React.Component {
         <div>
             <h1>Talk to {friend.givenName}</h1>
             {/* Treating participants as an array makes it easier for group solutions at some later point */}
-            <Chat socket={this.socket} author={this.props.user.email} participants={[friend.email, this.props.user.email]}/>
+            <Chat author={this.props.user.email} participants={[friend.email, this.props.user.email]}/>
         </div>
     ); 
 

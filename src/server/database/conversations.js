@@ -18,28 +18,27 @@ const getAll = () => {
 	return conversations;
 };
 
-const addMessage = (author, participants, text) => {
+//adds and returns a message to correct conversation
+const addMessage = (author, text, participants) => {
 
 	const conversation = retrieveByParticipants(participants); 
+	const message = {
+		author, 
+		text, 
+		timestamp: new Date().getMilliseconds() 
+	}
 	//add to existing conversation if present. 
 	if (conversation) {
-		conversation.messages.add({
-			text: text, 
-			timestamp: new Date().getMilliseconds()		
-		}); 
+		conversation.messages.push(message); 
 	} else {
 		//crate a new one otherwise 
 		conversations.push({
 			participants: participants, 
-			messages: [
-				{
-					author: author, 
-					text: text, 
-					timestamp: new Date().getMilliseconds() 
-				}
-			]
+			messages: [ message ]
 		}); 
 	}
+
+	return message; 
 };
 
 const retrieveByParticipants = participants => 
@@ -50,7 +49,8 @@ const retrieveByParticipants = participants =>
 		)
 	)
 
+
 module.exports = {
-	getAll, 
-	addMessage
+	addMessage,
+	retrieveByParticipants
 };

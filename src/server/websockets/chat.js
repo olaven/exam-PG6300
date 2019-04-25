@@ -5,87 +5,85 @@
  */
 
 const conversations = require("../database/conversations"); 
-const { broadcast } = require("./ws-util"); 
 
-const EmailToSocket = new Map(); 
+const EmailToSockets = new Map(); 
 
 const chat = (ews) => {
 
 	return (ws, req) => {
 
-		const email = req.session.passport.user.email; 
-		console.log(email + " connected to chat"); 
-		EmailToSocket.put(email, ws); 
-		sendExistingMessages() //TODO: Implement
-
 		ws.on("message", fromClient => {
 
+			
 			const dto = JSON.parse(fromClient);
+			
+			if(dto.topic === "message") {
+				
+				const message = conversations.addMessage(dto.author, dto.text, dto.participants)
+				broadcastNewMessage(dto.participants, message);
+			} else if (dto.topic === "opened") {
 
-			conversations.addMessage(dto.author, dto.participants, dto.text)
-			sendNewMessage(dto.author, dto.text, ws);
+				const email = req.session.passport.user.email;
+				console.log(email + " did connect"); 
+				if (email !== dto.email) {
+					
+					console.log(dto + " did not match session " + dto.email) 
+					ws.close();
+					return;  
+				} 
+
+				if (!EmailToSockets.get(email)) {
+					EmailToSockets.set(email, []); 
+				}
+				EmailToSockets.get(email).push(ws); 
+				//EmailToSockets.set(email, ws); //NOTE: needed when sending back
+				sendExistingMessages(dto.participants, ws) //TODO: Implement
+			}
 		});
 
+		ws.on("close", () => {
+
+			closeAllSockets(req); 
+		}); 
+
 		ws.on("error", () => {
-			console.log("error in chat-websocket..");
+			
+			closeAllSockets(req); 
 		});
 	};
 };
 
-const sendExistingMessages = () => {
+const sendExistingMessages = (participants, socket) => {
 
+	//TODO: sjekk at retrievebyparticic faktisk returnerer noe 
+	const conversation = conversations.retrieveByParticipants(participants); 
+	const messages = conversation? conversation.messages: []; 
+	socket.send(JSON.stringify({
+		messages
+	}));  
 }
 
-const sendNewMessage = (author, text, socket) => {
-	console.log("I want to send new message:")
+const broadcastNewMessage = (participants, message) => {
+	//iterer gjennom map 
+	
+	participants.forEach(email => {
+		const sockets = EmailToSockets.get(email); 
+		if (sockets) { //i.e. they are online/have "logged in"
+			sockets.forEach(socket => {
+				socket.send(JSON.stringify({
+					singleMessage: message
+				}));
+			}) 
+		}
+	}); 
+}
+
+const closeAllSockets = initialRequest => {
+
+	const email = initialRequest.session.passport.user.email;
+	EmailToSockets.set(email, null); 
 }
 
 module.exports = {
 	chat
 }
-
-// const messages = require("../database/messages");
-// const { broadcast } = require("./ws-util");
-
-// let idCounter = 0;
-
-
-// const chat = (ews) => {
- 
-// 	return (ws, req) => {
-
-// 		// update existing 
-// 		broadcastMessages(ews, messages.getAll());
-		
-// 		ws.on("message", fromClient => {
-
-// 			const dto = JSON.parse(fromClient);
-// 			const id = idCounter++;
-// 			const message = {
-// 				id: id,
-// 				username: dto.message.username,
-// 				text: dto.message.text
-// 			};
-
-
-// 			//add to our current local store
-// 			messages.addMessage(message);
-// 			//do a broadcast to all existing clients
-// 			broadcastMessages(ews, [message]);
-// 		});
-
-// 		ws.on("error", () => {
-// 			console.log("error in chat-websocket..");
-// 		});
-// 	};
-// };
-
-// const broadcastMessages = (ews, messages) => {
-	
-// 	const clients = ews.getWss().clients;
-// 	broadcast(clients, { messages });
-// };
-
-// module.exports = {
-// 	chat
-// };

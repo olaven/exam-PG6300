@@ -4,11 +4,7 @@ const { getWebSocket } = require("../client-utils");
 
 
 /**
- * Takes one common socket as props: 
- * This way, user only connects to chat once. 
- * 
  * Props: 
- * socket: WS
  * author: String (email)
  * participants: String[] (emails, including author)
  */
@@ -25,21 +21,47 @@ export class Chat extends React.Component {
 
     componentDidMount() {
 
-        this.props.socket.onmessage = (event => {
+        this.socket = getWebSocket("/chat");
+        this.socket.onopen = event => {
+
+            //NOTE: This is where client identifies itself. 
+            // It will not receive messages if email does not match passports session. 
+            this.socket.send(JSON.stringify({
+                topic: "opened", 
+                email: this.props.author, 
+                participants: this.props.participants
+            })); 
+        }
+        this.socket.onmessage = (event => {
 
             const data = JSON.parse(event.data);
-            this.setState(
-                previous => {
-                    return (previous.messages === null ? 
-                        {messages: data.messages}: 
-                        {messages: [...previous.messages, ...data.messages]}) 
-                }
-            );
+            if (data.singleMessage) {
+
+                const message = data.singleMessage; 
+                const oldMessages = this.state.messages; 
+                this.setState({
+                    messages: (oldMessages.concat([message]))
+                }); 
+            } else if (data.messages) {
+                console.log("received multiple messages"); 
+                this.setState(
+                    previous => {
+                        return (previous.messages === null ?
+                            { messages: data.messages } :
+                            { messages: [...previous.messages, ...data.messages] })
+                    }
+                );
+            }
         });
-        this.props.socket.onerror = error => {
+        this.socket.onerror = error => {
             
             console.log("some websocket error occured."); 
         }
+    }
+
+    componentWillUnmount() {
+
+        this.socket.close();
     }
 
     onInputChange = event => {
@@ -51,12 +73,13 @@ export class Chat extends React.Component {
     sendMessage = () => {
         
         const payload = JSON.stringify({ 
+            topic: "message",
             author: this.props.author,
             participants: this.props.participants,
             text: this.state.input 
         });
 
-        this.props.socket.send(payload);
+        this.socket.send(payload);
         this.setState({input: ""});
     }
 

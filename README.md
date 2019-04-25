@@ -30,6 +30,8 @@ For a list of all demo-users, see `#23` in [this file](./src/server/database/dem
 ## Assumptions and coices
 * The API 
   * The endpoint for accepting/denying friend requests is at `DELETE /api/friendRequests/ID`. The use of `DELETE` may seem slightly unintuitive. However, the request is removed from the database when accepted or denied, thus the choice seems appropriate. Arguably, I could have used `PUT` instead, as the state of a user is updated/modified.
+* Sockets 
+  * As mentioned in [a file from the course repo](https://github.com/arcuri82/web_development_and_api_design/blob/4537742786621fe1b417cb27399ea1710670fcba/les10/connect4-v2/src/server/ws/ws-handler.js), using passport for authentication has some limitations with websockets. Another, token-based approach is used. In the [`timeline.jsx`](./src/client/components/timeline.jsx), I use something akin to this token-approach. In [`conversations.js`](./src/server/websockets/conversation.js), however, I use the passport-session to compare emails. My assumption is that for the purposes of this exam, showing two ways of doing something is better than showing one (or none). 
 
 ## General notes
 * Modifications to yarn scripts:
