@@ -72,7 +72,7 @@ export class Timeline extends React.Component {
     getToken = async () => {
 
         try {
-            const response = await fetch("/api/token", { method: "post" });
+            const response = await fetch("/api/tokens", { method: "post" });
             const payload = await response.json();
             const token = payload.token; 
 

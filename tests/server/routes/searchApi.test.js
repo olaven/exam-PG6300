@@ -29,7 +29,6 @@ describe("The search-api.", () => {
             .get("/api/search/" + devUser.givenName)
             .send();
 
-        response//? 
         expect(response.statusCode).toEqual(401);
     });
 

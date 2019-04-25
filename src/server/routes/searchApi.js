@@ -4,10 +4,6 @@ const http = require("../../shared/http");
 const { getAllUsers } = require("../database/users");
 const router = express.Router();
 
-/**
- * This is queried to get a token. This token can then be used 
- * connecting to the /timeline WS-endpoints. 
- */
 router.get("/search/:searchQuery", isAuthenticated, (req, res) => {
 
     //NOTE: req.user is defined, as user has to be authenticated at this point

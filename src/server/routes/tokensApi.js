@@ -8,7 +8,7 @@ const router = express.Router();
  * This is queried to get a token. This token can then be used 
  * connecting to the /timeline WS-endpoints. 
  */
-router.post("/token", isAuthenticated, (req, res) => {
+router.post("/tokens", isAuthenticated, (req, res) => {
 
 	//NOTE: req.user is defined, as user has to be authenticated at this point
 	const email = req.user.email; 

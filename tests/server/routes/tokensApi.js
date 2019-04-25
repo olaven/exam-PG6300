@@ -8,7 +8,7 @@ describe("The API in general.", () => {
     it("401 if not authenticated", async () => {
 
         const response = await request(app)
-            .post("/api/token")
+            .post("/api/tokens")
             .send();
 
         expect(response.statusCode).toEqual(401);
@@ -29,7 +29,7 @@ describe("The API in general.", () => {
         expect(loginResponse.statusCode).toBe(204);
         
         const tokenResponse = await agent
-            .post("/api/token")
+            .post("/api/tokens")
             .send(); 
         
         expect(tokenResponse.statusCode).toBe(201); 
