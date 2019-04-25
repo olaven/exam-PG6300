@@ -1,6 +1,7 @@
 
 const { getDevUser } = require("../../../src/server/database/demo");
 const friendRequests = require("../../../src/server/database/friendRequests"); 
+const users = require("../../../src/server/database/users"); 
 const { app } = require("../../../src/server/app");
 const request = require("supertest");
 
@@ -114,4 +115,62 @@ describe("Friend request API.", () => {
         const id = response.body[0].id; 
         expect(id).toBeDefined(); 
     }); 
+
+    it("accepting-endpoint returns 401 if not authenticated", async () => {
+
+        
+        const response = await request(app)
+            .delete("/api/friendRequests/someId")
+            .send(); 
+
+        expect(response.statusCode).toBe(401); 
+    }); 
+
+    it("returns 400 if x-request-accepted is not specified ", async () => {
+
+
+        const agent = await getLoggedInAgentAs(getDevUser()); 
+        const response = await agent
+            .delete("/api/friendRequests/someId")
+            .send(); 
+
+        expect(response.statusCode).toBe(400);
+    });
+
+    it("returns 404 NOT FOUND if id is invalid", async () => {
+
+
+        const agent = await getLoggedInAgentAs(getDevUser());
+        const response = await agent
+            .delete("/api/friendRequests/INVALID")
+            .set("x-request-accepted", true)
+            .send();
+
+        expect(response.statusCode).toBe(404);
+    });
+
+    it("Adds friends if x-request-accepted is true", async () => {
+
+        let sam = users.getUser("sam@shire.com");
+        let gandalf = users.getUser("gandalf@arda.com");
+        
+        expect(sam.friendEmails.includes(gandalf.email)).toBe(false);
+        expect(gandalf.friendEmails.includes(sam.email)).toBe(false);
+
+        const id = friendRequests.persist("sam@shire.com", "gandalf@arda.com"); 
+        const agent = await getLoggedInAgentAs(getDevUser());
+        const response = await agent
+            .delete("/api/friendRequests/" + id)
+            .set("x-request-accepted", true)
+            .send();
+
+        expect(response.statusCode).toBe(204);
+        
+
+        sam = users.getUser(sam.email); 
+        gandalf = users.getUser(gandalf.email)
+
+        expect(sam.friendEmails.includes(gandalf.email)).toBe(true); 
+        expect(gandalf.friendEmails.includes(sam.email)).toBe(true);
+    });
 });

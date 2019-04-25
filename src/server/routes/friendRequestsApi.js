@@ -61,4 +61,34 @@ router.post("/friendRequests", isAuthenticated, (req, res) => {
 });
 
 
+router.delete("/friendRequests/:id", isAuthenticated, (req, res) => {
+
+
+    const requestAcceptHeader = req.get("x-request-accepted");
+    if(!requestAcceptHeader || !req.params.id) {
+        res.status(http.codes.BAD_REQUEST).send(); 
+        return; 
+    }
+
+    const id = req.params.id; 
+    const accepted = (requestAcceptHeader === "true"); 
+    const friendRequest = friendRequests.retrieveById(id); 
+
+    if (!friendRequest) {
+        res.status(http.codes.NOT_FOUND).send(); 
+        return; 
+    }  
+    
+    
+    if (accepted) {
+
+        friendRequest//? 
+        users.addFriends(friendRequest.from, friendRequest.to);
+    }
+
+    friendRequests.remove(id)
+
+    res.status(http.codes.NO_CONTENT).send(); 
+}); 
+
 module.exports = router;

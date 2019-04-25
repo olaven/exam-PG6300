@@ -15,16 +15,21 @@
 - [ ] test the app without internet connection
 - [ ] deploy most recent version to heroku with "git push heroku master" 
 
-## Special users 
+## Admin user
 * When running in development mode, it is possible to log in with: 
   * email: dev@admin.com
   * password: dev
+For a list of all demo-users, see `#23` in [this file](./src/server/database/demo.js).
 
 ## Extras 
 * I have added styling with [Reactstrap](https://reactstrap.github.io). This required adding css-loaders to `webpack.config.js`. 
 * To ensure consistent code-style, I have used [ESlint](https://eslint.org). This is also configured as an extra script.
 * Although not required, I have set up Travis to automatically run tests
 * The app is deployed to [Heroku](https://exam-pg6300.herokuapp.com)
+
+## Assumptions and coices
+* The API 
+  * The endpoint for accepting/denying friend requests is at `DELETE /api/friendRequests/ID`. The use of `DELETE` may seem slightly unintuitive. However, the request is removed from the database when accepted or denied, thus the choice seems appropriate. Arguably, I could have used `PUT` instead, as the state of a user is updated/modified.
 
 ## General notes
 * Modifications to yarn scripts:

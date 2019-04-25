@@ -46,11 +46,17 @@ export class FriendRequestsView extends React.Component {
         const response = await fetch("/api/friendRequests/" + id, {
             method: "delete", 
             headers: {
-                accepted
+                "x-request-accepted": accepted
             }
         }); 
 
-        console.log(response); 
+        if (response.code !== http.codes.NOT_CONTENT) {
+            alert("an error occured with friend request."); 
+            return; 
+        } 
+        
+        //update displayed requests
+        this.fetchRequests(); 
     }
 
     renderFriendRequests = () => this.state.friendRequests.map(request => 

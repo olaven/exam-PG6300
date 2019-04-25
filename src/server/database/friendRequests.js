@@ -1,14 +1,16 @@
 const nanoid = require("nanoid"); 
-const friendRequests = []
+let friendRequests = []
 
 const persist = (from, to) => {
 
     const request = {
-        from, to,
+        from: from,
+        to: to,
         id: nanoid()
     }; 
     
     friendRequests.push(request); 
+    return request.id; 
 }
 
 const retrieveFrom = from => 
@@ -17,9 +19,12 @@ const retrieveFrom = from =>
 const retrieveTo = to => 
     friendRequests.filter(request => request.to === to); 
 
-const remove = (from, to) => {
+const retrieveById = id => 
+    friendRequests.find(request => request.id === id); 
+
+const remove = id => {
     friendRequests = friendRequests
-        .filter(request => request.from === request.from && request.to === to)
+        .filter(request => request.id !== id)
 }
 
 const clear = () => {
@@ -31,5 +36,7 @@ module.exports = {
     persist,
     retrieveFrom, 
     retrieveTo, 
+    retrieveById,
+    remove, 
     clear
 }
