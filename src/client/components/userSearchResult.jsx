@@ -5,7 +5,11 @@ import http from "../../shared/http";
 
 "react-router-dom";
 
-
+/**
+ * Takes to props in order to deal with sending of friend-requests: 
+ * displayedUser: The user the component will show (will receive requests)
+ * loggedInUser: The user that will (sends requests)
+ */
 export class UserSearchResult extends React.Component {
 
     constructor(props) {
@@ -21,7 +25,7 @@ export class UserSearchResult extends React.Component {
         try {
             
             const payload = {
-                from: this.props.user.email, 
+                from: this.props.loggedInUser.email, 
                 to: email 
             }; 
             const response = await fetch("/api/friendRequests", {
@@ -56,8 +60,8 @@ export class UserSearchResult extends React.Component {
     render() {
 
         return <div>
-            <p>{this.props.user.givenName} {this.props.user.familyName}</p>
-            <Button onClick={() => {this.sendRequestTo(this.props.user.email)}}>Send friend request</Button>
+            <p>{this.props.displayedUser.givenName} {this.props.displayedUser.familyName}</p>
+            <Button onClick={() => {this.sendRequestTo(this.props.displayedUser.email)}}>Send friend request</Button>
             {this.state.errorMessage? this.state.errorMessage: ""}
         </div>
     }

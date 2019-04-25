@@ -1,9 +1,11 @@
+const nanoid = require("nanoid"); 
 const friendRequests = []
 
 const persist = (from, to) => {
 
     const request = {
-        from, to
+        from, to,
+        id: nanoid()
     }; 
     
     friendRequests.push(request); 

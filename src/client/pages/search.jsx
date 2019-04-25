@@ -54,7 +54,7 @@ export class Search extends React.Component {
     }
 
     renderResults = () => this.state.results.map(user => 
-        <UserSearchResult user={user} key={user.email}/>
+        <UserSearchResult displayedUser={user} loggedInUser={this.props.user} key={user.email}/>
     )
 
 

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "reactstrap"; 
 import { ToLogIn } from "../components/toLogIn";
 import { Timeline } from "../components/timeline";
+import { FriendRequestsView } from "../components/friendRequestsView";
 
 export class Home extends React.Component {
 
@@ -29,6 +30,7 @@ export class Home extends React.Component {
                         <Button color="secondary" id="linkToProfile">Search for users</Button>
                     </Link>
                     <hr/>
+                    <FriendRequestsView email={this.props.user.email} /> 
                     <Timeline merged={true} email={this.props.user.email}/>
                 </div>:
                 <ToLogIn className="toLogIn"/>}

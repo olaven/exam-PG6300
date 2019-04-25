@@ -88,5 +88,30 @@ describe("Friend request API.", () => {
 
         expect(response.statusCode).toBe(200); 
         expect(response.body.length).toBe(1); 
-    })
+    }); 
+
+    it("returns requests with IDs", async () => {
+
+        const samAgent = await getLoggedInAgentAs({
+            email: "sam@shire.com",
+            password: "rosie"
+        });
+
+        await postFriendRequestResponse("sam@shire.com", "gandalf@arda.com", samAgent);
+
+        const gandalfAgent = await getLoggedInAgentAs({
+            email: "gandalf@arda.com",
+            password: "runrunrun"
+        });
+
+        const response = await gandalfAgent
+            .get("/api/friendRequests")
+            .query({
+                to: "gandalf@arda.com"
+            })
+            .send();
+
+        const id = response.body[0].id; 
+        expect(id).toBeDefined(); 
+    }); 
 });
