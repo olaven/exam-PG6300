@@ -41,7 +41,7 @@ export class Conversations extends React.Component {
     }
 
     renderConversations = () => this.state.friends.map(friend =>
-        <div>
+        <div key={friend.email}>
             <h1>Talk to {friend.givenName}</h1>
             {/* Treating participants as an array makes it easier for group solutions at some later point */}
             <Chat author={this.props.user.email} participants={[friend.email, this.props.user.email]}/>

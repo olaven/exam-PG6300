@@ -41,13 +41,20 @@ const addMessage = (author, text, participants) => {
 	return message; 
 };
 
-const retrieveByParticipants = participants => 
-	conversations.find(conversation =>
-		conversation.participants
-			.every(participant =>
-				participants.includes(participant)
-			)
-	)
+const retrieveByParticipants = participants => {
+	const conversation = conversations.find(conversation => {
+		const currentParticipants = conversation.participants; 
+		if (currentParticipants.every(p => 
+			participants.includes(p)
+		)) {
+			return true; 
+		} else {
+			return false; 
+		}
+	}); 
+
+	return conversation; 
+}
 
 
 module.exports = {

@@ -59,16 +59,16 @@ const chat = (ews) => {
 
 const sendExistingMessages = (participants, socket) => {
 
-	//TODO: sjekk at retrievebyparticic faktisk returnerer noe 
 	const conversation = conversations.retrieveByParticipants(participants); 
 	const messages = conversation? conversation.messages: []; 
+	
 	socket.send(JSON.stringify({
 		messages
 	}));  
 }
 
 const broadcastNewMessage = (participants, message) => {
-	//iterer gjennom map 
+	
 	/**
 	 * Structure of map: 
 	 * {
@@ -82,6 +82,7 @@ const broadcastNewMessage = (participants, message) => {
 
 	participants.forEach(email => {
 
+		//possiblities for correct conversation.
 		const possibilities = EmailToSockets.get(email); 
 		if (possibilities) {
 			possibilities.forEach(possibility => {
@@ -92,18 +93,6 @@ const broadcastNewMessage = (participants, message) => {
 			})
 		}
 	})
-	// console.log("participants: ", participants);
-	// participants.forEach(email => {
-	// 	//TODO: FEIL. sender til alle
-	// 	const sockets = EmailToSockets.get(email); 
-	// 	if (sockets) { //i.e. they are online/have "logged in"
-	// 		sockets.forEach(socket => {
-	// 			socket.send(JSON.stringify({
-	// 				singleMessage: message
-	// 			}));
-	// 		}) 
-	// 	}
-	// }); 
 }
 
 const closeAllSockets = initialRequest => {
