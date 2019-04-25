@@ -45,8 +45,8 @@ export class Search extends React.Component {
             return;
         } 
  
-        const json = await response.json();
-        const results = json.results; 
+        const json = await response.json(); // NOTE: not displaying the logged in user in results
+        const results = json.results.filter(user => user.email !== this.props.user.email); 
         
         this.setState({
             results
