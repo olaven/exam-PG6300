@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 const { getWebSocket } = require("../client-utils");
 
+
+//TODO: UPDATE ME TO BE BETWEEN TWO USERS 
 export class Chat extends React.Component {
 
     constructor(props) {
@@ -27,6 +29,10 @@ export class Chat extends React.Component {
                 }
             );
         });
+        this.socket.onerror = error => {
+            
+            console.log("some websocket error occured."); 
+        }
     }
 
     componentWillUnmount() {

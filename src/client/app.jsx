@@ -8,13 +8,13 @@ import React from "react";
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import { Home } from "./pages/home.jsx";
-import { Chat } from "./pages/chat";
 import { NotFound } from "./pages/notFound.jsx"
 import { Signup } from "./authentication/signup.jsx";
 import { Login } from "./authentication/login.jsx";
 import { Layout } from "./layout/layout.jsx";
 import { Profile } from "./pages/profile.jsx";
 import { Search } from "./pages/search";
+import { Conversations } from "./pages/conversations.jsx";
 
 export class App extends React.Component {
 
@@ -104,7 +104,7 @@ export class App extends React.Component {
 
                 <Switch>
                     {this.renderRouteWithUser("/", Home)}
-                    {this.renderRouteWithUser("/chat", Chat)}
+                    {this.renderRouteWithUser("/conversations", Conversations)}
                     {this.renderRouteWithUser("/profile", Profile)}
                     {this.renderRouteWithUser("/search", Search)}
                     {this.renderRouteWithUser("/signup", Signup)}

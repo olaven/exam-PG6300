@@ -70,10 +70,10 @@ describe("the home page.", () => {
 				user={getTestUser()} />
 		</MemoryRouter>) 
 		
-		const linkToChat = wrapper.find("#linkToChat").at(0);
+		const linkToConversations = wrapper.find("#linkToConversations").at(0);
 		const profileLink = wrapper.find("#linkToProfile").at(0);  
 
-		expect(linkToChat).toBeDefined(); 
+		expect(linkToConversations).toBeDefined(); 
 		expect(profileLink).toBeDefined(); 
 	});
 });

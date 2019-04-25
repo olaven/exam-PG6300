@@ -20,8 +20,8 @@ export class Home extends React.Component {
             <h1>Welcome to SocialSite!</h1>
             {loggedIn ? 
                 <div id="homeMessage">
-                    <Link to={"/chat"} id="linkToChat">
-                        <Button color="secondary">Go to chat</Button>
+                    <Link to={"/conversations"} id="linkToConversations">
+                        <Button color="secondary">Your conversations</Button>
                     </Link>
                     <Link to={"/profile"}>
                         <Button color="secondary" id="linkToProfile">Go to your profile</Button>

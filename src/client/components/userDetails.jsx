@@ -35,7 +35,7 @@ export class UserDetailsView extends React.Component {
 
     fetchUser = async () => {
 
-        const response = await fetch("/api/user/" + this.props.email); 
+        const response = await fetch("/api/users/" + this.props.email); 
 
         if (response.status === codes.OK) {
             const user = await response.json();
