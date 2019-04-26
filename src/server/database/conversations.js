@@ -26,7 +26,7 @@ const addMessage = (author, text, participants) => {
 	const message = {
 		author, 
 		text, 
-		timestamp: new Date().getMilliseconds() 
+		timestamp: Date.now() 
 	};
 	//add to existing conversation if present. 
 	if (conversation) {

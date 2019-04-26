@@ -58,9 +58,13 @@ export class Timeline extends React.Component {
                 posts = dto.posts; 
             }
 
-            posts = posts.sort((first, second) => {
-                return (first.timestamp >= second.timestamp? 1: -1); 
-            }); 
+    
+            posts.sort((a, b) => {
+                if (a.timestamp > b.timestamp) return 1; 
+                else if (a.timestamp < b.timestamp) return -1; 
+                else return 0; 
+            })
+            
             this.setState({
                 posts, 
                 errorMessage: null

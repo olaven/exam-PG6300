@@ -73,7 +73,7 @@ export class FriendRequestsView extends React.Component {
     render() {
 
         if (this.state.friendRequests.length === 0) {
-            return <div id="no-requests-message">No friend requests yet :-)</div>
+            return <div id="no-requests-message">No friend requests right now :-)</div>
         }
 
         return <div>

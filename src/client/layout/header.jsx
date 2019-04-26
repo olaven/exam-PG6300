@@ -91,7 +91,7 @@ export class Header extends React.Component {
             {loggedIn ? this.renderLoggedIn(): this.renderLoggedOut()}
 
             <NavItem>
-                Users online: {this.state.userCount} {this.state.errorMessage ? "(error getting)": ""}
+                Page visitors: {this.state.userCount} {this.state.errorMessage ? "(error getting)": ""}
             </NavItem>
         </Navbar>
     }
