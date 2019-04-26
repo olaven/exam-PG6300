@@ -1,11 +1,12 @@
 /**
  * 
- * NOTE: This file is copied(apart from modification on WsStub and overrideFetchWithAgent) from
+ * NOTE: This file is copied and adapted
  * https: //github.com/arcuri82/web_development_and_api_design/blob/master/exercise-solutions/quiz-game/part-10/tests/mytest-utils.js
  */
 
 const request = require("supertest");
 const WS = require("ws");
+const { app } = require("../src/server/app");
 
 /*
     Here, we stub away the calls to "fetch", as not available in NodeJS (ie, they
@@ -47,6 +48,21 @@ function stubFetch(
 			resolve(httpResponse);
 		});
 	};
+}
+
+
+async function getLoggedInAgentAs(user) {
+
+
+	const agent = await request.agent(app);
+	let loginResponse = await agent
+		.post("/api/login")
+		.send({
+			email: user.email,
+			password: user.password
+		})
+		.set("Content-Type", "application/json");
+	return agent;
 }
 
 
@@ -234,7 +250,10 @@ function checkConnectedWS(ws, timeoutMs) {
 		});
 }
 
-
+/**
+ * NOTE: This modificaion is written by Andreas Storesund Madsen. 
+ * It was shared _before_ the exam, on the school forums.
+ */
 function overrideWebSocket(port) {
 
 	class WsStub extends WS {
@@ -285,6 +304,7 @@ module.exports = {
 	stubFetch,
 	flushPromises,
 	overrideFetch,
+	getLoggedInAgentAs, 
 	overrideFetchWithAgent,
 	asyncCheckCondition,
 	checkConnectedWS,

@@ -1,10 +1,8 @@
 const React = require("react");
-const { MemoryRouter } = require("react-router-dom");
-const { mount, shallow } = require("enzyme");
-const request = require("supertest");
+const { shallow } = require("enzyme"); 
+
 const { getDevUser } = require("../../../src/server/database/demo");
-const { app } = require("../../../src/server/app");
-const { asyncCheckCondition, overrideFetch, overrideFetchWithAgent } = require("../../mytest-utils");
+const { asyncCheckCondition, overrideFetchWithAgent, getLoggedInAgentAs } = require("../../mytest-utils");
 const { Conversations } = require("../../../src/client/pages/conversations");
 
 
@@ -12,25 +10,12 @@ const getConversations = (props) => shallow(
     <Conversations {...props} />
 );
 
-const getLoggedInAgent = async () => {
-
-    const devUser = getDevUser();
-    const agent = await request.agent(app);
-    let loginResponse = await agent
-        .post("/api/login")
-        .send({
-            email: devUser.email,
-            password: devUser.password
-        })
-        .set("Content-Type", "application/json");
-    return agent;
-}
 
 describe("The conversations-page", () => {
 
     beforeAll(async () => {
 
-        const agent = await getLoggedInAgent(); 
+        const agent = await getLoggedInAgentAs(getDevUser()); 
         overrideFetchWithAgent(agent); 
     })
 
@@ -56,7 +41,7 @@ describe("The conversations-page", () => {
         expect(wrapper.state().friends.length).toBeGreaterThan(0); 
     })
 
-    it.only("does show friends when logged in", async () => {
+    it("does show friends when logged in", async () => {
 
         const wrapper = getConversations({
             user: getDevUser()

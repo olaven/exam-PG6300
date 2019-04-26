@@ -1,26 +1,9 @@
-const {
-    getDevUser
-} = require("../../../src/server/database/demo");
-const friendRequests = require("../../../src/server/database/friendRequests");
-const users = require("../../../src/server/database/users");
-const {
-    app
-} = require("../../../src/server/app");
+const { getDevUser } = require("../../../src/server/database/demo");
+const { getLoggedInAgentAs } = require("../../mytest-utils"); 
+const { app } = require("../../../src/server/app");
 const request = require("supertest");
 
 
-const getLoggedInAgentAs = async (user) => {
-
-    const agent = await request.agent(app);
-    let loginResponse = await agent
-        .post("/api/login")
-        .send({
-            email: user.email,
-            password: user.password
-        })
-        .set("Content-Type", "application/json");
-    return agent;
-}
 
 describe("the users-API.", () => {
 

@@ -12,22 +12,8 @@ const request = require("supertest");
 const {
     asyncCheckCondition,
     checkConnectedWS,
-    overrideWebSocket
+    getLoggedInAgentAs
 } = require("../../mytest-utils");
-
-const getLoggedInAgentAs = async (user) => {
-
-    const agent = await request.agent(app);
-    let loginResponse = await agent
-        .post("/api/login")
-        .send({
-            email: user.email,
-            password: user.password
-        })
-        .set("Content-Type", "application/json");
-    return agent;
-}
-
 
 
 let server;

@@ -1,32 +1,16 @@
 const request = require("supertest");
 
-const { getLogge} = require("../../mytest-utils"); 
-const { getDevUser } = require("../../../src/server/database/demo");;
+const { getLoggedInAgentAs } = require("../../mytest-utils"); 
+const { getDevUser } = require("../../../src/server/database/demo");
 const { app } = require("../../../src/server/app");
 
-const devUser = getDevUser(); 
-
-
-const getLoggedInAgent = async () => {
-
-    const devUser = getDevUser();
-    const agent = await request.agent(app);
-    let loginResponse = await agent
-        .post("/api/login")
-        .send({
-            email: devUser.email,
-            password: devUser.password
-        })
-        .set("Content-Type", "application/json");
-    return agent; 
-}
 
 describe("The search-api.", () => {
 
     it("401 if not authenticated", async () => {
 
         const response = await request(app)
-            .get("/api/search/" + devUser.givenName)
+            .get("/api/search/" + getDevUser().givenName)
             .send();
 
         expect(response.statusCode).toEqual(401);
@@ -34,7 +18,7 @@ describe("The search-api.", () => {
 
     it("Returns 400 if bad searchquery is provided", async () => {
 
-        const agent = await getLoggedInAgent(); 
+        const agent = await getLoggedInAgentAs(getDevUser()); 
         const response = await agent
             .get("/api/search/" + undefined)
             .send();
@@ -44,26 +28,28 @@ describe("The search-api.", () => {
 
     it("Returns reasonable results", async () => {
 
-        const agent = await getLoggedInAgent(); 
+        const user = getDevUser(); 
+        const agent = await getLoggedInAgentAs(user); 
         const response = await agent
-            .get("/api/search/" + devUser.givenName)
+            .get("/api/search/" + user.givenName)
             .send();
 
         expect(response.statusCode).toBe(200);
-        response.body.results.find(user => user.email = devUser.email);  
+        response.body.results.find(u => u.email = user.email);  
     });
 
     it("Does not contain location or dateOfBirth", async () => {
 
-        const agent = await getLoggedInAgent();
+        const user = getDevUser();
+        const agent = await getLoggedInAgentAs(user);
         const response = await agent
-            .get("/api/search/" + devUser.givenName)
+            .get("/api/search/" + user.givenName)
             .send();
 
         expect(response.statusCode).toBe(200);
-        response.body.results.forEach(user => {
-            expect(user.location).toBeUndefined(); 
-            expect(user.dateOfBirth).toBeUndefined();
+        response.body.results.forEach(u => {
+            expect(u.location).toBeUndefined(); 
+            expect(u.dateOfBirth).toBeUndefined();
         })
     });
 });
