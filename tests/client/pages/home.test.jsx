@@ -46,13 +46,6 @@ describe("the home page.", () => {
 		expect(home).not.toBeNull();
 	});
 
-	it.skip("only renders one message only", () => {
-        
-		const wrapper = getHome(null); 
-		const messages = wrapper.find(".homeMessage");
-		expect(messages.length).toEqual(1);
-	});
-
 	it("renders message to login when user logged out", () => {
 
 		const wrapper = getHome({

@@ -1,10 +1,10 @@
-import React from "react"; import { UserDetailsView } from "../components/userDetails";
+import React from "react"; 
 import { Input } from "reactstrap"; 
 
 import { codes } from "../../shared/http";
 import { ToLogIn } from "../components/toLogIn";
+import { UserDetailsView } from "../components/userDetailsView";
 import { UserSearchResult } from "../components/userSearchResult";
-"react-router-dom";
 
 
 export class Search extends React.Component {

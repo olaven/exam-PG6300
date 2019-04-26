@@ -1,9 +1,9 @@
-import React from "react"; import { UserDetailsView } from "../components/userDetails";
+import React from "react"; 
 
 import { codes } from "../../shared/http";
 import { ToLogIn } from "../components/toLogIn";
 import { FriendProfile } from "../components/friendProfile"; 
-"react-router-dom";
+
 
 
 export class Friends extends React.Component {

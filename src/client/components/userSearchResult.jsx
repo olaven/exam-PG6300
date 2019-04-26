@@ -1,4 +1,4 @@
-import React from "react"; import { UserDetailsView } from "../components/userDetails";
+import React from "react"; import { UserDetailsView } from "../components/userDetailsView";
 import { Button } from "reactstrap"; 
 
 import http from "../../shared/http"; 

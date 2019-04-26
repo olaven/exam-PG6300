@@ -70,7 +70,7 @@ describe("Websocket for usercount.", () => {
 		expect(count).toEqual(1);
 	});
     
-	it.skip("updates every connected socket", async () => {
+	it("updates every connected socket", async () => {
 	
 		const n = 3;
 		const counts = new Array(n);
@@ -88,7 +88,8 @@ describe("Websocket for usercount.", () => {
 			);
 		}
 		
-		await asyncCheckCondition(() => false, 2000, 1000);
+		// just needs some time to update
+		await asyncCheckCondition(() => false, 300, 100);
 		
 		for (let count of counts) {
 			expect(count).toBe(n);

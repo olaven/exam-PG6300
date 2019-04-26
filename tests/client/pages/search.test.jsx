@@ -3,20 +3,17 @@ const { shallow, mount } = require("enzyme");
 const { MemoryRouter } = require("react-router-dom");
 
 const { app } = require("../../../src/server/app");
-const { getTestUser } = require("../clientTestUtils");
-const { overrideFetch } = require("../../mytest-utils");
+const { getDevUser } = require("../../../src/server/database/demo"); 
+const { overrideFetch, getLoggedInAgentAs, overrideFetchWithAgent, asyncCheckCondition } = require("../../mytest-utils");
 const { Search } = require("../../../src/client/pages/search");
 
 const getSearch = props => shallow(<Search {...props}/>)
 
 describe("the search page.", () => {
 
-    beforeAll(() => {
-        overrideFetch(app); 
-    }); 
-
     it("is is not visible if not logged in, even if results are present in state", () => {
 
+        overrideFetch(app); 
         const wrapper = getSearch({
             user: null
         }); 
@@ -30,6 +27,7 @@ describe("the search page.", () => {
 
     it("is is visible if logged in", () => {
 
+        overrideFetch(app); 
         const wrapper = getSearch({
             user: {
                 email: "user@mail.com"
@@ -48,7 +46,4 @@ describe("the search page.", () => {
         const rendered = wrapper.find(".user-search-result");
         expect(rendered.exists()).toBe(true);
     }); 
-
-   
-
 });

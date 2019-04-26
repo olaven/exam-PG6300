@@ -78,7 +78,6 @@ export class UserDetailsView extends React.Component {
 
 
         const user = this.state.user; 
-
         if(!user) {
             return <div>Loading data...</div>
         }

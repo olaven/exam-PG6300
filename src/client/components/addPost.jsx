@@ -58,6 +58,7 @@ export class AddPost extends React.Component {
             const payload = JSON.stringify({ post });
             this.props.socket.send(payload);
         } catch (error) {
+        
             alert("an error occured when sending.."); 
             return; 
         }

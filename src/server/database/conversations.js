@@ -6,6 +6,7 @@
  * 	participants: [emailOne, emailTwo..]
  * 	messages: [
  * 	text: "some message"
+ * 	author: "some@mail.com"
  * 	timestanmp: new Date().getMilliSeconds()
  * ]
  * }
@@ -56,8 +57,13 @@ const retrieveByParticipants = participants => {
 	return conversation; 
 };
 
+const clearConversations = () => {
+	conversations.length = 0
+}
+
 
 module.exports = {
 	addMessage,
-	retrieveByParticipants
+	retrieveByParticipants, 
+	clearConversations
 };
