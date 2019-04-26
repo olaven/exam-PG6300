@@ -18,7 +18,6 @@ app.use(express.static("public"));
 
 configure.authentication();
 configure.websocket();
-// configure.graphql();
 configure.rest();
 
 

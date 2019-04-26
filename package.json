@@ -14,14 +14,12 @@
     "lint": "./node_modules/.bin/eslint src/ --fix"
   },
   "dependencies": {
-    "apollo-server-express": "^2.4.8",
     "bootstrap": "^4.3.1",
     "cross-env": "^5.2.0",
     "css-loader": "^2.1.1",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "express-ws": "^4.0.0",
-    "graphql": "^14.0.2",
     "nanoid": "^2.0.1",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
