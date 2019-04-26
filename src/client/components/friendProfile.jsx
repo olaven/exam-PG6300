@@ -23,7 +23,7 @@ export class FriendProfile extends React.Component {
     }
 
     render() {
-        console.log(this.props); 
+        
         return <div>
             <h3>{this.props.friend.givenName}</h3>
             <Button onClick={this.toggleHidden} color="primary">Toggle details</Button>

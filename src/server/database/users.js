@@ -63,6 +63,16 @@ const createUser = (email, givenName, familyName, dateOfBirth, location, passwor
 	return true;
 };
 
+const updateUser = (user) => {
+
+	// The data that the user is not allowed to edit
+	const old = users.get(user.email); 
+	user.password = old.password; 
+	user.friendEmails = old.friendEmails; 
+	
+	users.set(user.email, user); 
+}
+
 const clearUsers = () => {
 
 	users = new Map();
@@ -74,5 +84,6 @@ module.exports = {
 	verifyUser,
 	createUser,
 	addFriends, 
+	updateUser, 
 	clearUsers
 };

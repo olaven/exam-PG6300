@@ -87,25 +87,29 @@ export class Chat extends React.Component {
         this.state.messages.map((message, index) =>
             <div key={index}>
                 <p>{message.author}</p>
-                <p>{this.parseLinks(message.text)}</p>
+                {this.parseText(message.text)}
             </div>
-        ); 
-
-    parseLinks = text => {
-        //TODO: FIX ME 
-        //unescaped: http(s) ?://([a-z]|[A-Z])*.[a-z]*
+        );
         
-        const pattern = /http(s)?/
-        const words = text.split(" "); 
-        words.forEach((word, index) => { 
-            if (pattern.test(word)) {
-                words[index] = <a href={word}>{word}</a>
-            }
-        }); 
+    parseText = text => text.split(" ").map((word, index) => {
+        if (this.isLink(word)) {
+            
+            return <a key={index} href={word}>{word}</a>
+        } else {
+            
+            return <div key={index}>{word}</div>
+        }
+    }); 
 
-        const parsed = words.join(" ");  
-        return parsed; 
-    }
+    /**
+     * About security: 
+     * React automatically escapes content inside tags. However, it does 
+     * not escape the values of href-attributes. 
+     * 
+     * I am veriyfing that the protocol is http/https. This way, doing 
+     * xss with (for example) "javascript:"-protocol is not possible through this input. 
+     */
+    isLink = word => (word.startsWith("http://") || word.startsWith("https://"))
 
 
     render() {

@@ -47,6 +47,35 @@ router.get("/users/:email", isAuthenticated, (req, res) => {
 	res.status(http.codes.OK).send(payload);
 });
 
+router.put("/users/:email", isAuthenticated, (req, res) => {
+
+	if(
+		!req.body.user ||
+		!req.body.user.email ||
+		!req.body.user.givenName || 
+		!req.body.user.familyName||
+		!req.body.user.location ||
+		!req.body.user.dateOfBirth) 
+	{
+		res.send(http.codes.BAD_REQUEST).send(); 
+		return; 
+	}
+
+	if (!users.getUser(req.body.user.email)) {
+		res.status(http.codes.NOT_FOUND).send();
+		return; 
+	}
+
+	if (req.user.email !== req.body.user.email) {
+		res.status(http.codes.FORBIDDEN).send();
+		return;
+	}
+
+	users.updateUser(req.body.user); 
+	// as per https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PUT#Responses
+	res.status(http.codes.NO_CONTENT).send()
+})
+
 
 const hidePasswordFrom = user => {
 
