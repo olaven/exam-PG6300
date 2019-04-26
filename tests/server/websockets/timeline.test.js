@@ -3,16 +3,30 @@
  * * https: //github.com/arcuri82/web_development_and_api_design/blob/master/exercise-solutions/quiz-game/part-10/tests/server/ws-handler-test.js
  */
 
-const {
-    app
-} = require("../../../src/server/app");
+const { app } = require("../../../src/server/app");
 const WS = require("ws");
+const { getDevUser } = require("../../../src/server/database/demo"); 
+const request = require("supertest");
+
 
 const {
     asyncCheckCondition,
     checkConnectedWS,
     overrideWebSocket
 } = require("../../mytest-utils");
+
+const getLoggedInAgentAs = async (user) => {
+
+    const agent = await request.agent(app);
+    let loginResponse = await agent
+        .post("/api/login")
+        .send({
+            email: user.email,
+            password: user.password
+        })
+        .set("Content-Type", "application/json");
+    return agent;
+}
 
 
 
@@ -32,9 +46,8 @@ const connectSocket = async (onMessage, updatedPredicate) => {
 
     const updated = await asyncCheckCondition(() =>
         updatedPredicate, 2000, 200);
+    
     expect(updated).toEqual(true);
-
-    updated//? 
 
     return socket;
 };
@@ -52,17 +65,12 @@ describe("Websocket for timeline.", () => {
     });
 
     afterAll(() => {
-
-        server.close();
-    });
-
-
-    afterEach(() => {
         for (let i = 0; i < sockets.length; i++) {
 
             sockets[i].close();
         }
         sockets.length = 0;
+        server.close();
     });
 
 
@@ -76,20 +84,41 @@ describe("Websocket for timeline.", () => {
         expect(socket).toBeDefined(); 
     });
 
-    it.skip("sends posts after connection", async () => {
+    it("can login and get posts", async () => {
 
-        let received = null; 
-        let updated = false;
-        await connectSocket(
-            data => {
-                updated = true;
-                received = JSON.parse(data);
-            },
-            () => updated
-        );
+        const agent = await getLoggedInAgentAs(getDevUser()); 
+        const tokenResponse = await agent
+            .post("/api/tokens")
+            .send();
+        
+        const token = tokenResponse.body.token; 
+        const socket = new WS("ws://localhost:" + port + "/timeline");
 
-        received//? 
-        expect(received).not.toBe(null); 
+        sockets.push(socket); 
+        socket.on("open", () => {
+            socket.send(JSON.stringify({
+                token, 
+                topic: "login",
+                merged: true // as devuser has no posts
+            })); 
+        }); 
+
+        let posts; 
+        socket.on("message", data => {
+            
+            
+            const dto = JSON.parse(data); 
+            posts = dto.posts; 
+        }); 
+
+        await asyncCheckCondition(() => posts, 2000, 100); 
+        
+        expect(posts).toBeDefined(); 
+        posts.forEach(post => {
+            expect(post.title).toBeDefined(); 
+            expect(post.content).toBeDefined()
+            expect(post.authorEmail).toBeDefined()
+        }); 
     })
 
 });

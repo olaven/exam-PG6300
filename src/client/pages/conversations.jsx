@@ -1,11 +1,9 @@
 import React from "react";
-import { Button } from "reactstrap"; 
 import { ToLogIn } from "../components/toLogIn";
 import { Chat } from "../components/chat";
 const { getWebSocket } = require("../client-utils");
 
 
-//TODO: UPDATE ME TO BE BETWEEN TWO USERS 
 export class Conversations extends React.Component {
 
     constructor(props) {
@@ -41,7 +39,7 @@ export class Conversations extends React.Component {
     }
 
     renderConversations = () => this.state.friends.map(friend =>
-        <div key={friend.email}>
+        <div className="friend-conversations" key={friend.email}>
             <h1>Talk to {friend.givenName}</h1>
             {/* Treating participants as an array makes it easier for group solutions at some later point */}
             <Chat author={this.props.user.email} participants={[friend.email, this.props.user.email]}/>
@@ -54,7 +52,7 @@ export class Conversations extends React.Component {
             return <ToLogIn /> 
         }
         
-        return <div>
+        return <div id="conversations-page">
             <h1>These are your conversations:</h1>
             {this.state.errorMessage?
                 this.state.errorMessage: 

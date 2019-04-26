@@ -85,8 +85,8 @@ export class Chat extends React.Component {
 
     renderMessages = () => 
         this.state.messages.map((message, index) =>
-            <div>
-                <p key={index}>{message.author}</p>
+            <div key={index}>
+                <p>{message.author}</p>
                 <p>{this.parseLinks(message.text)}</p>
             </div>
         ); 

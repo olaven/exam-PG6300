@@ -36,7 +36,7 @@ describe("The friends-page", () => {
         overrideFetchWithAgent(agent); 
     })
 
-    it.only("renders friends", async () => {
+    it("renders friends", async () => {
 
         const errorMessage = "Test error message"; 
         const wrapper = getFriends(); 

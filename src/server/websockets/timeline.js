@@ -27,7 +27,6 @@ const timeline = (ews) => {
 				const persisted = persist(dto.post);
 				broadcastNewPost(persisted, ws);
 			}
-			//TODO: broadcast new post to relevant users
 		});
 
 		ws.on("error", () => {
@@ -43,6 +42,7 @@ const sendInitialPosts = socket => {
 	const dto = {
 		posts: postsFromSubscriptions
 	};
+
 
 	const payload = JSON.stringify(dto);  
 	socket.send(payload); 
