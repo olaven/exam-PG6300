@@ -48,12 +48,13 @@ export class Friends extends React.Component {
         }
     }
 
-    renderFriends = () => this.state.friends.map(friend => <FriendProfile key={friend.email} friend={friend}/>)
+    renderFriends = () => this.state.friends.map(friend => <FriendProfile className="friend-profile" key={friend.email} friend={friend}/>)
 
     
 
     render() {
 
+        this.state.errorMessage//?
         const loggedIn = this.props.user !== null; 
         if (!loggedIn) {
             return <ToLogIn />

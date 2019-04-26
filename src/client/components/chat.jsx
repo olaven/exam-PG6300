@@ -115,7 +115,6 @@ export class Chat extends React.Component {
         if (loggedIn) {
 
             return <div id="chat">
-                <h1>Chat</h1>
                 <div id="messages">
                     {this.renderMessages()}
                 </div>

@@ -57,7 +57,7 @@ export class App extends React.Component {
         }
 
         if (response.status !== 200) {
-            //TODO here could have some warning message in the page.
+            console.log("Error when fetching user. Not logged in?")
         } else {
             const user = await response.json();
             this.updateLoggedInUser(user);
